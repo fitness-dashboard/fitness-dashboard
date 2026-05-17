@@ -38,6 +38,19 @@ fig = px.line(
 )
 
 
+fig.for_each_trace(
+    lambda trace: trace.update(
+        name={
+            "Weight (kg) 500kcal":
+                "Weight (kg) 500kcal Defizit",
+
+            "Weight (kg) 300kcal":
+                "Weight (kg) 300kcal Defizit"
+        }.get(trace.name, trace.name)
+    )
+)
+
+
 # Y-Achse begrenzen
 fig.update_yaxes(range=[70, 90])
 
@@ -103,7 +116,7 @@ fig4 = px.line(
     title="Grundumsätze"
 )
 
-
+# Graphen umbenennen
 fig4.for_each_trace(
     lambda trace: trace.update(
         name={
