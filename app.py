@@ -68,7 +68,7 @@ fig.update_layout(
     ),
 
     margin=dict(
-        b=30
+        b=15
     )
 )
 # Diagramm 1 anzeigen
