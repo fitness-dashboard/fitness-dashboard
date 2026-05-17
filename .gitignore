@@ -9,3 +9,4 @@ venv/
 *.xlsx
 *.xlsm
 *.csv
+!fitness_dashboard_data.csv
