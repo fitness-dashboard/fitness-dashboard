@@ -58,15 +58,19 @@ fig.update_yaxes(range=[70, 90])
 
 fig.update_layout(
     height=350,
+
     legend=dict(
         orientation="h",
         yanchor="bottom",
         y=-0.35,
         xanchor="center",
         x=0.5
+    ),
+
+    margin=dict(
+        b=120
     )
 )
-
 # Diagramm 1 anzeigen
 st.plotly_chart(fig, use_container_width=True)
 
