@@ -100,11 +100,11 @@ fig2 = px.line(
 fig2.update_yaxes(range=[15, 65])
 
 # Achsen umbenennen bzw. ausblenden
-fig.update_yaxes(
-    title_text="kg"
+fig2.update_yaxes(
+    title_text="Prozent"
 )
 
-fig.update_xaxes(
+fig2.update_xaxes(
     title_text=""
 )
 
@@ -147,11 +147,11 @@ fig3 = px.line(
 fig3.update_yaxes(range=[10, 35])
 
 # Achsen umbenennen bzw. ausblenden
-fig.update_yaxes(
-    title_text="kg"
+fig3.update_yaxes(
+    title_text="Prozent"
 )
 
-fig.update_xaxes(
+fig3.update_xaxes(
     title_text=""
 )
 
@@ -212,11 +212,11 @@ fig4.for_each_trace(
 fig4.update_yaxes(range=[1500, 3000])
 
 # Achsen umbenennen bzw. ausblenden
-fig.update_yaxes(
-    title_text="kg"
+fig4.update_yaxes(
+    title_text="kcal"
 )
 
-fig.update_xaxes(
+fig4.update_xaxes(
     title_text=""
 )
 
