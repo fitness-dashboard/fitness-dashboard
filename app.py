@@ -54,6 +54,15 @@ fig.for_each_trace(
 # Y-Achse begrenzen
 fig.update_yaxes(range=[70, 90])
 
+# Achsen umbenennen bzw. ausblenden
+fig.update_yaxes(
+    title_text="kg"
+)
+
+fig.update_xaxes(
+    title_text=""
+)
+
 # Für Handyansicht optimieren
 
 fig.update_layout(
@@ -89,6 +98,16 @@ fig2 = px.line(
 
 # Y-Achse begrenzen
 fig2.update_yaxes(range=[15, 65])
+
+# Achsen umbenennen bzw. ausblenden
+fig.update_yaxes(
+    title_text="kg"
+)
+
+fig.update_xaxes(
+    title_text=""
+)
+
 
 # Für Handyansicht optimieren
 
@@ -126,6 +145,16 @@ fig3 = px.line(
 
 # Y-Achse begrenzen
 fig3.update_yaxes(range=[10, 35])
+
+# Achsen umbenennen bzw. ausblenden
+fig.update_yaxes(
+    title_text="kg"
+)
+
+fig.update_xaxes(
+    title_text=""
+)
+
 
 # Für Handyansicht optimieren
 
@@ -181,6 +210,16 @@ fig4.for_each_trace(
 
 # Y-Achse begrenzen
 fig4.update_yaxes(range=[1500, 3000])
+
+# Achsen umbenennen bzw. ausblenden
+fig.update_yaxes(
+    title_text="kg"
+)
+
+fig.update_xaxes(
+    title_text=""
+)
+
 
 # Für Handyansicht optimieren
 
