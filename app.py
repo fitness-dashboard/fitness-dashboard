@@ -54,6 +54,18 @@ fig.for_each_trace(
 # Y-Achse begrenzen
 fig.update_yaxes(range=[70, 90])
 
+# Für Handyansicht optimieren
+
+fig.update_layout(
+    height=350,
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=-0.35,
+        xanchor="center",
+        x=0.5
+    )
+)
 
 # Diagramm 1 anzeigen
 st.plotly_chart(fig, use_container_width=True)
