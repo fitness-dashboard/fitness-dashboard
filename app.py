@@ -90,6 +90,23 @@ fig2 = px.line(
 # Y-Achse begrenzen
 fig2.update_yaxes(range=[15, 65])
 
+# Für Handyansicht optimieren
+
+fig2.update_layout(
+    height=350,
+
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=-0.35,
+        xanchor="center",
+        x=0.5
+    ),
+
+    margin=dict(
+        b=5
+    )
+)
 
 # Diagramm 2 anzeigen
 st.plotly_chart(fig2, use_container_width=True)
@@ -110,6 +127,23 @@ fig3 = px.line(
 # Y-Achse begrenzen
 fig3.update_yaxes(range=[10, 35])
 
+# Für Handyansicht optimieren
+
+fig3.update_layout(
+    height=350,
+
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=-0.35,
+        xanchor="center",
+        x=0.5
+    ),
+
+    margin=dict(
+        b=5
+    )
+)
 
 # Diagramm 3 anzeigen
 st.plotly_chart(fig3, use_container_width=True)
@@ -148,6 +182,23 @@ fig4.for_each_trace(
 # Y-Achse begrenzen
 fig4.update_yaxes(range=[1500, 3000])
 
+# Für Handyansicht optimieren
+
+fig4.update_layout(
+    height=350,
+
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=-0.35,
+        xanchor="center",
+        x=0.5
+    ),
+
+    margin=dict(
+        b=5
+    )
+)
 
 # Diagramm anzeigen
 st.plotly_chart(fig4, use_container_width=True)
