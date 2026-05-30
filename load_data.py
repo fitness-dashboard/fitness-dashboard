@@ -170,8 +170,15 @@ def lade_daten():
 
     dfTanitaNeu["Date"] = pd.to_datetime(
         dfTanitaNeu["Date"],
-        errors="coerce"
+        errors="coerce",
+        dayfirst=True
     )
+
+    print("Erstes Tanita-Datum:", dfTanitaNeu["Date"].min())
+    print("Letztes Tanita-Datum:", dfTanitaNeu["Date"].max())
+    print("Anzahl Tanita-Zeilen:", len(dfTanitaNeu))
+
+    dfTanitaNeu["Only Date"] = dfTanitaNeu["Date"].dt.date
 
     dfTanitaNeu["Only Date"] = dfTanitaNeu["Date"].dt.date
 

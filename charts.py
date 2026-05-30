@@ -49,7 +49,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("C1").value = "Körperfettanteil kg 7 Tage"
 
     # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
-    start_datum_chart = pd.Timestamp("2025-11-20")
+    start_datum_chart = pd.Timestamp("2025-06-14")
     dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
 
     chart_data = pd.DataFrame({
@@ -101,7 +101,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("H1").value = "Fett % Soll"
 
     # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
-    start_datum_chart = pd.Timestamp("2025-11-20")
+    start_datum_chart = pd.Timestamp("2025-06-14")
     dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
 
     chart_data2 = pd.DataFrame({
@@ -164,7 +164,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("N1").value = "Weight (kg) 300kcal"
 
     # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
-    start_datum_chart = pd.Timestamp("2025-11-20")
+    start_datum_chart = pd.Timestamp("2025-06-14")
     dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
 
     chart_data3 = pd.DataFrame({
@@ -228,7 +228,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("T1").value = "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"
 
     # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
-    start_datum_chart = pd.Timestamp("2025-11-20")
+    start_datum_chart = pd.Timestamp("2025-06-14")
     dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
 
     chart_data4 = pd.DataFrame({
