@@ -18,7 +18,7 @@ dfGesamt["Only Date"] = pd.to_datetime(
 
 
 # Zeitraum filtern
-start_datum_chart = pd.Timestamp("2025-11-20")
+start_datum_chart = pd.Timestamp("2025-06-14")
 
 dfChart = dfGesamt[
     dfGesamt["Only Date"] >= start_datum_chart
