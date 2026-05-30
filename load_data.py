@@ -156,6 +156,22 @@ def lade_daten():
     dfTanitaNeu = pd.read_csv(fileTanitaNeu)
 
     # ===============================
+    # Datumsfelder getrennt umwandeln
+    # ===============================
+
+    dfTanitaAlt["Date"] = pd.to_datetime(
+        dfTanitaAlt["Date"],
+        format="%d.%m.%Y",
+        errors="coerce"
+    )
+
+    dfTanitaNeu["Date"] = pd.to_datetime(
+        dfTanitaNeu["Date"],
+        format="%Y-%m-%d %H:%M:%S",
+        errors="coerce"
+    )
+
+    # ===============================
     # Beide Dateien zusammenführen
     # ===============================
 
@@ -164,14 +180,23 @@ def lade_daten():
         ignore_index=True
     )
 
-    # ===============================
-    # Datentypen umwandeln
-    # ===============================
+    print(
+        "Ungültige Datumswerte:",
+        dfTanitaNeu["Date"].isna().sum()
+    )
 
-    dfTanitaNeu["Date"] = pd.to_datetime(
-        dfTanitaNeu["Date"],
-        errors="coerce",
-        dayfirst=True
+    print(
+        "Erstes Tanita-Datum:",
+        dfTanitaNeu["Date"].min()
+    )
+
+    print(
+        "Letztes Tanita-Datum:",
+        dfTanitaNeu["Date"].max()
+    )
+
+    dfTanitaNeu["Only Date"] = (
+        dfTanitaNeu["Date"].dt.date
     )
     print(
         "Ungültige Datumswerte:",
