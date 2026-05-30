@@ -142,9 +142,31 @@ def lade_daten():
     print(fileTanitaNeu)
 
     # ===============================
-    # TANITA CSV einlesen
+    # TANITA Altdaten einlesen
     # ===============================
+
+    dfTanitaAlt = pd.read_csv(
+        r"D:\Documents\Gesundheit Kai\Diät\Altdaten Tanita Neu fertig.csv"
+    )
+
+    # ===============================
+    # TANITA aktuelle CSV einlesen
+    # ===============================
+
     dfTanitaNeu = pd.read_csv(fileTanitaNeu)
+
+    # ===============================
+    # Beide Dateien zusammenführen
+    # ===============================
+
+    dfTanitaNeu = pd.concat(
+        [dfTanitaAlt, dfTanitaNeu],
+        ignore_index=True
+    )
+
+    # ===============================
+    # Datentypen umwandeln
+    # ===============================
 
     dfTanitaNeu["Date"] = pd.to_datetime(
         dfTanitaNeu["Date"],
@@ -168,13 +190,28 @@ def lade_daten():
         errors="coerce"
     )
 
+    # ===============================
+    # Körperfett in kg berechnen
+    # ===============================
+
     dfTanitaNeu["Körperfettanteil kg"] = (
             dfTanitaNeu["Weight (kg)"]
             * dfTanitaNeu["Body Fat (%)"]
             / 100
     ).round(2)
 
-    dfTanitaNeu = dfTanitaNeu.sort_values("Date")
+    # ===============================
+    # Nach Datum sortieren
+    # ===============================
+
+    dfTanitaNeu = (
+        dfTanitaNeu
+        .sort_values("Date")
+        .drop_duplicates(
+            subset=["Only Date"],
+            keep="last"
+        )
+    )
 
     # ===============================
     # MERGE aller Daten

@@ -198,29 +198,27 @@ def berechne_werte(dfGesamt):
         .round(0)
     )
 
-
-
-
     # ===============================
-    # Summe der letzten 30 vorhandenen Werte
+    # Kalorien durch Gewichtsänderung
+    # Vergleich heute vs vor 30 Tagen
     # ===============================
 
-    kalorien_clean = (
-        dfGesamt["Kalorien Gewichtsreduktion"]
-        .dropna()
+    gewicht_vor_30_tagen = (
+        dfGesamt["Weight (kg)"]
+        .shift(30)
     )
 
-    rolling_summe = (
-        kalorien_clean
-        .rolling(window=30, min_periods=30)
-        .sum()
-    )
-
-    dfGesamt["Kalorien Gewichtsänderung Summe 30 Tage"] = (
-        rolling_summe
-        .reindex(dfGesamt.index)
-        .round(0)
-    )
+    dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"] = (
+            (
+                    gewicht_vor_30_tagen
+                    - dfGesamt["Weight (kg)"]
+            )
+            * 7000
+    ).where(
+        gewicht_vor_30_tagen.notna()
+        &
+        dfGesamt["Weight (kg)"].notna()
+    ).round(0)
 
 
     # ===============================
@@ -231,11 +229,11 @@ def berechne_werte(dfGesamt):
         (
             dfGesamt["Kalorien aus Essen Summe 30 Tage"]
             - dfGesamt["Kalorien aus Training Summe 30 Tage"]
-            + dfGesamt["Kalorien Gewichtsänderung Summe 30 Tage"]
+            + dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"]
         )
         / 30
     ).where(
-        dfGesamt["Kalorien Gewichtsänderung Summe 30 Tage"].notna()
+        dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"].notna()
     ).round(0)
 
     # ===============================
