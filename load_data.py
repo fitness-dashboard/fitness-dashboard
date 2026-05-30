@@ -173,6 +173,11 @@ def lade_daten():
         errors="coerce",
         dayfirst=True
     )
+    print(
+        "Ungültige Datumswerte:",
+        dfTanitaNeu["Date"].isna().sum()
+    )
+
 
     print("Erstes Tanita-Datum:", dfTanitaNeu["Date"].min())
     print("Letztes Tanita-Datum:", dfTanitaNeu["Date"].max())
