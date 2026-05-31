@@ -219,6 +219,10 @@ def erstelle_diagramme(workbook, dfGesamt):
     excel_chart3.Axes(2).HasTitle = True
     excel_chart3.Axes(2).AxisTitle.Text = "KG"
 
+    # Y-Achse Bereich festlegen
+    excel_chart3.Axes(2).MinimumScale = 65
+    excel_chart3.Axes(2).MaximumScale = 105
+
     # Legende unten
     excel_chart3.Legend.Position = -4107
 

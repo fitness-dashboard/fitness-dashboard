@@ -122,45 +122,57 @@ def berechne_werte(dfGesamt):
         start_wert - tage_seit_start * reduktion_pro_tag
     ).round(2)
 
-
     # ===============================
     # Gewicht 500 kcal Soll berechnen
     # ===============================
 
-    start_datum = pd.Timestamp("2025-11-21")
-    start_wert_500kcal = 86.6
+    start_datum = pd.Timestamp("2025-06-14")
+
+    start_wert_500kcal = (
+        dfGesamt.loc[
+            dfGesamt["Only Date"] == start_datum,
+            "Weight (kg)"
+        ]
+        .iloc[0]
+    )
 
     # tägliche Reduktion
     reduktion_pro_tag_500kcal = 1 / 14
 
     # Tage seit Startdatum berechnen
     tage_seit_start = (
-        dfGesamt["Only Date"] - start_datum
+            dfGesamt["Only Date"] - start_datum
     ).dt.days
 
     # Zielwert berechnen
     dfGesamt["Weight (kg) 500kcal"] = (
-        start_wert_500kcal - tage_seit_start * reduktion_pro_tag_500kcal
+            start_wert_500kcal
+            - tage_seit_start * reduktion_pro_tag_500kcal
     ).round(2)
 
     # ===============================
     # Gewicht 300 kcal Soll berechnen
     # ===============================
 
-    start_datum = pd.Timestamp("2025-11-21")
-    start_wert_300kcal = 86.6
+    start_datum = pd.Timestamp("2025-06-14")
 
-    # tägliche Reduktion
+    start_wert_300kcal = (
+        dfGesamt.loc[
+            dfGesamt["Only Date"] == start_datum,
+            "Weight (kg)"
+        ]
+        .iloc[0]
+    )
+
     reduktion_pro_tag_300kcal = 1 / 23.33
 
-    # Tage seit Startdatum berechnen
     tage_seit_start = (
-        dfGesamt["Only Date"] - start_datum
+            dfGesamt["Only Date"] - start_datum
     ).dt.days
 
-    # Zielwert berechnen
     dfGesamt["Weight (kg) 300kcal"] = (
-        start_wert_300kcal - tage_seit_start * reduktion_pro_tag_300kcal
+            start_wert_300kcal
+            - tage_seit_start * reduktion_pro_tag_300kcal
     ).round(2)
 
     # ===============================
