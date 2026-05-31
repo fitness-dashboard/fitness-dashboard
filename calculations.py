@@ -216,20 +216,20 @@ def berechne_werte(dfGesamt):
     # ===============================
 
     gewicht_vor_30_tagen = (
-        dfGesamt["Weight (kg)"]
+        dfGesamt["Weight (kg) 7 Tage"]
         .shift(30)
     )
 
     dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"] = (
             (
                     gewicht_vor_30_tagen
-                    - dfGesamt["Weight (kg)"]
+                    - dfGesamt["Weight (kg) 7 Tage"]
             )
             * 7000
     ).where(
         gewicht_vor_30_tagen.notna()
         &
-        dfGesamt["Weight (kg)"].notna()
+        dfGesamt["Weight (kg) 7 Tage"].notna()
     ).round(0)
 
 
