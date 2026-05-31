@@ -49,7 +49,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("C1").value = "Körperfettanteil kg 7 Tage"
 
     # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
-    start_datum_chart = pd.Timestamp("2025-06-14")
+    start_datum_chart = pd.Timestamp("2025-11-21")
     dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
 
     chart_data = pd.DataFrame({
