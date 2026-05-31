@@ -216,7 +216,7 @@ fig4.for_each_trace(
 
 
 # Y-Achse begrenzen
-fig4.update_yaxes(range=[1500, 3000])
+fig4.update_yaxes(range=[1300, 2500])
 
 # Achsen umbenennen bzw. ausblenden
 fig4.update_yaxes(
