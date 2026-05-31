@@ -287,5 +287,9 @@ def erstelle_diagramme(workbook, dfGesamt):
     excel_chart4.Axes(2).HasTitle = True
     excel_chart4.Axes(2).AxisTitle.Text = "kcal"
 
+    # Y-Achse Bereich festlegen
+    excel_chart4.Axes(2).MinimumScale = 1000
+    excel_chart4.Axes(2).MaximumScale = 2500
+
     # Legende unten
     excel_chart4.Legend.Position = -4107

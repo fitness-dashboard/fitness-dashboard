@@ -52,7 +52,7 @@ fig.for_each_trace(
 
 
 # Y-Achse begrenzen
-fig.update_yaxes(range=[70, 90])
+fig.update_yaxes(range=[70, 105])
 
 # Achsen umbenennen bzw. ausblenden
 fig.update_yaxes(
