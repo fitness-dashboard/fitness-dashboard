@@ -256,10 +256,10 @@ def berechne_werte(dfGesamt):
 
 
     # ===============================
-    # Grundumsatz pro Tag errechnet
+    # Grundumsatz pro Tag errechnet 30 Tage
     # ===============================
 
-    dfGesamt["Grundumsatz pro Tag errechnet"] = (
+    dfGesamt["Grundumsatz pro Tag errechnet 30 Tage"] = (
         (
             dfGesamt["Kalorien aus Essen Summe 30 Tage"]
             - dfGesamt["Kalorien aus Training Summe 30 Tage"]
