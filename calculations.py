@@ -211,6 +211,28 @@ def berechne_werte(dfGesamt):
     )
 
     # ===============================
+    # Summe Kalorien aus Training letzte 60 Tage
+    # ===============================
+
+    dfGesamt["Kalorien aus Training Summe 60 Tage"] = (
+        dfGesamt["Kalorien aus Training"]
+        .rolling(window=60, min_periods=60)
+        .sum()
+        .round(0)
+    )
+
+    # ===============================
+    # Summe Kalorien aus Essen letzte 60 Tage
+    # ===============================
+
+    dfGesamt["Kalorien aus Essen Summe 60 Tage"] = (
+        dfGesamt["Kalorien"]
+        .rolling(window=60, min_periods=60)
+        .sum()
+        .round(0)
+    )
+
+    # ===============================
     # Kalorien durch Gewichtsänderung
     # Vergleich heute vs vor 30 Tagen
     # ===============================
@@ -247,6 +269,33 @@ def berechne_werte(dfGesamt):
     ).where(
         dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"].notna()
     ).round(0)
+
+    # ===============================
+    # Kalorien durch Gewichtsänderung
+    # Vergleich heute vs vor 60 Tagen
+    # ===============================
+
+    gewicht_vor_60_tagen = (
+        dfGesamt["Weight (kg) 7 Tage"]
+        .shift(60)
+    )
+
+    dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"] = (
+            (
+                    gewicht_vor_60_tagen
+                    - dfGesamt["Weight (kg) 7 Tage"]
+            )
+            * 7000
+    ).where(
+        gewicht_vor_60_tagen.notna()
+        &
+        dfGesamt["Weight (kg) 7 Tage"].notna()
+    ).round(0)
+
+
+
+
+
 
     # ===============================
     # Grundumsatz nach Mifflin-St.-Jeor mit Faktor 1,12 (Den habe ich für mich rausgefunden)
