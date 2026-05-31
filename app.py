@@ -197,6 +197,7 @@ fig4 = px.line(
     y=[
         "BMR (kcal)",
         "Grundumsatz pro Tag errechnet 30 Tage",
+        "Grundumsatz pro Tag errechnet 60 Tage",
         "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"
     ],
     title="Grundumsätze"
