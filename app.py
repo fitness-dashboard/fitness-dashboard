@@ -83,10 +83,17 @@ fig.update_layout(
 # Diagramm 1 anzeigen
 st.plotly_chart(fig, use_container_width=True)
 
+#Neuen Zeitraum für Diagramm 2 festlegen, weil das Diagramm anders ist als die anderen
+
+start_datum_chart2 = pd.Timestamp("2025-11-21")
+
+dfChart2 = dfGesamt[
+    dfGesamt["Only Date"] >= start_datum_chart2
+]
 
 # Zweites Diagramm
 fig2 = px.line(
-    dfChart,
+    dfChart2,
     x="Only Date",
     y=[
         "Muscle Mass (kg) 7 Tage",
@@ -97,7 +104,7 @@ fig2 = px.line(
 
 
 # Y-Achse begrenzen
-fig2.update_yaxes(range=[15, 65])
+fig2.update_yaxes(range=[10, 75])
 
 # Achsen umbenennen bzw. ausblenden
 fig2.update_yaxes(
