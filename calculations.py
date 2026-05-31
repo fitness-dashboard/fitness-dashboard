@@ -292,6 +292,21 @@ def berechne_werte(dfGesamt):
         dfGesamt["Weight (kg) 7 Tage"].notna()
     ).round(0)
 
+    # ===============================
+    # Grundumsatz pro Tag errechnet 60 Tage
+    # ===============================
+
+    dfGesamt["Grundumsatz pro Tag errechnet 60 Tage"] = (
+            (
+                    dfGesamt["Kalorien aus Essen Summe 60 Tage"]
+                    - dfGesamt["Kalorien aus Training Summe 60 Tage"]
+                    + dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"]
+            )
+            / 60
+    ).where(
+        dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"].notna()
+    ).round(0)
+
 
 
 
