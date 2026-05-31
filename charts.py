@@ -233,7 +233,8 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("Q1").value = "Datum"
     wsChart.range("R1").value = "BMR (kcal) Tanita"
     wsChart.range("S1").value = "Grundumsatz pro Tag errechnet 30 Tage"
-    wsChart.range("T1").value = "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"
+    wsChart.range("T1").value = "Grundumsatz pro Tag errechnet 60 Tage"
+    wsChart.range("U1").value = "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"
 
     # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
     start_datum_chart = pd.Timestamp("2025-06-14")
@@ -243,6 +244,7 @@ def erstelle_diagramme(workbook, dfGesamt):
         "Datum": dfChart["Only Date"],
         "BMR (kcal) Tanita": dfChart["BMR (kcal)"],
         "Grundumsatz pro Tag errechnet 30 Tage": dfChart["Grundumsatz pro Tag errechnet 30 Tage"],
+        "Grundumsatz pro Tag errechnet 60 Tage": dfChart["Grundumsatz pro Tag errechnet 60 Tage"],
         "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12": dfChart["Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"]
     })
 
@@ -261,7 +263,7 @@ def erstelle_diagramme(workbook, dfGesamt):
 
     chart4.set_source_data(
         wsChart.range(
-            f"Q1:T{len(chart_data4) + 1}"
+            f"Q1:U{len(chart_data4) + 1}"
         )
     )
 
