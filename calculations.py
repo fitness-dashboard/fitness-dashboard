@@ -217,7 +217,7 @@ def berechne_werte(dfGesamt):
 
     gewicht_vor_30_tagen = (
         dfGesamt["Weight (kg) 7 Tage"]
-        .shift(30)
+        .shift(60)
     )
 
     dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"] = (
