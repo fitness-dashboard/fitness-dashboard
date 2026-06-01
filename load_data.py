@@ -228,6 +228,29 @@ def lade_daten():
     )
 
     # ===============================
+    # Muskelmasse Segmente bereinigen
+    # ===============================
+
+    segment_spalten = [
+        "Muscle mass - right arm",
+        "Muscle mass - left arm",
+        "Muscle mass - right leg",
+        "Muscle mass - left leg",
+        "Muscle mass - trunk"
+    ]
+
+    for spalte in segment_spalten:
+        dfTanitaNeu[spalte] = pd.to_numeric(
+            dfTanitaNeu[spalte],
+            errors="coerce"
+        )
+
+        dfTanitaNeu[spalte] = (
+            dfTanitaNeu[spalte]
+            .replace(0, pd.NA)
+        )
+
+    # ===============================
     # Körperfett in kg berechnen
     # ===============================
 
@@ -271,6 +294,18 @@ def lade_daten():
         dfTanitaNeu,
         on="Only Date",
         how="outer"
+    )
+    #Prüfung on Nullen da sind
+    print(
+        dfGesamt[
+            [
+                "Muscle mass - right arm",
+                "Muscle mass - left arm",
+                "Muscle mass - right leg",
+                "Muscle mass - left leg",
+                "Muscle mass - trunk"
+            ]
+        ].min()
     )
 
     return dfGesamt

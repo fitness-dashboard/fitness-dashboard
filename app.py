@@ -208,7 +208,8 @@ fig4.for_each_trace(
     lambda trace: trace.update(
         name={
             "BMR (kcal)": "BMR (kcal) Tanita",
-            "Grundumsatz pro Tag errechnet 30 Tage": "Grundumsatz pro Tag errechnet 30 Tage",
+            "Grundumsatz pro Tag errechnet 30 Tage": "Grundumsatz errechnet 30 Tage",
+            "Grundumsatz pro Tag errechnet 60 Tage": "Grundumsatz errechnet 60 Tage",
             "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12":
                 "Mifflin-St.-Jeor x 1,12"
         }.get(trace.name, trace.name)

@@ -295,3 +295,67 @@ def erstelle_diagramme(workbook, dfGesamt):
 
     # Legende unten
     excel_chart4.Legend.Position = -4107
+
+    # ===============================
+    # Daten für Diagramm 5 Muskelmasse Segmente
+    # ===============================
+
+    wsChart.range("V1").value = "Datum"
+    wsChart.range("W1").value = "Right Arm"
+    wsChart.range("X1").value = "Left Arm"
+    wsChart.range("Y1").value = "Right Leg"
+    wsChart.range("Z1").value = "Left Leg"
+    wsChart.range("AA1").value = "Trunk"
+
+    chart_data5 = pd.DataFrame({
+        "Datum": dfChart["Only Date"],
+        "Right Arm": dfChart["Muscle mass - right arm"],
+        "Left Arm": dfChart["Muscle mass - left arm"],
+        "Right Leg": dfChart["Muscle mass - right leg"],
+        "Left Leg": dfChart["Muscle mass - left leg"],
+        "Trunk": dfChart["Muscle mass - trunk"]
+    })
+
+    wsChart.range("V2").options(
+        index=False,
+        header=False
+    ).value = chart_data5
+
+    # ===============================
+    # Diagramm 5 Muskelmasse Segmente
+    # ===============================
+
+    chart5 = wsChart.charts.add()
+
+    chart5.chart_type = "line"
+
+    chart5.set_source_data(
+        wsChart.range(
+            f"V1:AA{len(chart_data5) + 1}"
+        )
+    )
+
+    # Position unter Diagramm 4
+    chart5.top = 1900
+    chart5.left = 50
+
+    chart5.width = 800
+    chart5.height = 400
+
+    # Excel COM Objekt
+    excel_chart5 = chart5.api[1]
+
+    # Titel
+    excel_chart5.HasTitle = True
+    excel_chart5.ChartTitle.Text = "Muskelmasse nach Körpersegment"
+
+    # X-Achse
+    excel_chart5.Axes(1).HasTitle = True
+    excel_chart5.Axes(1).AxisTitle.Text = "Datum"
+
+    # Y-Achse
+    excel_chart5.Axes(2).HasTitle = True
+    excel_chart5.Axes(2).AxisTitle.Text = "kg"
+
+    # Legende unten
+    excel_chart5.Legend.Position = -4107
