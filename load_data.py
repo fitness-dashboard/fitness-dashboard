@@ -180,37 +180,11 @@ def lade_daten():
         ignore_index=True
     )
 
-    print(
-        "Ungültige Datumswerte:",
-        dfTanitaNeu["Date"].isna().sum()
-    )
 
-    print(
-        "Erstes Tanita-Datum:",
-        dfTanitaNeu["Date"].min()
-    )
-
-    print(
-        "Letztes Tanita-Datum:",
-        dfTanitaNeu["Date"].max()
-    )
 
     dfTanitaNeu["Only Date"] = (
         dfTanitaNeu["Date"].dt.date
     )
-    print(
-        "Ungültige Datumswerte:",
-        dfTanitaNeu["Date"].isna().sum()
-    )
-
-
-    print("Erstes Tanita-Datum:", dfTanitaNeu["Date"].min())
-    print("Letztes Tanita-Datum:", dfTanitaNeu["Date"].max())
-    print("Anzahl Tanita-Zeilen:", len(dfTanitaNeu))
-
-    dfTanitaNeu["Only Date"] = dfTanitaNeu["Date"].dt.date
-
-    dfTanitaNeu["Only Date"] = dfTanitaNeu["Date"].dt.date
 
     dfTanitaNeu["Weight (kg)"] = pd.to_numeric(
         dfTanitaNeu["Weight (kg)"],
@@ -248,13 +222,6 @@ def lade_daten():
         dfTanitaNeu[spalte] = (
             dfTanitaNeu[spalte]
             .replace(0, pd.NA)
-        )
-
-    for spalte in segment_spalten:
-        print(
-            spalte,
-            "Anzahl Nullwerte:",
-            (dfTanitaNeu[spalte] == 0).sum()
         )
 
     # ===============================
@@ -302,17 +269,6 @@ def lade_daten():
         on="Only Date",
         how="outer"
     )
-    #Prüfung on Nullen da sind
-    print(
-        dfGesamt[
-            [
-                "Muscle mass - right arm",
-                "Muscle mass - left arm",
-                "Muscle mass - right leg",
-                "Muscle mass - left leg",
-                "Muscle mass - trunk"
-            ]
-        ].min()
-    )
+
 
     return dfGesamt
