@@ -1,12 +1,3 @@
-import xlwings as xw
-import pandas as pd
-import tkinter as tk
-from tkinter import filedialog
-from tkinter import messagebox
-from pathlib import Path
-import numpy as np
-import os
-import sys
 import subprocess
 
 from load_data import lade_daten
