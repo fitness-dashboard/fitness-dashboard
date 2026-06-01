@@ -250,6 +250,13 @@ def lade_daten():
             .replace(0, pd.NA)
         )
 
+    for spalte in segment_spalten:
+        print(
+            spalte,
+            "Anzahl Nullwerte:",
+            (dfTanitaNeu[spalte] == 0).sum()
+        )
+
     # ===============================
     # Körperfett in kg berechnen
     # ===============================
