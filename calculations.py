@@ -19,18 +19,20 @@ def berechne_werte(dfGesamt):
         as_index=False
     )[numeric_cols].sum()
 
-    #Suche nach Null Werten
-    print(
-        dfGesamt[
-            [
-                "Muscle mass - right arm",
-                "Muscle mass - left arm",
-                "Muscle mass - right leg",
-                "Muscle mass - left leg",
-                "Muscle mass - trunk"
-            ]
-        ].describe()
-    )
+    segment_spalten = [
+        "Muscle mass - right arm",
+        "Muscle mass - left arm",
+        "Muscle mass - right leg",
+        "Muscle mass - left leg",
+        "Muscle mass - trunk"
+    ]
+
+    for spalte in segment_spalten:
+        print(
+            spalte,
+            "Nullen nach groupby:",
+            (dfGesamt[spalte] == 0).sum()
+        )
 
     # ===============================
     # LÜCKENLOSE ZEITREIHE erzeugen
