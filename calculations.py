@@ -28,12 +28,10 @@ def berechne_werte(dfGesamt):
     ]
 
     for spalte in segment_spalten:
-        print(
-            spalte,
-            "Nullen nach groupby:",
-            (dfGesamt[spalte] == 0).sum()
+        dfGesamt[spalte] = (
+            dfGesamt[spalte]
+            .replace(0, np.nan)
         )
-
     # ===============================
     # LÜCKENLOSE ZEITREIHE erzeugen
     # ===============================
