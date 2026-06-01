@@ -370,7 +370,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     )
 
     # Position unter Diagramm 4
-    chart5.top = 1900
+    chart5.top = 1850
     chart5.left = 50
 
     chart5.width = 800
