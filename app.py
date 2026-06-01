@@ -20,10 +20,10 @@ dfGesamt["Only Date"] = pd.to_datetime(
 # Zeitraum filtern
 start_datum_chart = pd.Timestamp("2025-06-14")
 
+
 dfChart = dfGesamt[
     dfGesamt["Only Date"] >= start_datum_chart
-]
-
+].copy()
 
 # Erstes Diagramm
 fig = px.line(
@@ -89,7 +89,7 @@ start_datum_chart2 = pd.Timestamp("2025-11-21")
 
 dfChart2 = dfGesamt[
     dfGesamt["Only Date"] >= start_datum_chart2
-]
+].copy()
 
 # Zweites Diagramm
 fig2 = px.line(
