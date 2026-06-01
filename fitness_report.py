@@ -39,7 +39,10 @@ commit_result = subprocess.run(
     text=True
 )
 
-print(commit_result.stdout)
+if commit_result.returncode == 0:
+    print("Git Commit erstellt.")
+else:
+    print("Keine Änderungen für Commit vorhanden.")
 
 subprocess.run(
     ["git", "push"]
