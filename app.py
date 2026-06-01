@@ -250,3 +250,98 @@ fig4.update_layout(
 
 # Diagramm anzeigen
 st.plotly_chart(fig4, use_container_width=True)
+
+# ===============================
+# Diagramm 5 Muskelmasse Segmente
+# ===============================
+
+dfChart5 = dfChart.copy()
+
+# 30-Tage-Durchschnitt berechnen
+dfChart5["Right Arm 30 Tage"] = (
+    dfChart5["Muscle mass - right arm"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+dfChart5["Left Arm 30 Tage"] = (
+    dfChart5["Muscle mass - left arm"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+dfChart5["Right Leg 30 Tage"] = (
+    dfChart5["Muscle mass - right leg"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+dfChart5["Left Leg 30 Tage"] = (
+    dfChart5["Muscle mass - left leg"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+dfChart5["Trunk 30 Tage"] = (
+    dfChart5["Muscle mass - trunk"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+fig5 = px.line(
+    dfChart5,
+    x="Only Date",
+    y=[
+        "Right Arm 30 Tage",
+        "Left Arm 30 Tage",
+        "Right Leg 30 Tage",
+        "Left Leg 30 Tage",
+        "Trunk 30 Tage"
+    ],
+    title="Muskelmasse nach Körpersegment"
+)
+
+# Legende schöner benennen
+fig5.for_each_trace(
+    lambda trace: trace.update(
+        name={
+            "Right Arm 30 Tage": "Rechter Arm",
+            "Left Arm 30 Tage": "Linker Arm",
+            "Right Leg 30 Tage": "Rechtes Bein",
+            "Left Leg 30 Tage": "Linkes Bein",
+            "Trunk 30 Tage": "Rumpf"
+        }.get(trace.name, trace.name)
+    )
+)
+
+# Achsen
+fig5.update_yaxes(
+    title_text="kg"
+)
+
+fig5.update_xaxes(
+    title_text=""
+)
+
+# Für Handyansicht optimieren
+fig5.update_layout(
+    height=350,
+
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=-0.45,
+        xanchor="center",
+        x=0.5
+    ),
+
+    margin=dict(
+        b=5
+    )
+)
+
+# Diagramm anzeigen
+st.plotly_chart(
+    fig5,
+    use_container_width=True
+)
