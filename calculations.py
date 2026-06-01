@@ -19,6 +19,18 @@ def berechne_werte(dfGesamt):
         as_index=False
     )[numeric_cols].sum()
 
+    #Suche nach Null Werten
+    print(
+        dfGesamt[
+            [
+                "Muscle mass - right arm",
+                "Muscle mass - left arm",
+                "Muscle mass - right leg",
+                "Muscle mass - left leg",
+                "Muscle mass - trunk"
+            ]
+        ].describe()
+    )
 
     # ===============================
     # LÜCKENLOSE ZEITREIHE erzeugen
