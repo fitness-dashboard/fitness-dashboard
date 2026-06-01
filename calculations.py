@@ -19,6 +19,10 @@ def berechne_werte(dfGesamt):
         as_index=False
     )[numeric_cols].sum()
 
+    # ===============================
+    # Segment-Muskelmasse bereinigen
+    # ===============================
+
     segment_spalten = [
         "Muscle mass - right arm",
         "Muscle mass - left arm",
@@ -187,21 +191,10 @@ def berechne_werte(dfGesamt):
             - tage_seit_start * reduktion_pro_tag_300kcal
     ).round(2)
 
-    # ===============================
-    # Kalorien durch Gewichtsänderung
-    # ===============================
-
-    dfGesamt["Kalorien Gewichtsreduktion"] = (
-        (
-            dfGesamt["Weight (kg)"].shift(1)
-            - dfGesamt["Weight (kg)"]
-        )
-        * 7000
-    ).round(0)
 
 
     # ===============================
-    # Summe Kalorien aus Trainig letzte 30 Tage
+    # Summe Kalorien aus Training letzte 30 Tage
     # ===============================
 
     dfGesamt["Kalorien aus Training Summe 30 Tage"] = (
@@ -318,10 +311,6 @@ def berechne_werte(dfGesamt):
     ).where(
         dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"].notna()
     ).round(0)
-
-
-
-
 
 
     # ===============================

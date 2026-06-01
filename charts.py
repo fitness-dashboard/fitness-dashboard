@@ -13,10 +13,10 @@ def erstelle_diagramme(workbook, dfGesamt):
 
     wsChart = workbook.sheets.add("Diagramm")
 
-    # ==================================================
+    # ===============================
     # Nullwerte für Diagramme entfernen
-    # Diagramm 1
-    # ===================================================
+    # ===============================
+
     dfGesamt["Muscle Mass (kg) 7 Tage"] = (
         dfGesamt["Muscle Mass (kg) 7 Tage"]
         .replace(0, np.nan)
@@ -48,7 +48,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("B1").value = "Muscle Mass (kg) 7 Tage"
     wsChart.range("C1").value = "Körperfettanteil kg 7 Tage"
 
-    # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
+    # Daten für Diagramm filtern
     start_datum_chart = pd.Timestamp("2025-11-21")
     dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
 
@@ -100,7 +100,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("G1").value = "Body Fat (%) 7 Tage"
     wsChart.range("H1").value = "Fett % Soll"
 
-    # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
+    # Daten für Diagramm filtern
     start_datum_chart = pd.Timestamp("2025-06-14")
     dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
 
@@ -167,7 +167,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("M1").value = "Weight (kg) 500kcal"
     wsChart.range("N1").value = "Weight (kg) 300kcal"
 
-    # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
+    # Daten für Diagramm filtern
     start_datum_chart = pd.Timestamp("2025-06-14")
     dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
 
@@ -236,7 +236,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("T1").value = "Grundumsatz pro Tag errechnet 60 Tage"
     wsChart.range("U1").value = "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"
 
-    # Daten für Diagramme filtern da wir nur Eintraege nach dem 20.11.2025 haben wollen
+    # Daten für Diagramm filtern
     start_datum_chart = pd.Timestamp("2025-06-14")
     dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
 
@@ -307,13 +307,47 @@ def erstelle_diagramme(workbook, dfGesamt):
     wsChart.range("Z1").value = "Left Leg"
     wsChart.range("AA1").value = "Trunk"
 
+    # ===============================
+    # 30-Tage-Durchschnitt Muskelmasse Segmente
+    # ===============================
+
+    dfChart["Right Arm 30 Tage"] = (
+        dfChart["Muscle mass - right arm"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
+    dfChart["Left Arm 30 Tage"] = (
+        dfChart["Muscle mass - left arm"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
+    dfChart["Right Leg 30 Tage"] = (
+        dfChart["Muscle mass - right leg"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
+    dfChart["Left Leg 30 Tage"] = (
+        dfChart["Muscle mass - left leg"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
+    dfChart["Trunk 30 Tage"] = (
+        dfChart["Muscle mass - trunk"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
     chart_data5 = pd.DataFrame({
         "Datum": dfChart["Only Date"],
-        "Right Arm": dfChart["Muscle mass - right arm"],
-        "Left Arm": dfChart["Muscle mass - left arm"],
-        "Right Leg": dfChart["Muscle mass - right leg"],
-        "Left Leg": dfChart["Muscle mass - left leg"],
-        "Trunk": dfChart["Muscle mass - trunk"]
+        "Right Arm": dfChart["Right Arm 30 Tage"],
+        "Left Arm": dfChart["Left Arm 30 Tage"],
+        "Right Leg": dfChart["Right Leg 30 Tage"],
+        "Left Leg": dfChart["Left Leg 30 Tage"],
+        "Trunk": dfChart["Trunk 30 Tage"]
     })
 
     wsChart.range("V2").options(
