@@ -25,6 +25,7 @@ dfChart = dfGesamt[
     dfGesamt["Only Date"] >= start_datum_chart
 ].copy()
 
+#==================================================================================
 # Erstes Diagramm
 fig = px.line(
     dfChart,
@@ -91,6 +92,8 @@ dfChart2 = dfGesamt[
     dfGesamt["Only Date"] >= start_datum_chart2
 ].copy()
 
+
+#==================================================================================
 # Zweites Diagramm
 fig2 = px.line(
     dfChart2,
@@ -137,7 +140,7 @@ fig2.update_layout(
 # Diagramm 2 anzeigen
 st.plotly_chart(fig2, use_container_width=True)
 
-
+#==================================================================================
 # Drittes Diagramm
 fig3 = px.line(
     dfChart,
@@ -184,6 +187,7 @@ fig3.update_layout(
 # Diagramm 3 anzeigen
 st.plotly_chart(fig3, use_container_width=True)
 
+#==================================================================================
 # Viertes Diagramm
 # Null-Werte durch NaN ersetzen
 dfChart["BMR (kcal)"] = (
@@ -251,38 +255,38 @@ fig4.update_layout(
 # Diagramm anzeigen
 st.plotly_chart(fig4, use_container_width=True)
 
-# ===============================
+#==================================================================================
 # Diagramm 5 Muskelmasse Segmente
 # ===============================
 
 dfChart5 = dfChart.copy()
 
 # 30-Tage-Durchschnitt berechnen
-dfChart5["Right Arm 30 Tage"] = (
+dfChart5["MM Right Arm 30 Tage"] = (
     dfChart5["Muscle mass - right arm"]
     .rolling(window=30, min_periods=1)
     .mean()
 )
 
-dfChart5["Left Arm 30 Tage"] = (
+dfChart5["MM Left Arm 30 Tage"] = (
     dfChart5["Muscle mass - left arm"]
     .rolling(window=30, min_periods=1)
     .mean()
 )
 
-dfChart5["Right Leg 30 Tage"] = (
+dfChart5["MM Right Leg 30 Tage"] = (
     dfChart5["Muscle mass - right leg"]
     .rolling(window=30, min_periods=1)
     .mean()
 )
 
-dfChart5["Left Leg 30 Tage"] = (
+dfChart5["MM Left Leg 30 Tage"] = (
     dfChart5["Muscle mass - left leg"]
     .rolling(window=30, min_periods=1)
     .mean()
 )
 
-dfChart5["Trunk 30 Tage"] = (
+dfChart5["MM Trunk 30 Tage"] = (
     dfChart5["Muscle mass - trunk"]
     .rolling(window=30, min_periods=1)
     .mean()
@@ -292,11 +296,11 @@ fig5 = px.line(
     dfChart5,
     x="Only Date",
     y=[
-        "Right Arm 30 Tage",
-        "Left Arm 30 Tage",
-        "Right Leg 30 Tage",
-        "Left Leg 30 Tage",
-        "Trunk 30 Tage"
+        "MM Right Arm 30 Tage",
+        "MM Left Arm 30 Tage",
+        "MM Right Leg 30 Tage",
+        "MM Left Leg 30 Tage",
+        "MM Trunk 30 Tage"
     ],
     title="Muskelmasse nach Körpersegment"
 )
@@ -305,11 +309,11 @@ fig5 = px.line(
 fig5.for_each_trace(
     lambda trace: trace.update(
         name={
-            "Right Arm 30 Tage": "Rechter Arm",
-            "Left Arm 30 Tage": "Linker Arm",
-            "Right Leg 30 Tage": "Rechtes Bein",
-            "Left Leg 30 Tage": "Linkes Bein",
-            "Trunk 30 Tage": "Rumpf"
+            "MM Right Arm 30 Tage": "MM Rechter Arm",
+            "MM Left Arm 30 Tage": "MM Linker Arm",
+            "MM Right Leg 30 Tage": "MM Rechtes Bein",
+            "MM Left Leg 30 Tage": "MM Linkes Bein",
+            "MM Trunk 30 Tage": "MM Rumpf"
         }.get(trace.name, trace.name)
     )
 )
