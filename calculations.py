@@ -37,6 +37,25 @@ def berechne_werte(dfGesamt):
             .replace(0, np.nan)
         )
     # ===============================
+    # Segment-Fettmasse bereinigen
+    # ===============================
+    segment_fett_spalten = [
+        "Body fat (%) - right arm",
+        "Body fat (%) - left arm",
+        "Body fat (%) - right leg",
+        "Body fat (%) - left leg",
+        "Body fat (%) - trunk"
+    ]
+
+    for spalte in segment_fett_spalten:
+        if spalte in dfGesamt.columns:
+            dfGesamt[spalte] = (
+                dfGesamt[spalte]
+                .replace(0, np.nan)
+            )
+
+
+    # ===============================
     # LÜCKENLOSE ZEITREIHE erzeugen
     # ===============================
     alle_tage = pd.date_range(
