@@ -397,7 +397,7 @@ fig6 = px.line(
         "FM Left Leg 30 Tage",
         "FM Trunk 30 Tage"
     ],
-    title="Muskelmasse nach Körpersegment"
+    title="Fettmasse nach Körpersegment"
 )
 
 # Legende schöner benennen
@@ -406,16 +406,16 @@ fig6.for_each_trace(
         name={
             "FM Right Arm 30 Tage": "FM Rechter Arm",
             "FM Left Arm 30 Tage": "FM Linker Arm",
-            "FM Right Leg 30 Tage": "Fm Rechtes Bein",
-            "FM Left Leg 30 Tage": "Fm Linkes Bein",
-            "FM Trunk 30 Tage": "Fm Rumpf"
+            "FM Right Leg 30 Tage": "FM Rechtes Bein",
+            "FM Left Leg 30 Tage": "FM Linkes Bein",
+            "FM Trunk 30 Tage": "FM Rumpf"
         }.get(trace.name, trace.name)
     )
 )
 
 # Achsen
 fig6.update_yaxes(
-    title_text="kg"
+    title_text="%"
 )
 
 fig6.update_xaxes(
