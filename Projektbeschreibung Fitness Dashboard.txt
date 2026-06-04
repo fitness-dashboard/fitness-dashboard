@@ -1,0 +1,244 @@
+PROJEKTBESCHREIBUNG FITNESS DASHBOARD
+
+# Ziel
+
+Ziel des Projekts ist die tägliche Auswertung von:
+
+* Körpergewicht
+* Körperfett
+* Muskelmasse
+* Kalorienaufnahme
+* Trainingskalorien
+* Grundumsatz
+
+Die Ergebnisse werden automatisch:
+
+1. in Excel ausgewertet
+2. als Diagramme dargestellt
+3. nach GitHub hochgeladen
+4. auf Streamlit veröffentlicht
+
+# Technik
+
+Programmiersprache:
+
+* Python
+
+Bibliotheken:
+
+* pandas
+* numpy
+* xlwings
+* plotly
+* streamlit
+
+Veröffentlichung:
+
+* GitHub
+* Streamlit Cloud
+
+# Projektstruktur
+
+## fitness_report.py
+
+Hauptprogramm.
+
+Aufgaben:
+
+* Daten laden
+* Berechnungen durchführen
+* CSV für Dashboard exportieren
+* Excel aktualisieren
+* Diagramme erzeugen
+* GitHub automatisch aktualisieren
+
+## load_data.py
+
+Import aller Rohdaten.
+
+Datenquellen:
+
+* MyFitnessPal Messwerte
+* MyFitnessPal Nährwerte
+* MyFitnessPal Trainingsdaten
+* Tanita Waage
+
+Besonderheiten:
+
+* Tanita Altdaten werden aus
+  D:\Documents\Gesundheit Kai\Diät\Altdaten Tanita Neu fertig.csv
+  geladen.
+* Aktuelle Tanita-Daten werden automatisch aus Downloads geladen.
+* Beide Dateien werden zusammengeführt.
+* Zeitraum beginnt am 14.06.2025.
+
+## calculations.py
+
+Alle Kennzahlen und Berechnungen.
+
+Berechnet:
+
+* Gewichtsdurchschnitt 7 Tage
+* Körperfettanteil 7 Tage
+* Muskelmasse 7 Tage
+* Kalorien aus Essen Summe 30 Tage
+* Kalorien aus Essen Summe 60 Tage
+* Kalorien aus Training Summe 30 Tage
+* Kalorien aus Training Summe 60 Tage
+* Grundumsatz errechnet 30 Tage
+* Grundumsatz errechnet 60 Tage
+* Grundumsatz Mifflin-St.-Jeor
+
+## excel_export.py
+
+Exportiert den kompletten DataFrame nach Excel.
+
+## charts.py
+
+Erzeugt alle Excel-Diagramme.
+
+## app.py
+
+Streamlit Dashboard.
+
+Liest:
+fitness_dashboard_data.csv
+
+und erzeugt die Online-Diagramme.
+
+# Datenquellen
+
+## MyFitnessPal
+
+Dateien werden automatisch aus dem Download-Ordner geladen:
+
+* Messwerte-Übersicht
+* Nährwerte-Übersicht
+* Trainingsübersicht
+
+## Tanita Waage
+
+Datei wird automatisch aus Downloads geladen:
+
+csv_report_*.csv
+
+Zusätzlich werden historische Daten aus:
+
+D:\Documents\Gesundheit Kai\Diät\Altdaten Tanita Neu fertig.csv
+
+eingelesen.
+
+# Wichtige Berechnungen
+
+## Gewichtsprognose
+
+Es werden zwei Zielkurven berechnet:
+
+* 300 kcal Defizit pro Tag
+* 500 kcal Defizit pro Tag
+
+Startpunkt:
+14.06.2025
+
+Die Kurven starten beim tatsächlichen Gewicht am 14.06.2025.
+
+## Grundumsatz
+
+Variante 1:
+BMR (kcal) Tanita
+
+Variante 2:
+Grundumsatz errechnet 30 Tage
+
+Variante 3:
+Grundumsatz errechnet 60 Tage
+
+Variante 4:
+Mifflin-St.-Jeor x 1,12
+
+## Muskelmasse Segmente
+
+Auswertung:
+
+* Rechter Arm
+* Linker Arm
+* Rechtes Bein
+* Linkes Bein
+* Rumpf
+
+Darstellung:
+30-Tage-Durchschnitt
+
+# Excel-Diagramme
+
+Diagramm 1
+Gewichtsentwicklung
+
+* Gewicht
+* Gewicht 300 kcal Defizit
+* Gewicht 500 kcal Defizit
+
+Diagramm 2
+Körperfett % vs Ziel
+
+* Body Fat (%) 7 Tage
+* Fett % Soll
+
+Diagramm 3
+Muskelmasse und Körperfettanteil
+
+* Muscle Mass (kg) 7 Tage
+* Körperfettanteil kg 7 Tage
+
+Diagramm 4
+Grundumsätze
+
+* BMR Tanita
+* Grundumsatz errechnet 30 Tage
+* Grundumsatz errechnet 60 Tage
+* Mifflin-St.-Jeor x 1,12
+
+Diagramm 5
+Muskelmasse nach Körpersegment
+
+* Rechter Arm
+* Linker Arm
+* Rechtes Bein
+* Linkes Bein
+* Rumpf
+
+30-Tage-Durchschnitt
+
+# Automatisierung
+
+Nach jedem Lauf:
+
+1. CSV-Datei wird aktualisiert
+2. Git Add
+3. Git Commit
+4. Git Push
+
+Dadurch aktualisiert sich die Streamlit-Webseite automatisch.
+
+# GitHub
+
+Repository:
+fitness-dashboard
+
+# Streamlit
+
+URL:
+
+https://fitness-dashboard-8gzsgon9ehsqssnygrv5tp.streamlit.app/
+
+# Stand
+
+Projekt aktiv in Entwicklung.
+
+Letzte größere Erweiterungen:
+
+* Tanita-Altdaten integriert
+* Grundumsatz 60 Tage ergänzt
+* Muskelmasse Segmente ergänzt
+* Streamlit Dashboard erweitert
+* Automatischer GitHub Upload eingerichtet

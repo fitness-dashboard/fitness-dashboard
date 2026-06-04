@@ -40,7 +40,7 @@ def erstelle_diagramme(workbook, dfGesamt):
         .replace(0, np.nan)
     )
 
-    # ===============================
+    # ===============================================================================
     # Daten für Diagramm 1 Muskel KG vs Fett KG schreiben
     # ===============================
 
@@ -92,7 +92,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     excel_chart.Axes(2).HasTitle = True
     excel_chart.Axes(2).AxisTitle.Text = "kg"
 
-    # ===============================
+    # ===============================================================================
     # Daten für Diagramm 2 Soll Fett vs Ist Fett schreiben
     # ===============================
 
@@ -158,7 +158,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     # Legende unten
     excel_chart2.Legend.Position = -4107
 
-    # ===============================
+    # ===============================================================================
     # Daten für Diagramm 3 Gewicht vs 500kcal vs 300kcal schreiben
     # ===============================
 
@@ -226,7 +226,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     # Legende unten
     excel_chart3.Legend.Position = -4107
 
-    # ===============================
+    # ===============================================================================
     # Daten für Diagramm 4 Grundumsätze schreiben
     # ===============================
 
@@ -267,7 +267,7 @@ def erstelle_diagramme(workbook, dfGesamt):
         )
     )
 
-    # Position unter Diagramm 2
+    # Position unter Diagramm 3
     chart4.top = 1400
     chart4.left = 50
 
@@ -296,46 +296,46 @@ def erstelle_diagramme(workbook, dfGesamt):
     # Legende unten
     excel_chart4.Legend.Position = -4107
 
-    # ===============================
+    # =======================================================================================
     # Daten für Diagramm 5 Muskelmasse Segmente
     # ===============================
 
-    wsChart.range("V1").value = "Datum"
-    wsChart.range("W1").value = "Right Arm"
-    wsChart.range("X1").value = "Left Arm"
-    wsChart.range("Y1").value = "Right Leg"
-    wsChart.range("Z1").value = "Left Leg"
-    wsChart.range("AA1").value = "Trunk"
+    wsChart.range("Y1").value = "Datum"
+    wsChart.range("Z1").value = "MM Right Arm"
+    wsChart.range("AA1").value = "MM Left Arm"
+    wsChart.range("AB1").value = "MM Right Leg"
+    wsChart.range("AC1").value = "MM Left Leg"
+    wsChart.range("AD1").value = "MM Trunk"
 
     # ===============================
     # 30-Tage-Durchschnitt Muskelmasse Segmente
     # ===============================
 
-    dfChart["Right Arm 30 Tage"] = (
+    dfChart["MM Right Arm 30 Tage"] = (
         dfChart["Muscle mass - right arm"]
         .rolling(window=30, min_periods=1)
         .mean()
     )
 
-    dfChart["Left Arm 30 Tage"] = (
+    dfChart["MM Left Arm 30 Tage"] = (
         dfChart["Muscle mass - left arm"]
         .rolling(window=30, min_periods=1)
         .mean()
     )
 
-    dfChart["Right Leg 30 Tage"] = (
+    dfChart["MM Right Leg 30 Tage"] = (
         dfChart["Muscle mass - right leg"]
         .rolling(window=30, min_periods=1)
         .mean()
     )
 
-    dfChart["Left Leg 30 Tage"] = (
+    dfChart["MM Left Leg 30 Tage"] = (
         dfChart["Muscle mass - left leg"]
         .rolling(window=30, min_periods=1)
         .mean()
     )
 
-    dfChart["Trunk 30 Tage"] = (
+    dfChart["MM Trunk 30 Tage"] = (
         dfChart["Muscle mass - trunk"]
         .rolling(window=30, min_periods=1)
         .mean()
@@ -343,14 +343,14 @@ def erstelle_diagramme(workbook, dfGesamt):
 
     chart_data5 = pd.DataFrame({
         "Datum": dfChart["Only Date"],
-        "Right Arm": dfChart["Right Arm 30 Tage"],
-        "Left Arm": dfChart["Left Arm 30 Tage"],
-        "Right Leg": dfChart["Right Leg 30 Tage"],
-        "Left Leg": dfChart["Left Leg 30 Tage"],
-        "Trunk": dfChart["Trunk 30 Tage"]
+        "MM Right Arm": dfChart["MM Right Arm 30 Tage"],
+        "MM Left Arm": dfChart["MM Left Arm 30 Tage"],
+        "MM Right Leg": dfChart["MM Right Leg 30 Tage"],
+        "MM Left Leg": dfChart["MM Left Leg 30 Tage"],
+        "MM Trunk": dfChart["MM Trunk 30 Tage"]
     })
 
-    wsChart.range("V2").options(
+    wsChart.range("Y2").options(
         index=False,
         header=False
     ).value = chart_data5
@@ -365,7 +365,7 @@ def erstelle_diagramme(workbook, dfGesamt):
 
     chart5.set_source_data(
         wsChart.range(
-            f"V1:AA{len(chart_data5) + 1}"
+            f"Y1:AD{len(chart_data5) + 1}"
         )
     )
 
@@ -393,3 +393,102 @@ def erstelle_diagramme(workbook, dfGesamt):
 
     # Legende unten
     excel_chart5.Legend.Position = -4107
+
+    # =======================================================================================
+    # Daten für Diagramm 6 Fettmasse Segmente
+    # ===============================
+
+    wsChart.range("AG1").value = "Datum"
+    wsChart.range("AH1").value = "FM Right Arm"
+    wsChart.range("AI1").value = "FM Left Arm"
+    wsChart.range("AJ1").value = "FM Right Leg"
+    wsChart.range("AK1").value = "FM Left Leg"
+    wsChart.range("AL1").value = "FM Trunk"
+
+    # ===============================
+    # 30-Tage-Durchschnitt Fettmasse Segmente
+    # ===============================
+
+
+    dfChart["FM Right Arm 30 Tage"] = (
+        dfChart["Body fat (%) - right arm"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
+    dfChart["FM Left Arm 30 Tage"] = (
+        dfChart["Body fat (%) - left arm"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
+    dfChart["FM Right Leg 30 Tage"] = (
+        dfChart["Body fat (%) - right leg"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
+    dfChart["FM Left Leg 30 Tage"] = (
+        dfChart["Body fat (%) - left leg"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
+    dfChart["FM Trunk 30 Tage"] = (
+        dfChart["Body fat (%) - trunk"]
+        .rolling(window=30, min_periods=1)
+        .mean()
+    )
+
+    chart_data6 = pd.DataFrame({
+        "Datum": dfChart["Only Date"],
+        "FM Right Arm": dfChart["FM Right Arm 30 Tage"],
+        "FM Left Arm": dfChart["FM Left Arm 30 Tage"],
+        "FM Right Leg": dfChart["FM Right Leg 30 Tage"],
+        "FM Left Leg": dfChart["FM Left Leg 30 Tage"],
+        "FM Trunk": dfChart["FM Trunk 30 Tage"]
+    })
+
+    wsChart.range("AG2").options(
+        index=False,
+        header=False
+    ).value = chart_data6
+
+    # ===============================
+    # Diagramm 6 Fettmasse Segmente
+    # ===============================
+
+    chart6 = wsChart.charts.add()
+
+    chart6.chart_type = "line"
+
+    chart6.set_source_data(
+        wsChart.range(
+            f"AG1:AL{len(chart_data6) + 1}"
+        )
+    )
+
+    # Position unter Diagramm 5
+    chart6.top = 2300
+    chart6.left = 50
+
+    chart6.width = 800
+    chart6.height = 400
+
+    # Excel COM Objekt
+    excel_chart6 = chart6.api[1]
+
+    # Titel
+    excel_chart6.HasTitle = True
+    excel_chart6.ChartTitle.Text = "Fettmasse nach Körpersegment"
+
+    # X-Achse
+    excel_chart6.Axes(1).HasTitle = True
+    excel_chart6.Axes(1).AxisTitle.Text = "Datum"
+
+    # Y-Achse
+    excel_chart6.Axes(2).HasTitle = True
+    excel_chart6.Axes(2).AxisTitle.Text = "kg"
+
+    # Legende unten
+    excel_chart6.Legend.Position = -4107
