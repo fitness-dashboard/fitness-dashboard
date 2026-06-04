@@ -48,4 +48,6 @@ subprocess.run(
     ["git", "push"]
 )
 
+
+
 print("GitHub wurde aktualisiert.")

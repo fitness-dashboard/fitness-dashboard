@@ -349,3 +349,98 @@ st.plotly_chart(
     fig5,
     use_container_width=True
 )
+
+#==================================================================================
+# Diagramm 6 Muskelmasse Segmente
+# ===============================
+
+dfChart6 = dfChart.copy()
+
+# 30-Tage-Durchschnitt berechnen
+dfChart6["FM Right Arm 30 Tage"] = (
+    dfChart6["Body fat (%) - right arm"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+dfChart6["FM Left Arm 30 Tage"] = (
+    dfChart6["Body fat (%) - left arm"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+dfChart6["FM Right Leg 30 Tage"] = (
+    dfChart6["Body fat (%) - right leg"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+dfChart6["FM Left Leg 30 Tage"] = (
+    dfChart6["Body fat (%) - left leg"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+dfChart6["FM Trunk 30 Tage"] = (
+    dfChart6["Body fat (%) - trunk"]
+    .rolling(window=30, min_periods=1)
+    .mean()
+)
+
+fig6 = px.line(
+    dfChart6,
+    x="Only Date",
+    y=[
+        "FM Right Arm 30 Tage",
+        "FM Left Arm 30 Tage",
+        "FM Right Leg 30 Tage",
+        "FM Left Leg 30 Tage",
+        "FM Trunk 30 Tage"
+    ],
+    title="Muskelmasse nach Körpersegment"
+)
+
+# Legende schöner benennen
+fig6.for_each_trace(
+    lambda trace: trace.update(
+        name={
+            "FM Right Arm 30 Tage": "FM Rechter Arm",
+            "FM Left Arm 30 Tage": "FM Linker Arm",
+            "FM Right Leg 30 Tage": "Fm Rechtes Bein",
+            "FM Left Leg 30 Tage": "Fm Linkes Bein",
+            "FM Trunk 30 Tage": "Fm Rumpf"
+        }.get(trace.name, trace.name)
+    )
+)
+
+# Achsen
+fig6.update_yaxes(
+    title_text="kg"
+)
+
+fig6.update_xaxes(
+    title_text=""
+)
+
+# Für Handyansicht optimieren
+fig6.update_layout(
+    height=350,
+
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=-0.45,
+        xanchor="center",
+        x=0.5
+    ),
+
+    margin=dict(
+        b=5
+    )
+)
+
+# Diagramm anzeigen
+st.plotly_chart(
+    fig6,
+    use_container_width=True
+)
