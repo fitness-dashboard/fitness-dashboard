@@ -204,7 +204,7 @@ def create_rm_excel_chart(
 
     chart = wsGymRunCharts.charts.add()
 
-    chart.chart_type = "xy_scatter"
+    chart.chart_type = "line"
 
     # chart.set_source_data(
     #     wsGymRun.range(
