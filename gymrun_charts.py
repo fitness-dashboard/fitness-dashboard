@@ -10,6 +10,8 @@ def create_rm_chart_data(
     dfGymMaxRM,
     exercise_name
 ):
+    #Hilfe
+    print("RM:", exercise_name)
 
     dfChart = get_exercise_rm(
         dfGymMaxRM,
@@ -37,6 +39,7 @@ def create_volume_chart_data(
     dfGymVolume,
     exercise_name
 ):
+    print("VOL:", exercise_name)
 
     dfChart = get_exercise_volume(
         dfGymVolume,
@@ -67,6 +70,8 @@ def create_all_rm_chart_data(
 ):
 
     all_charts = {}
+
+
 
     for exercise_name in GYM_EXERCISES:
 

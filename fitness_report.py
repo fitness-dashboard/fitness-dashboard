@@ -91,6 +91,8 @@ erstelle_diagramme(workbook, dfGesamt)
 #     len(GYM_EXERCISES)
 # )
 
+#Hilfe
+print("Start Schleife")
 
 #Schleife durch die Übungen
 for exercise_name in GYM_EXERCISES:
