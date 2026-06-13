@@ -52,7 +52,22 @@ print(
 
 dfGymVolume = build_gym_volume(dfGymRun)
 
+volume_info = create_volume_chart_data(
+    dfGymVolume,
+    "Flachbankdrücken Langhantel"
+)
+#Hilfe
+print(
+    volume_info["data"].head()
+)
 
+print(
+    volume_info["vol_min"]
+)
+
+print(
+    volume_info["vol_max"]
+)
 
 print()
 print("Zeitraum:")

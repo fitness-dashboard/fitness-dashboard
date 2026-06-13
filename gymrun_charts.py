@@ -230,3 +230,24 @@ def create_rm_excel_chart(
     # rm_max = chart_info["rm_max"]
 
     return chart_info
+
+def create_volume_chart_data(
+    dfGymVolume,
+    exercise_name
+):
+    dfChart = dfGymVolume[
+        ["Date", exercise_name]
+    ].copy()
+
+    dfChart = dfChart.dropna()
+
+    return {
+        "data": dfChart,
+        "vol_min": GYM_EXERCISES[
+            exercise_name
+        ]["vol_min"],
+        "vol_max": GYM_EXERCISES[
+            exercise_name
+        ]["vol_max"],
+        "exercise_name": exercise_name
+    }
