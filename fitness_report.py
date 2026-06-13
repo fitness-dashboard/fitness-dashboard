@@ -57,18 +57,6 @@ volume_info = create_volume_chart_data(
     dfGymVolume,
     "Flachbankdrücken Langhantel"
 )
-#Hilfe
-print(
-    volume_info["data"].head()
-)
-
-print(
-    volume_info["vol_min"]
-)
-
-print(
-    volume_info["vol_max"]
-)
 
 print()
 print("Zeitraum:")
@@ -105,18 +93,11 @@ chart_info = create_rm_excel_chart(
     "Flachbankdrücken Langhantel"
 )
 
-print(
-    chart_info["exercise_name"]
-)
 
 volume_info = create_volume_excel_chart(
     workbook,
     dfGymVolume,
     "Flachbankdrücken Langhantel"
-)
-
-print(
-    volume_info["exercise_name"]
 )
 
 # ===============================
