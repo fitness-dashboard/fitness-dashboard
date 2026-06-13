@@ -265,6 +265,10 @@ def create_volume_excel_chart(
         index=False
     ).value = dfChart
 
+    last_row = len(dfChart) + 3
+
+    print(last_row)
+
     return volume_info
 def create_volume_chart_data(
     dfGymVolume,
