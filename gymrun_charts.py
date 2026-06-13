@@ -109,6 +109,10 @@ def create_rm_excel_chart(
 
     dfChart = chart_info["data"]
 
+    print(dfChart.head())
+
+    print(dfChart.columns)
+
     # Blatt holen oder anlegen
     try:
         wsGymRun = workbook.sheets[
