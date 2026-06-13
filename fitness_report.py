@@ -86,6 +86,11 @@ dfGesamt.to_csv(
 workbook = exportiere_excel(dfGesamt)
 erstelle_diagramme(workbook, dfGesamt)
 
+print(
+    len(GYM_EXERCISES)
+)
+
+
 #Hilfe
 chart_info = create_rm_excel_chart(
     workbook,
