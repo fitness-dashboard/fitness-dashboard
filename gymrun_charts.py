@@ -144,7 +144,7 @@ def create_rm_excel_chart(
 
     # Daten
 
-    wsGymRun.range("B3").options(
+    wsGymRun.range("A3").options(
         index=False
     ).value = dfChart
 
