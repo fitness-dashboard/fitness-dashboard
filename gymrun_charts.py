@@ -241,12 +241,11 @@ def create_volume_excel_chart(
         exercise_name
     )
 
-    print(
-        volume_info["exercise_name"]
-    )
+    dfChart = volume_info["data"]
+
+    print(dfChart.shape)
 
     return volume_info
-
 def create_volume_chart_data(
     dfGymVolume,
     exercise_name
