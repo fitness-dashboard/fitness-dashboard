@@ -124,6 +124,8 @@ def create_rm_excel_chart(
             "GymRun Data"
         )
 
+    wsGymRun.clear()
+
     try:
         wsGymRunCharts = workbook.sheets[
             "GymRun Charts"
@@ -132,6 +134,11 @@ def create_rm_excel_chart(
         wsGymRunCharts = workbook.sheets.add(
             "GymRun Charts"
         )
+
+    # Vorhandene Diagramme löschen
+
+    for chart in wsGymRunCharts.charts:
+        chart.delete()
 
     # Titel
 
