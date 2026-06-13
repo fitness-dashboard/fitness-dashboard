@@ -12,7 +12,8 @@ from gymrun_charts import (
     create_volume_chart_data,
     create_all_rm_chart_data,
     create_all_volume_chart_data,
-    create_rm_excel_chart
+    create_rm_excel_chart,
+    create_volume_excel_chart
 )
 
 print("Programm gestartet")

@@ -231,6 +231,22 @@ def create_rm_excel_chart(
 
     return chart_info
 
+def create_volume_excel_chart(
+    workbook,
+    dfGymVolume,
+    exercise_name
+):
+    volume_info = create_volume_chart_data(
+        dfGymVolume,
+        exercise_name
+    )
+
+    print(
+        volume_info["exercise_name"]
+    )
+
+    return volume_info
+
 def create_volume_chart_data(
     dfGymVolume,
     exercise_name
