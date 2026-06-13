@@ -95,20 +95,24 @@ erstelle_diagramme(workbook, dfGesamt)
 print("Start Schleife")
 
 #Schleife durch die Übungen
-for exercise_name in GYM_EXERCISES:
+for index, exercise_name in enumerate(
+    GYM_EXERCISES
+):
 
     print(exercise_name)
 
     create_rm_excel_chart(
         workbook,
         dfGymMaxRM,
-        exercise_name
+        exercise_name,
+        index
     )
 
     create_volume_excel_chart(
         workbook,
         dfGymVolume,
-        exercise_name
+        exercise_name,
+        index
     )
 
 # ===============================

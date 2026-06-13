@@ -104,7 +104,8 @@ def create_all_volume_chart_data(
 def create_rm_excel_chart(
     workbook,
     dfGymMaxRM,
-    exercise_name
+    exercise_name,
+    index
 ):
 
     chart_info = create_rm_chart_data(
@@ -180,7 +181,7 @@ def create_rm_excel_chart(
     #     )
     # )
 
-    chart.top = 50
+    chart.top = 50 + index * 450
     chart.left = 50
 
     chart.width = 800
@@ -235,7 +236,8 @@ def create_rm_excel_chart(
 def create_volume_excel_chart(
     workbook,
     dfGymVolume,
-    exercise_name
+    exercise_name,
+    index
 ):
     print("VOL:", exercise_name)
 
@@ -243,8 +245,6 @@ def create_volume_excel_chart(
         dfGymVolume,
         exercise_name
     )
-
-    dfChart = volume_info["data"]
 
     dfChart = volume_info["data"]
 
@@ -287,7 +287,7 @@ def create_volume_excel_chart(
 
     chart.chart_type = "xy_scatter_lines"
 
-    chart.top = 50
+    chart.top = 50 + index * 450
     chart.left = 900
 
     chart.width = 800
