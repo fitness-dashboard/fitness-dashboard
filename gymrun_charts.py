@@ -149,8 +149,23 @@ def create_rm_excel_chart(
     #     chart.delete()
 
     start_col = 2 + index * 4
-    date_col = start_col
-    value_col = start_col + 1
+
+    column_pairs = [
+        ("B", "C"),
+        ("F", "G"),
+        ("J", "K"),
+        ("N", "O"),
+        ("R", "S"),
+        ("V", "W"),
+        ("Z", "AA"),
+        ("AD", "AE"),
+        ("AH", "AI"),
+        ("AL", "AM")
+    ]
+
+    date_col, value_col = (
+        column_pairs[index]
+    )
 
     # Titel
 
@@ -208,17 +223,15 @@ def create_rm_excel_chart(
     excel_chart.SeriesCollection().NewSeries()
 
     excel_chart.SeriesCollection(1).Values = (
-        wsGymRun.range(
-            (4, value_col),
-            (last_row, value_col)
-        ).api
+        f"='GymRun Data'!"
+        f"${value_col}$4:"
+        f"${value_col}${last_row}"
     )
 
     excel_chart.SeriesCollection(1).XValues = (
-        wsGymRun.range(
-            (4, date_col),
-            (last_row, date_col)
-        ).api
+        f"='GymRun Data'!"
+        f"${date_col}$4:"
+        f"${date_col}${last_row}"
     )
 
     excel_chart.SeriesCollection(1).Name = (
