@@ -243,6 +243,7 @@ def create_volume_excel_chart(
 
     dfChart = volume_info["data"]
 
+    dfChart = volume_info["data"]
     print(dfChart.shape)
 
     return volume_info
