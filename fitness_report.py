@@ -93,6 +93,7 @@ print(
     chart_info["exercise_name"]
 )
 
+
 # ===============================
 # GitHub automatisch aktualisieren
 # ===============================
