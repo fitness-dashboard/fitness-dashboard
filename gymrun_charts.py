@@ -119,6 +119,15 @@ def create_rm_excel_chart(
             "GymRun Data"
         )
 
+    try:
+        wsGymRunCharts = workbook.sheets[
+            "GymRun Charts"
+        ]
+    except:
+        wsGymRunCharts = workbook.sheets.add(
+            "GymRun Charts"
+        )
+
     # Titel
 
     wsGymRun.range("A1").value = (
