@@ -224,6 +224,8 @@ def create_rm_excel_chart(
     excel_chart.Axes(2).AxisTitle.Text = (
         "kg"
     )
+
+
     excel_chart.Axes(2).MinimumScale = rm_min
     excel_chart.Axes(2).MaximumScale = rm_max
     # rm_min = chart_info["rm_min"]
@@ -320,6 +322,14 @@ def create_volume_excel_chart(
     excel_chart.Axes(2).HasTitle = True
     excel_chart.Axes(2).AxisTitle.Text = (
         "Volumen"
+    )
+
+    excel_chart.Axes(2).MinimumScale = (
+        volume_info["vol_min"]
+    )
+
+    excel_chart.Axes(2).MaximumScale = (
+        volume_info["vol_max"]
     )
 
     print(last_row)
