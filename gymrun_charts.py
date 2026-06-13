@@ -107,16 +107,10 @@ def create_rm_excel_chart(
         exercise_name
     )
 
-#Hilfe
-    print(chart_info.keys())
+
 
     rm_min = chart_info["rm_min"]
     rm_max = chart_info["rm_max"]
-
-#Hilfe
-    print(rm_min)
-    print(rm_max)
-
 
     dfChart = chart_info["data"]
 
@@ -246,7 +240,7 @@ def create_volume_excel_chart(
     dfChart = volume_info["data"]
 
     dfChart = volume_info["data"]
-    print(dfChart.shape)
+
 
     # Blatt holen oder anlegen
 
@@ -332,7 +326,6 @@ def create_volume_excel_chart(
         volume_info["vol_max"]
     )
 
-    print(last_row)
 
     return volume_info
 def create_volume_chart_data(
