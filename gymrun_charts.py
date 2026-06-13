@@ -224,8 +224,9 @@ def create_rm_excel_chart(
     excel_chart.Axes(2).AxisTitle.Text = (
         "kg"
     )
-
-    rm_min = chart_info["rm_min"]
-    rm_max = chart_info["rm_max"]
+    excel_chart.Axes(2).MinimumScale = rm_min
+    excel_chart.Axes(2).MaximumScale = rm_max
+    # rm_min = chart_info["rm_min"]
+    # rm_max = chart_info["rm_max"]
 
     return chart_info
