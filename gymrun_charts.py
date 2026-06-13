@@ -149,6 +149,8 @@ def create_rm_excel_chart(
     #     chart.delete()
 
     start_col = 2 + index * 4
+    date_col = start_col
+    value_col = start_col + 1
 
     # Titel
 
@@ -206,11 +208,17 @@ def create_rm_excel_chart(
     excel_chart.SeriesCollection().NewSeries()
 
     excel_chart.SeriesCollection(1).Values = (
-        f"='GymRun Data'!$C$4:$C${last_row}"
+        wsGymRun.range(
+            (4, value_col),
+            (last_row, value_col)
+        ).api
     )
 
     excel_chart.SeriesCollection(1).XValues = (
-        f"='GymRun Data'!$B$4:$B${last_row}"
+        wsGymRun.range(
+            (4, date_col),
+            (last_row, date_col)
+        ).api
     )
 
     excel_chart.SeriesCollection(1).Name = (
