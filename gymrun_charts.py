@@ -222,6 +222,10 @@ def create_rm_excel_chart(
 
     excel_chart.SeriesCollection().NewSeries()
 
+    print(
+        excel_chart.SeriesCollection().Count
+    )
+
     excel_chart.SeriesCollection(1).Values = (
         f"='GymRun Data'!"
         f"${value_col}$4:"
