@@ -109,6 +109,15 @@ print(
     chart_info["exercise_name"]
 )
 
+volume_info = create_volume_excel_chart(
+    workbook,
+    dfGymVolume,
+    "Flachbankdrücken Langhantel"
+)
+
+print(
+    volume_info["exercise_name"]
+)
 
 # ===============================
 # GitHub automatisch aktualisieren
