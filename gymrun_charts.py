@@ -293,6 +293,23 @@ def create_volume_excel_chart(
 
     start_col = 2 + index * 4
 
+    column_pairs = [
+        ("B", "C"),
+        ("F", "G"),
+        ("J", "K"),
+        ("N", "O"),
+        ("R", "S"),
+        ("V", "W"),
+        ("Z", "AA"),
+        ("AD", "AE"),
+        ("AH", "AI"),
+        ("AL", "AM")
+    ]
+
+    date_col, value_col = (
+        column_pairs[index]
+    )
+
     # ===============================
     # Blatt holen oder anlegen
     # ===============================
@@ -356,7 +373,7 @@ def create_volume_excel_chart(
 
     chart = wsGymRunCharts.charts.add()
 
-    chart.chart_type = "xy_scatter_lines"
+    chart.chart_type = "line"
 
     chart.top = 50 + index * 450
     chart.left = 900
@@ -369,11 +386,15 @@ def create_volume_excel_chart(
     excel_chart.SeriesCollection().NewSeries()
 
     excel_chart.SeriesCollection(1).Values = (
-        f"='GymRun Volume Data'!$C$4:$C${last_row}"
+        f"='GymRun Volume Data'!"
+        f"${value_col}$4:"
+        f"${value_col}${last_row}"
     )
 
     excel_chart.SeriesCollection(1).XValues = (
-        f"='GymRun Volume Data'!$B$4:$B${last_row}"
+        f"='GymRun Volume Data'!"
+        f"${date_col}$4:"
+        f"${date_col}${last_row}"
     )
 
     excel_chart.SeriesCollection(1).Name = (
