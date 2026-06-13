@@ -132,7 +132,7 @@ def create_rm_excel_chart(
             "GymRun Data"
         )
 
-    wsGymRun.clear()
+    #wsGymRun.clear()
 
     try:
         wsGymRunCharts = workbook.sheets[
@@ -148,18 +148,32 @@ def create_rm_excel_chart(
     # for chart in wsGymRunCharts.charts:
     #     chart.delete()
 
+    start_col = 2 + index * 4
+
     # Titel
 
-    wsGymRun.range("A1").value = (
-        exercise_name
-    )
+    wsGymRun.cells(
+        1,
+        start_col
+    ).value = exercise_name
 
-    wsGymRun.range("A1").font.bold = True
-    wsGymRun.range("A1").font.size = 14
+
+    wsGymRun.cells(
+        1,
+        start_col
+    ).font.bold = True
+
+    wsGymRun.cells(
+        1,
+        start_col
+    ).font.size = 14
 
     # Daten
 
-    wsGymRun.range("B3").options(
+    wsGymRun.cells(
+        3,
+        start_col
+    ).options(
         index=False
     ).value = dfChart
 
