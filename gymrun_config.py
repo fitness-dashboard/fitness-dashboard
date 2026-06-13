@@ -34,7 +34,7 @@ GYM_EXERCISES = {
 
     "Beinpresse am Gerät 1 Bein": {
         "start_date": "2019-05-01",
-        "rm_min": 30,
+        "rm_min": 5,
         "rm_max": 130,
         "vol_min": 0,
         "vol_max": 1500
@@ -43,7 +43,7 @@ GYM_EXERCISES = {
     "Wadenheben sitzend 1 Bein": {
         "start_date": "2021-10-03",
         "rm_min": 10,
-        "rm_max": 60,
+        "rm_max": 50,
         "vol_min": 0,
         "vol_max": 700
     },
@@ -51,7 +51,7 @@ GYM_EXERCISES = {
     "Schulterdrücken KH 1 Bein": {
         "start_date": "2022-10-23",
         "rm_min": 0,
-        "rm_max": 30,
+        "rm_max": 25,
         "vol_min": 0,
         "vol_max": 400
     },
@@ -67,7 +67,7 @@ GYM_EXERCISES = {
     "Trizepsdrücken am Gerät 1Arm (sitzend)": {
         "start_date": "2019-05-03",
         "rm_min": 0,
-        "rm_max": 30,
+        "rm_max": 20,
         "vol_min": 0,
         "vol_max": 150
     },
@@ -75,7 +75,7 @@ GYM_EXERCISES = {
     "Hammer Bankdrücken am Gerät (sitzend) 1 Arm": {
         "start_date": "2019-04-29",
         "rm_min": 20,
-        "rm_max": 50,
+        "rm_max": 80,
         "vol_min": 300,
         "vol_max": 2500
     }
