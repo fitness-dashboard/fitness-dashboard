@@ -267,6 +267,61 @@ def create_volume_excel_chart(
 
     last_row = len(dfChart) + 3
 
+    # ===============================
+    # Volumen Diagramm
+    # ===============================
+
+    try:
+        wsGymRunCharts = workbook.sheets[
+            "GymRun Charts"
+        ]
+    except:
+        wsGymRunCharts = workbook.sheets.add(
+            "GymRun Charts"
+        )
+
+    chart = wsGymRunCharts.charts.add()
+
+    chart.chart_type = "xy_scatter_lines"
+
+    chart.top = 50
+    chart.left = 900
+
+    chart.width = 800
+    chart.height = 400
+
+    excel_chart = chart.api[1]
+
+    excel_chart.SeriesCollection().NewSeries()
+
+    excel_chart.SeriesCollection(1).Values = (
+        f"='GymRun Volume Data'!$C$4:$C${last_row}"
+    )
+
+    excel_chart.SeriesCollection(1).XValues = (
+        f"='GymRun Volume Data'!$B$4:$B${last_row}"
+    )
+
+    excel_chart.SeriesCollection(1).Name = (
+        exercise_name
+    )
+
+    excel_chart.HasTitle = True
+
+    excel_chart.ChartTitle.Text = (
+            exercise_name + " Volumen"
+    )
+
+    excel_chart.Axes(1).HasTitle = True
+    excel_chart.Axes(1).AxisTitle.Text = (
+        "Datum"
+    )
+
+    excel_chart.Axes(2).HasTitle = True
+    excel_chart.Axes(2).AxisTitle.Text = (
+        "Volumen"
+    )
+
     print(last_row)
 
     return volume_info
