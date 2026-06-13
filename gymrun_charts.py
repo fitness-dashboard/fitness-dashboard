@@ -107,12 +107,20 @@ def create_rm_excel_chart(
         exercise_name
     )
 
+#Hilfe
+    print(chart_info.keys())
+
+    rm_min = chart_info["rm_min"]
+    rm_max = chart_info["rm_max"]
+
+#Hilfe
+    print(rm_min)
+    print(rm_max)
+
+
     dfChart = chart_info["data"]
 
-    print(dfChart.dtypes)
-    print(dfChart.head())
 
-    print(dfChart.columns)
 
     # Blatt holen oder anlegen
     try:
@@ -155,8 +163,7 @@ def create_rm_excel_chart(
         index=False
     ).value = dfChart
 
-    #Hilfe
-    print(dfChart.shape)
+
 
     last_row = len(dfChart) + 3
 
@@ -218,6 +225,7 @@ def create_rm_excel_chart(
         "kg"
     )
 
-    print(last_row)
+    rm_min = chart_info["rm_min"]
+    rm_max = chart_info["rm_max"]
 
     return chart_info
