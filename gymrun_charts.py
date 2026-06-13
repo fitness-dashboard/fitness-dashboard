@@ -237,6 +237,8 @@ def create_volume_excel_chart(
     dfGymVolume,
     exercise_name
 ):
+    print("VOL:", exercise_name)
+
     volume_info = create_volume_chart_data(
         dfGymVolume,
         exercise_name
