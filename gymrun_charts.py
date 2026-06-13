@@ -141,4 +141,11 @@ def create_rm_excel_chart(
 
     wsGymRun.range("A3").value = dfChart
 
+    #Hilfe
+    print(dfChart.shape)
+
+    last_row = len(dfChart) + 3
+
+    print(last_row)
+
     return chart_info
