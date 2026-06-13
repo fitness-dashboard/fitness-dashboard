@@ -119,7 +119,17 @@ def create_rm_excel_chart(
             "GymRun Data"
         )
 
-    # Daten schreiben
-    wsGymRun.range("A1").value = dfChart
+    # Titel
+
+    wsGymRun.range("A1").value = (
+        exercise_name
+    )
+
+    wsGymRun.range("A1").font.bold = True
+    wsGymRun.range("A1").font.size = 14
+
+    # Daten
+
+    wsGymRun.range("A3").value = dfChart
 
     return chart_info
