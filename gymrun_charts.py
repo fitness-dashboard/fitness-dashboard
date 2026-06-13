@@ -246,6 +246,25 @@ def create_volume_excel_chart(
     dfChart = volume_info["data"]
     print(dfChart.shape)
 
+    # Blatt holen oder anlegen
+
+    try:
+        wsGymRunVolume = workbook.sheets[
+            "GymRun Volume Data"
+        ]
+    except:
+        wsGymRunVolume = workbook.sheets.add(
+            "GymRun Volume Data"
+        )
+
+    wsGymRunVolume.clear()
+
+    wsGymRunVolume.range("A1").value = exercise_name
+
+    wsGymRunVolume.range("B3").options(
+        index=False
+    ).value = dfChart
+
     return volume_info
 def create_volume_chart_data(
     dfGymVolume,
