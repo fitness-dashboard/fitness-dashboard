@@ -84,6 +84,30 @@ dfGesamt.to_csv(
 )
 
 workbook = exportiere_excel(dfGesamt)
+
+# ===============================
+# Alte GymRun-Blätter löschen
+# ===============================
+
+for sheet_name in [
+    "GymRun Data",
+    "GymRun Volume Data",
+    "GymRun Charts"
+]:
+
+    try:
+        workbook.sheets[
+            sheet_name
+        ].delete()
+
+        print(
+            f"{sheet_name} gelöscht"
+        )
+
+    except:
+        pass
+
+
 erstelle_diagramme(workbook, dfGesamt)
 
 #Hilfe
