@@ -146,6 +146,50 @@ def create_rm_excel_chart(
 
     last_row = len(dfChart) + 3
 
+    # ===============================
+    # Erstes GymRun Diagramm
+    # ===============================
+
+    chart = wsGymRunCharts.charts.add()
+
+    chart.chart_type = "line"
+
+    chart.set_source_data(
+        wsGymRun.range(
+            f"A3:B{last_row}"
+        )
+    )
+
+    chart.top = 50
+    chart.left = 50
+
+    chart.width = 800
+    chart.height = 400
+
+    excel_chart = chart.api[1]
+
+    # Titel
+
+    excel_chart.HasTitle = True
+
+    excel_chart.ChartTitle.Text = (
+            exercise_name + " 1RM"
+    )
+
+    # X-Achse
+
+    excel_chart.Axes(1).HasTitle = True
+    excel_chart.Axes(1).AxisTitle.Text = (
+        "Datum"
+    )
+
+    # Y-Achse
+
+    excel_chart.Axes(2).HasTitle = True
+    excel_chart.Axes(2).AxisTitle.Text = (
+        "kg"
+    )
+
     print(last_row)
 
     return chart_info
