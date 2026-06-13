@@ -262,8 +262,15 @@ def create_volume_excel_chart(
 
     dfChart = volume_info["data"]
 
+    # ===============================
+    # Datenposition berechnen
+    # ===============================
 
+    start_col = 2 + index * 4
+
+    # ===============================
     # Blatt holen oder anlegen
+    # ===============================
 
     try:
         wsGymRunVolume = workbook.sheets[
@@ -274,11 +281,36 @@ def create_volume_excel_chart(
             "GymRun Volume Data"
         )
 
-    wsGymRunVolume.clear()
+    # Nicht mehr löschen
+    # wsGymRunVolume.clear()
 
-    wsGymRunVolume.range("A1").value = exercise_name
+    # ===============================
+    # Titel
+    # ===============================
 
-    wsGymRunVolume.range("B3").options(
+    wsGymRunVolume.cells(
+        1,
+        start_col
+    ).value = exercise_name
+
+    wsGymRunVolume.cells(
+        1,
+        start_col
+    ).font.bold = True
+
+    wsGymRunVolume.cells(
+        1,
+        start_col
+    ).font.size = 14
+
+    # ===============================
+    # Daten schreiben
+    # ===============================
+
+    wsGymRunVolume.cells(
+        3,
+        start_col
+    ).options(
         index=False
     ).value = dfChart
 
@@ -326,7 +358,7 @@ def create_volume_excel_chart(
     excel_chart.HasTitle = True
 
     excel_chart.ChartTitle.Text = (
-            exercise_name + " Volumen"
+        exercise_name + " Volumen"
     )
 
     excel_chart.Axes(1).HasTitle = True
@@ -346,7 +378,6 @@ def create_volume_excel_chart(
     excel_chart.Axes(2).MaximumScale = (
         volume_info["vol_max"]
     )
-
 
     return volume_info
 def create_volume_chart_data(
