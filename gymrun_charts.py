@@ -144,8 +144,8 @@ def create_rm_excel_chart(
 
     # Vorhandene Diagramme löschen
 
-    for chart in wsGymRunCharts.charts:
-        chart.delete()
+    # for chart in wsGymRunCharts.charts:
+    #     chart.delete()
 
     # Titel
 
