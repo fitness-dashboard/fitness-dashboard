@@ -144,7 +144,9 @@ def create_rm_excel_chart(
 
     # Daten
 
-    wsGymRun.range("A3").value = dfChart
+    wsGymRun.range("B3").options(
+        index=False
+    ).value = dfChart
 
     #Hilfe
     print(dfChart.shape)
@@ -176,11 +178,11 @@ def create_rm_excel_chart(
     excel_chart.SeriesCollection().NewSeries()
 
     excel_chart.SeriesCollection(1).Values = (
-        f"='GymRun Data'!$B$4:$B${last_row}"
+        f"='GymRun Data'!$A$4:$A${last_row}"
     )
 
     excel_chart.SeriesCollection(1).XValues = (
-        f"='GymRun Data'!$A$4:$A${last_row}"
+        f"='GymRun Data'!$B$4:$B${last_row}"
     )
 
     excel_chart.SeriesCollection(1).Name = (
