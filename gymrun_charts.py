@@ -109,6 +109,7 @@ def create_rm_excel_chart(
 
     dfChart = chart_info["data"]
 
+    print(dfChart.dtypes)
     print(dfChart.head())
 
     print(dfChart.columns)
