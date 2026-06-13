@@ -86,24 +86,28 @@ dfGesamt.to_csv(
 workbook = exportiere_excel(dfGesamt)
 erstelle_diagramme(workbook, dfGesamt)
 
-print(
-    len(GYM_EXERCISES)
-)
-
-
 #Hilfe
-chart_info = create_rm_excel_chart(
-    workbook,
-    dfGymMaxRM,
-    "Flachbankdrücken Langhantel"
-)
+# print(
+#     len(GYM_EXERCISES)
+# )
 
 
-volume_info = create_volume_excel_chart(
-    workbook,
-    dfGymVolume,
-    "Flachbankdrücken Langhantel"
-)
+#Schleife durch die Übungen
+for exercise_name in GYM_EXERCISES:
+
+    print(exercise_name)
+
+    create_rm_excel_chart(
+        workbook,
+        dfGymMaxRM,
+        exercise_name
+    )
+
+    create_volume_excel_chart(
+        workbook,
+        dfGymVolume,
+        exercise_name
+    )
 
 # ===============================
 # GitHub automatisch aktualisieren
