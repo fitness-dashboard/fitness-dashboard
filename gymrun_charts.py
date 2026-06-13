@@ -158,11 +158,11 @@ def create_rm_excel_chart(
 
     chart.chart_type = "line"
 
-    chart.set_source_data(
-        wsGymRun.range(
-            f"A3:B{last_row}"
-        )
-    )
+    # chart.set_source_data(
+    #     wsGymRun.range(
+    #         f"A3:B{last_row}"
+    #     )
+    # )
 
     chart.top = 50
     chart.left = 50
@@ -171,6 +171,20 @@ def create_rm_excel_chart(
     chart.height = 400
 
     excel_chart = chart.api[1]
+
+    excel_chart.SeriesCollection().NewSeries()
+
+    excel_chart.SeriesCollection(1).Values = (
+        f"='GymRun Data'!$B$4:$B${last_row}"
+    )
+
+    excel_chart.SeriesCollection(1).XValues = (
+        f"='GymRun Data'!$A$4:$A${last_row}"
+    )
+
+    excel_chart.SeriesCollection(1).Name = (
+        exercise_name
+    )
 
     # Titel
 
