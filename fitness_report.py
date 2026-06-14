@@ -152,8 +152,14 @@ for index, exercise_name in enumerate(
 # GitHub automatisch aktualisieren
 # ===============================
 
+print("GymRun RM CSV exportiert.")
+
 subprocess.run(
     ["git", "add", "."]
+)
+
+subprocess.run(
+    ["git", "status"]
 )
 
 commit_result = subprocess.run(
