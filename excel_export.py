@@ -38,17 +38,6 @@ def exportiere_excel(dfGesamt):
     wsData.clear_contents()
     wsData.clear_formats()
 
-    print(
-        dfGesamt[
-            [
-                "Muscle mass - right arm",
-                "Muscle mass - left arm",
-                "Muscle mass - right leg",
-                "Muscle mass - left leg",
-                "Muscle mass - trunk"
-            ]
-        ].describe()
-    )
 
     # DataFrame schreiben
     wsData.range("A2").value = dfGesamt

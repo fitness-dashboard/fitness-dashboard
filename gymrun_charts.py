@@ -10,8 +10,6 @@ def create_rm_chart_data(
     dfGymMaxRM,
     exercise_name
 ):
-    #Hilfe
-    print("RM:", exercise_name)
 
     dfChart = get_exercise_rm(
         dfGymMaxRM,
@@ -39,8 +37,6 @@ def create_volume_chart_data(
     dfGymVolume,
     exercise_name
 ):
-    print("VOL:", exercise_name)
-
     dfChart = get_exercise_volume(
         dfGymVolume,
         exercise_name
@@ -222,9 +218,6 @@ def create_rm_excel_chart(
 
     excel_chart.SeriesCollection().NewSeries()
 
-    print(
-        excel_chart.SeriesCollection().Count
-    )
 
     excel_chart.SeriesCollection(1).Values = (
         f"='GymRun Data'!"
@@ -278,7 +271,6 @@ def create_volume_excel_chart(
     exercise_name,
     index
 ):
-    print("VOL:", exercise_name)
 
     volume_info = create_volume_chart_data(
         dfGymVolume,

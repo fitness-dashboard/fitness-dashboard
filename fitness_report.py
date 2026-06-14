@@ -40,7 +40,7 @@ dfGymMaxRM.to_csv(
     "gymrun_rm_data.csv",
     index=False
 )
-#Hilfe
+
 import os
 
 print(
