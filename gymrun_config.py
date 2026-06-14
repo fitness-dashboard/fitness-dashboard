@@ -33,7 +33,7 @@ GYM_EXERCISES = {
     },
 
     "Beinpresse am Gerät 1 Bein": {
-        "start_date": "2019-05-01",
+        "start_date": "2025-08-30",
         "rm_min": 5,
         "rm_max": 130,
         "vol_min": 0,
