@@ -474,12 +474,6 @@ st.header(
     "GymRun 1RM Entwicklung"
 )
 
-for exercise_name in GYM_EXERCISES:
-
-    st.subheader(
-        exercise_name
-    )
-
 for exercise_name, y_range in GYM_EXERCISES.items():
 
     dfExercise = dfGymRM[
