@@ -153,8 +153,6 @@ for index, exercise_name in enumerate(
     GYM_EXERCISES
 ):
 
-    print(exercise_name)
-
     create_rm_excel_chart(
         workbook,
         dfGymMaxRM,
