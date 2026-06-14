@@ -11,6 +11,14 @@ dfGesamt = pd.read_csv(
     "fitness_dashboard_data.csv"
 )
 
+dfGymRM = pd.read_csv(
+    "gymrun_rm_data.csv"
+)
+
+dfGymRM["Date"] = pd.to_datetime(
+    dfGymRM["Date"]
+)
+
 
 dfGesamt["Only Date"] = pd.to_datetime(
     dfGesamt["Only Date"]
@@ -442,5 +450,40 @@ fig6.update_layout(
 # Diagramm anzeigen
 st.plotly_chart(
     fig6,
+    use_container_width=True
+)
+
+#==================================================================================
+# Diagramm 7 Flachbankdrücken Langhantel
+# ===============================
+
+st.header(
+    "GymRun 1RM Entwicklung"
+)
+
+dfFlachbank = dfGymRM[
+    [
+        "Date",
+        "Flachbankdrücken Langhantel"
+    ]
+].copy()
+
+dfFlachbank = (
+    dfFlachbank.dropna()
+)
+
+figGym = px.line(
+    dfFlachbank,
+    x="Date",
+    y="Flachbankdrücken Langhantel",
+    title="Flachbankdrücken Langhantel"
+)
+
+figGym.update_yaxes(
+    range=[60,130]
+)
+
+st.plotly_chart(
+    figGym,
     use_container_width=True
 )
