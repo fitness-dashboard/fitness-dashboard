@@ -461,12 +461,12 @@ GYM_EXERCISES = {
     "Flachbankdrücken Langhantel": [60, 130],
     "Brustdrücken sitzend Gym90 ein Arm": [20, 80],
     "Latziehen am Turm 1 Arm": [20, 80],
-    "Kreuzheben Langhantel": [80, 180],
-    "Beinpresse am Gerät 1 Bein": [50, 250],
-    "Wadenheben sitzend 1 Bein": [20, 120],
-    "Schulterdrücken KH 1 Bein": [10, 50],
+    "Kreuzheben Langhantel": [40, 180],
+    "Beinpresse am Gerät 1 Bein": [30, 250],
+    "Wadenheben sitzend 1 Bein": [10, 120],
+    "Schulterdrücken KH 1 Bein": [10,30],
     "Bizeps Panatta": [10, 50],
-    "Trizepsdrücken am Gerät 1Arm (sitzend)": [10, 60],
+    "Trizepsdrücken am Gerät 1Arm (sitzend)": [2, 30],
     "Hammer Bankdrücken am Gerät (sitzend) 1 Arm": [20, 80]
 }
 
