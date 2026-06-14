@@ -454,7 +454,7 @@ st.plotly_chart(
 )
 
 #==================================================================================
-# Diagramm 7 Flachbankdrücken Langhantel
+# Schleife für Alle Diagramme aus GymRun
 # ===============================
 
 GYM_EXERCISES = {
@@ -480,29 +480,31 @@ for exercise_name in GYM_EXERCISES:
         exercise_name
     )
 
-dfFlachbank = dfGymRM[
-    [
-        "Date",
-        "Flachbankdrücken Langhantel"
-    ]
-].copy()
+for exercise_name, y_range in GYM_EXERCISES.items():
 
-dfFlachbank = (
-    dfFlachbank.dropna()
-)
+    dfExercise = dfGymRM[
+        [
+            "Date",
+            exercise_name
+        ]
+    ].copy()
 
-figGym = px.line(
-    dfFlachbank,
-    x="Date",
-    y="Flachbankdrücken Langhantel",
-    title="Flachbankdrücken Langhantel"
-)
+    dfExercise = (
+        dfExercise.dropna()
+    )
 
-figGym.update_yaxes(
-    range=[60,130]
-)
+    figGym = px.line(
+        dfExercise,
+        x="Date",
+        y=exercise_name,
+        title=exercise_name
+    )
 
-st.plotly_chart(
-    figGym,
-    use_container_width=True
-)
+    figGym.update_yaxes(
+        range=y_range
+    )
+
+    st.plotly_chart(
+        figGym,
+        use_container_width=True
+    )
