@@ -36,6 +36,15 @@ print(
 
 dfGymMaxRM = build_gym_max_rm(dfGymRun)
 
+dfGymMaxRM.to_csv(
+    "gymrun_rm_data.csv",
+    index=False
+)
+
+print(
+    "GymRun RM CSV exportiert."
+)
+
 all_rm_charts = create_all_rm_chart_data(
     dfGymMaxRM
 )

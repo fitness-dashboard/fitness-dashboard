@@ -10,6 +10,7 @@ Ziel des Projekts ist die tägliche Auswertung von:
 * Kalorienaufnahme
 * Trainingskalorien
 * Grundumsatz
+* Krafttraining (GymRun)
 
 Die Ergebnisse werden automatisch:
 
@@ -49,12 +50,13 @@ Aufgaben:
 * Berechnungen durchführen
 * CSV für Dashboard exportieren
 * Excel aktualisieren
-* Diagramme erzeugen
+* Standarddiagramme erzeugen
+* GymRun-Auswertungen erzeugen
 * GitHub automatisch aktualisieren
 
 ## load_data.py
 
-Import aller Rohdaten.
+Import aller Ernährungs- und Körperdaten.
 
 Datenquellen:
 
@@ -63,14 +65,16 @@ Datenquellen:
 * MyFitnessPal Trainingsdaten
 * Tanita Waage
 
-Besonderheiten:
+## load_gymrun.py
 
-* Tanita Altdaten werden aus
-  D:\Documents\Gesundheit Kai\Diät\Altdaten Tanita Neu fertig.csv
-  geladen.
-* Aktuelle Tanita-Daten werden automatisch aus Downloads geladen.
-* Beide Dateien werden zusammengeführt.
-* Zeitraum beginnt am 14.06.2025.
+Import der GymRun Trainingsdaten.
+
+Aufgaben:
+
+* GymRun CSV automatisch aus Downloads laden
+* Trainingsdaten bereinigen
+* Datumsfelder konvertieren
+* DataFrame für weitere Auswertungen bereitstellen
 
 ## calculations.py
 
@@ -89,19 +93,62 @@ Berechnet:
 * Grundumsatz errechnet 60 Tage
 * Grundumsatz Mifflin-St.-Jeor
 
+## gymrun_calculations.py
+
+Berechnet Trainingskennzahlen aus GymRun.
+
+Berechnet:
+
+* Tages-MaxRM pro Übung
+* Trainingsvolumen pro Übung und Trainingstag
+
+## gymrun_helpers.py
+
+Hilfsfunktionen für GymRun.
+
+Aufgaben:
+
+* Extraktion einzelner Übungen
+* Aufbereitung für Diagramme
+* Filterung nach Startdatum
+
+## gymrun_charts.py
+
+Erzeugt Datenstrukturen und Excel-Diagramme für GymRun.
+
+Funktionen:
+
+* MaxRM Diagramme
+* Volumen Diagramme
+* Diagrammdaten aufbereiten
+* Excel-Diagramme erzeugen
+
+## gymrun_config.py
+
+Zentrale Konfiguration aller GymRun Übungen.
+
+Enthält:
+
+* Startdatum pro Übung
+* RM-Minimum
+* RM-Maximum
+* Volumen-Minimum
+* Volumen-Maximum
+
 ## excel_export.py
 
 Exportiert den kompletten DataFrame nach Excel.
 
 ## charts.py
 
-Erzeugt alle Excel-Diagramme.
+Erzeugt alle Excel-Diagramme des Fitness-Dashboards.
 
 ## app.py
 
 Streamlit Dashboard.
 
 Liest:
+
 fitness_dashboard_data.csv
 
 und erzeugt die Online-Diagramme.
@@ -128,6 +175,20 @@ D:\Documents\Gesundheit Kai\Diät\Altdaten Tanita Neu fertig.csv
 
 eingelesen.
 
+## GymRun
+
+Datei wird automatisch aus Downloads geladen:
+
+GymRun_*.csv
+
+Enthält:
+
+* Datum
+* Übung
+* Gewicht
+* Wiederholungen
+* Sätze
+
 # Wichtige Berechnungen
 
 ## Gewichtsprognose
@@ -138,6 +199,7 @@ Es werden zwei Zielkurven berechnet:
 * 500 kcal Defizit pro Tag
 
 Startpunkt:
+
 14.06.2025
 
 Die Kurven starten beim tatsächlichen Gewicht am 14.06.2025.
@@ -145,18 +207,49 @@ Die Kurven starten beim tatsächlichen Gewicht am 14.06.2025.
 ## Grundumsatz
 
 Variante 1:
+
 BMR (kcal) Tanita
 
 Variante 2:
+
 Grundumsatz errechnet 30 Tage
 
 Variante 3:
+
 Grundumsatz errechnet 60 Tage
 
 Variante 4:
+
 Mifflin-St.-Jeor x 1,12
 
-## Muskelmasse Segmente
+# GymRun Auswertung
+
+Aktuell werden folgende Übungen ausgewertet:
+
+* Flachbankdrücken Langhantel
+* Brustdrücken sitzend Gym90 ein Arm
+* Latziehen am Turm 1 Arm
+* Kreuzheben Langhantel
+* Beinpresse am Gerät 1 Bein
+* Wadenheben sitzend 1 Bein
+* Schulterdrücken KH 1 Bein
+* Bizeps Panatta
+* Trizepsdrücken am Gerät 1 Arm
+* Hammer Bankdrücken am Gerät 1 Arm
+
+Für jede Übung werden berechnet:
+
+## MaxRM
+
+Höchstes geschätztes One-Rep-Maximum pro Trainingstag.
+
+## Trainingsvolumen
+
+Gesamtvolumen pro Trainingstag:
+
+Gewicht × Wiederholungen × Sätze
+
+# Muskelmasse Segmente
 
 Auswertung:
 
@@ -167,11 +260,15 @@ Auswertung:
 * Rumpf
 
 Darstellung:
+
 30-Tage-Durchschnitt
 
 # Excel-Diagramme
 
+## Fitness Dashboard
+
 Diagramm 1
+
 Gewichtsentwicklung
 
 * Gewicht
@@ -179,18 +276,21 @@ Gewichtsentwicklung
 * Gewicht 500 kcal Defizit
 
 Diagramm 2
+
 Körperfett % vs Ziel
 
 * Body Fat (%) 7 Tage
 * Fett % Soll
 
 Diagramm 3
+
 Muskelmasse und Körperfettanteil
 
 * Muscle Mass (kg) 7 Tage
 * Körperfettanteil kg 7 Tage
 
 Diagramm 4
+
 Grundumsätze
 
 * BMR Tanita
@@ -199,6 +299,7 @@ Grundumsätze
 * Mifflin-St.-Jeor x 1,12
 
 Diagramm 5
+
 Muskelmasse nach Körpersegment
 
 * Rechter Arm
@@ -209,20 +310,43 @@ Muskelmasse nach Körpersegment
 
 30-Tage-Durchschnitt
 
+# GymRun Diagramme
+
+Für jede Übung werden zwei Diagramme erzeugt:
+
+## Diagramm A
+
+MaxRM Verlauf
+
+* Datum
+* MaxRM
+
+## Diagramm B
+
+Trainingsvolumen Verlauf
+
+* Datum
+* Trainingsvolumen
+
+Die Diagramme werden automatisch in Excel erstellt und skaliert.
+
 # Automatisierung
 
 Nach jedem Lauf:
 
 1. CSV-Datei wird aktualisiert
-2. Git Add
-3. Git Commit
-4. Git Push
+2. Excel-Datei wird aktualisiert
+3. GymRun-Diagramme werden neu erzeugt
+4. Git Add
+5. Git Commit
+6. Git Push
 
 Dadurch aktualisiert sich die Streamlit-Webseite automatisch.
 
 # GitHub
 
 Repository:
+
 fitness-dashboard
 
 # Streamlit
@@ -240,5 +364,10 @@ Letzte größere Erweiterungen:
 * Tanita-Altdaten integriert
 * Grundumsatz 60 Tage ergänzt
 * Muskelmasse Segmente ergänzt
-* Streamlit Dashboard erweitert
 * Automatischer GitHub Upload eingerichtet
+* GymRun Import integriert
+* MaxRM Auswertung integriert
+* Trainingsvolumen Auswertung integriert
+* Automatische Excel-Diagramme für GymRun ergänzt
+* Übungsspezifische Skalierung über gymrun_config.py ergänzt
+* Automatische Bereinigung und Neuerzeugung der GymRun-Blätter implementiert
