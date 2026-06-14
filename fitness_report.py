@@ -40,6 +40,27 @@ dfGymMaxRM.to_csv(
     "gymrun_rm_data.csv",
     index=False
 )
+#Hilfe
+import os
+
+print(
+    "Arbeitsverzeichnis:"
+)
+
+print(
+    os.getcwd()
+)
+
+print(
+    "CSV Pfad:"
+)
+
+print(
+    os.path.abspath(
+        "gymrun_rm_data.csv"
+    )
+)
+
 
 print(
     "GymRun RM CSV exportiert."
