@@ -457,9 +457,28 @@ st.plotly_chart(
 # Diagramm 7 Flachbankdrücken Langhantel
 # ===============================
 
+GYM_EXERCISES = {
+    "Flachbankdrücken Langhantel": [60, 130],
+    "Brustdrücken sitzend Gym90 ein Arm": [20, 80],
+    "Latziehen am Turm 1 Arm": [20, 80],
+    "Kreuzheben Langhantel": [80, 180],
+    "Beinpresse am Gerät 1 Bein": [50, 250],
+    "Wadenheben sitzend 1 Bein": [20, 120],
+    "Schulterdrücken KH 1 Bein": [10, 50],
+    "Bizeps Panatta": [10, 50],
+    "Trizepsdrücken am Gerät 1Arm (sitzend)": [10, 60],
+    "Hammer Bankdrücken am Gerät (sitzend) 1 Arm": [20, 80]
+}
+
 st.header(
     "GymRun 1RM Entwicklung"
 )
+
+for exercise_name in GYM_EXERCISES:
+
+    st.subheader(
+        exercise_name
+    )
 
 dfFlachbank = dfGymRM[
     [
