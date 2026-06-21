@@ -5,7 +5,7 @@ GYM_EXERCISES = {
         "rm_min": 5,
         "rm_max": 30,
         "vol_min": 0,
-        "vol_max": 3000
+        "vol_max": 500
     },
 
     "Bizeps-Curls Kurzhantel (stehend)": {
@@ -13,7 +13,7 @@ GYM_EXERCISES = {
         "rm_min": 5,
         "rm_max": 20,
         "vol_min": 0,
-        "vol_max": 2500
+        "vol_max": 500
     },
 
     "Flachbankdips Beine hochgelegt": {
@@ -21,7 +21,7 @@ GYM_EXERCISES = {
         "rm_min": 0,
         "rm_max": 40,
         "vol_min": 0,
-        "vol_max": 3000
+        "vol_max": 500
     },
 
     "Trizepsdrücken SZ-Stange, French-Press (Flachbank)": {
@@ -29,7 +29,7 @@ GYM_EXERCISES = {
         "rm_min": 5,
         "rm_max": 35,
         "vol_min": 0,
-        "vol_max": 3000
+        "vol_max": 500
     },
 
     "Bulgarische Kniebeuge": {
@@ -37,7 +37,7 @@ GYM_EXERCISES = {
         "rm_min": 5,
         "rm_max": 50,
         "vol_min": 0,
-        "vol_max": 5000
+        "vol_max": 1000
     },
 
     "Kniebeuge Langhantel Schulterauflage (stehend)": {
@@ -45,7 +45,7 @@ GYM_EXERCISES = {
         "rm_min": 10,
         "rm_max": 100,
         "vol_min": 0,
-        "vol_max": 10000
+        "vol_max": 1000
     },
 
     "Rumänisches Kreuzheben mit Langhantel (stehend)": {
@@ -53,15 +53,15 @@ GYM_EXERCISES = {
         "rm_min": 10,
         "rm_max": 100,
         "vol_min": 0,
-        "vol_max": 10000
+        "vol_max": 1000
     },
 
     "Wadenheben einbeinig stehend mit KH": {
         "start_date": "2026-01-01",
         "rm_min": 80,
         "rm_max": 200,
-        "vol_min": 0,
-        "vol_max": 5000
+        "vol_min": 500,
+        "vol_max": 2000
     },
 
     "Klimmzüge mit Band": {
@@ -69,7 +69,7 @@ GYM_EXERCISES = {
         "rm_min": 0,
         "rm_max": 20,
         "vol_min": 0,
-        "vol_max": 3000
+        "vol_max": 500
     },
 
     "Rudern zur Brust": {
@@ -77,7 +77,7 @@ GYM_EXERCISES = {
         "rm_min": 5,
         "rm_max": 50,
         "vol_min": 0,
-        "vol_max": 5000
+        "vol_max": 500
     },
 
     "Rudern KH 1 Arm": {
@@ -85,7 +85,7 @@ GYM_EXERCISES = {
         "rm_min": 5,
         "rm_max": 40,
         "vol_min": 0,
-        "vol_max": 4000
+        "vol_max": 1500
     },
 
     "Liegestütze breiter Griff": {
@@ -93,6 +93,6 @@ GYM_EXERCISES = {
         "rm_min": 40,
         "rm_max": 100,
         "vol_min": 0,
-        "vol_max": 3000
+        "vol_max": 1000
     }
 }
