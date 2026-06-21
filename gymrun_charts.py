@@ -132,11 +132,11 @@ def create_rm_excel_chart(
 
     try:
         wsGymRunCharts = workbook.sheets[
-            "GymRun Charts"
+            "Charts GymRun"
         ]
     except:
         wsGymRunCharts = workbook.sheets.add(
-            "GymRun Charts"
+            "Charts GymRun"
         )
 
     # Vorhandene Diagramme löschen
@@ -356,11 +356,11 @@ def create_volume_excel_chart(
 
     try:
         wsGymRunCharts = workbook.sheets[
-            "GymRun Charts"
+            "Charts GymRun"
         ]
     except:
         wsGymRunCharts = workbook.sheets.add(
-            "GymRun Charts"
+            "Charts GymRun"
         )
 
     chart = wsGymRunCharts.charts.add()

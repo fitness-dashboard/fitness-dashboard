@@ -122,7 +122,7 @@ workbook = exportiere_excel(dfGesamt)
 for sheet_name in [
     "GymRun Data",
     "GymRun Volume Data",
-    "GymRun Charts"
+    "Charts GymRun"
 ]:
 
     try:
