@@ -29,7 +29,7 @@ def exportiere_excel(dfGesamt):
         workbook = app.books.open(excel_datei)
 
     # Worksheet auswählen
-    wsData = workbook.sheets["Data"]
+    wsData = workbook.sheets["Data Food and Body"]
 
     # Excel schneller machen
     # app.screen_updating = False

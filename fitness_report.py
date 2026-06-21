@@ -120,8 +120,8 @@ workbook = exportiere_excel(dfGesamt)
 # ===============================
 
 for sheet_name in [
-    "GymRun Data",
-    "GymRun Volume Data",
+    "Data GymRun One RM",
+    "Data GymRun Volume",
     "Charts GymRun"
 ]:
 
@@ -172,9 +172,9 @@ for index, exercise_name in enumerate(
 # ===============================
 
 sheet_order = [
-    "Data",
-    "GymRun Volume Data",
-    "GymRun Data",
+    "Data Food and Body",
+    "Data GymRun Volume",
+    "Data GymRun One RM",
     "Charts Body",
     "Charts GymRun",
     "Körper"

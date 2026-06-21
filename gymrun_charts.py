@@ -121,11 +121,11 @@ def create_rm_excel_chart(
     # Blatt holen oder anlegen
     try:
         wsGymRun = workbook.sheets[
-            "GymRun Data"
+            "Data GymRun One RM"
         ]
     except:
         wsGymRun = workbook.sheets.add(
-            "GymRun Data"
+            "Data GymRun One RM"
         )
 
     #wsGymRun.clear()
@@ -220,13 +220,13 @@ def create_rm_excel_chart(
 
 
     excel_chart.SeriesCollection(1).Values = (
-        f"='GymRun Data'!"
+        f"='Data GymRun One RM'!"
         f"${value_col}$4:"
         f"${value_col}${last_row}"
     )
 
     excel_chart.SeriesCollection(1).XValues = (
-        f"='GymRun Data'!"
+        f"='Data GymRun One RM'!"
         f"${date_col}$4:"
         f"${date_col}${last_row}"
     )
@@ -308,11 +308,11 @@ def create_volume_excel_chart(
 
     try:
         wsGymRunVolume = workbook.sheets[
-            "GymRun Volume Data"
+            "Data GymRun Volume"
         ]
     except:
         wsGymRunVolume = workbook.sheets.add(
-            "GymRun Volume Data"
+            "Data GymRun Volume"
         )
 
     # Nicht mehr löschen
@@ -378,13 +378,13 @@ def create_volume_excel_chart(
     excel_chart.SeriesCollection().NewSeries()
 
     excel_chart.SeriesCollection(1).Values = (
-        f"='GymRun Volume Data'!"
+        f"='Data GymRun Volume'!"
         f"${value_col}$4:"
         f"${value_col}${last_row}"
     )
 
     excel_chart.SeriesCollection(1).XValues = (
-        f"='GymRun Volume Data'!"
+        f"='Data GymRun Volume'!"
         f"${date_col}$4:"
         f"${date_col}${last_row}"
     )
