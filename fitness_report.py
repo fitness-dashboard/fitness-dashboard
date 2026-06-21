@@ -180,23 +180,31 @@ sheet_order = [
     "Körper"
 ]
 
-for position, sheet_name in enumerate(
-    reversed(sheet_order),
-    start=1
-):
+for i, sheet_name in enumerate(sheet_order):
 
     try:
-        workbook.sheets[
-            sheet_name
-        ].api.Move(
-            Before=workbook.sheets[1].api
-        )
 
-    except:
+        if i == 0:
+            workbook.sheets[
+                sheet_name
+            ].api.Move(
+                Before=workbook.sheets[1].api
+            )
+
+        else:
+            workbook.sheets[
+                sheet_name
+            ].api.Move(
+                After=workbook.sheets[
+                    sheet_order[i - 1]
+                ].api
+            )
+
+    except Exception as e:
+
         print(
-            f"Blatt nicht gefunden: {sheet_name}"
+            f"Fehler bei {sheet_name}: {e}"
         )
-
 
 # ===============================
 # GitHub automatisch aktualisieren
