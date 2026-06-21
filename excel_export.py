@@ -8,7 +8,7 @@ def exportiere_excel(dfGesamt):
     # Excel-Datei öffnen oder vorhandene Instanz verwenden
     # ===============================
 
-    excel_datei = r"D:\Documents\Gesundheit Kai\Diät\Gewicht mit Python.xlsm"
+    excel_datei = r"D:\Documents\Gesundheit Kai\Diät\Gewicht mit Python Kai.xlsm"
 
     if xw.apps.count > 0:
         app = xw.apps.active
