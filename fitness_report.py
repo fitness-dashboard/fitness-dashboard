@@ -168,6 +168,37 @@ for index, exercise_name in enumerate(
     )
 
 # ===============================
+# Tabellenblätter sortieren
+# ===============================
+
+sheet_order = [
+    "Data",
+    "GymRun Volume Data",
+    "GymRun Data",
+    "Charts Body",
+    "Charts GymRun",
+    "Körper"
+]
+
+for position, sheet_name in enumerate(
+    reversed(sheet_order),
+    start=1
+):
+
+    try:
+        workbook.sheets[
+            sheet_name
+        ].api.Move(
+            Before=workbook.sheets[1].api
+        )
+
+    except:
+        print(
+            f"Blatt nicht gefunden: {sheet_name}"
+        )
+
+
+# ===============================
 # GitHub automatisch aktualisieren
 # ===============================
 
