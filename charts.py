@@ -7,11 +7,11 @@ def erstelle_diagramme(workbook, dfGesamt):
     # ===============================
 
     try:
-        workbook.sheets["Diagramm"].delete()
+        workbook.sheets["Charts Body"].delete()
     except:
         pass
 
-    wsChart = workbook.sheets.add("Diagramm")
+    wsChart = workbook.sheets.add("Charts Body")
 
     # ===============================
     # Nullwerte für Diagramme entfernen
