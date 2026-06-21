@@ -158,6 +158,23 @@ def berechne_werte(dfGesamt):
     ).round(2)
 
     # ===============================
+    # Fett % Soll ab 21.05.2026 einfrieren
+    # ===============================
+
+    haltedatum = pd.Timestamp("2026-05-21")
+
+    zielwert = dfGesamt.loc[
+        dfGesamt["Only Date"] == haltedatum,
+        "Fett % Soll"
+    ].iloc[0]
+
+    dfGesamt.loc[
+        dfGesamt["Only Date"] >= haltedatum,
+        "Fett % Soll"
+    ] = zielwert
+
+
+    # ===============================
     # Gewicht 500 kcal Soll berechnen
     # ===============================
 
