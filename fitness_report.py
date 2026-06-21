@@ -107,6 +107,9 @@ print(
 dfGesamt = lade_daten()
 dfGesamt = berechne_werte(dfGesamt)
 
+#Hilfe
+print(dfGesamt.columns.tolist())
+
 # CSV-Datei exportieren für Export nach Github
 dfGesamt.to_csv(
     "fitness_dashboard_data.csv",

@@ -92,160 +92,165 @@ def erstelle_diagramme(workbook, dfGesamt):
     excel_chart.Axes(2).HasTitle = True
     excel_chart.Axes(2).AxisTitle.Text = "kg"
 
-    # ===============================================================================
-    # Daten für Diagramm 2 Soll Fett vs Ist Fett schreiben
+    # # ===============================================================================
+    # # Daten für Diagramm 2 Soll Fett vs Ist Fett schreiben
+    # # ===============================
+    #
+    # wsChart.range("F1").value = "Datum"
+    # wsChart.range("G1").value = "Body Fat (%) 7 Tage"
+    # wsChart.range("H1").value = "Fett % Soll"
+    #
+    # # Daten für Diagramm filtern
+    # start_datum_chart = pd.Timestamp("2025-06-14")
+    # dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
+    #
+    # chart_data2 = pd.DataFrame({
+    #     "Datum": dfChart["Only Date"],
+    #     "Body Fat (%) 7 Tage": dfChart["Body Fat (%) 7 Tage"],
+    #     "Fett % Soll": dfChart["Fett % Soll"]
+    # })
+    #
+    # wsChart.range("F2").options(
+    #     index=False,
+    #     header=False
+    # ).value = chart_data2
+    #
+    # # ===============================
+    # # Diagramm 2 Soll Fett vs Ist Fett erstellen
+    # # ===============================
+    #
+    # chart2 = wsChart.charts.add()
+    #
+    # chart2.chart_type = "line"
+    #
+    # chart2.set_source_data(
+    #     wsChart.range(
+    #         f"F1:H{len(chart_data2) + 1}"
+    #     )
+    # )
+    #
+    # # Position unter Diagramm 1
+    # chart2.top = 500
+    # chart2.left = 50
+    #
+    # chart2.width = 800
+    # chart2.height = 400
+    #
+    # # Excel COM Objekt
+    # excel_chart2 = chart2.api[1]
+    #
+    # # Titel
+    # excel_chart2.HasTitle = True
+    # excel_chart2.ChartTitle.Text = "Körperfett % vs Ziel"
+    #
+    # # X-Achse
+    # excel_chart2.Axes(1).HasTitle = True
+    # excel_chart2.Axes(1).AxisTitle.Text = "Datum"
+    #
+    # # Y-Achse
+    # excel_chart2.Axes(2).HasTitle = True
+    # excel_chart2.Axes(2).AxisTitle.Text = "%"
+    #
+    # # Y-Achse Bereich festlegen
+    # excel_chart2.Axes(2).MinimumScale = 10
+    # excel_chart2.Axes(2).MaximumScale = 35
+    #
+    # # Legende unten
+    # excel_chart2.Legend.Position = -4107
+
+    # # ===============================================================================
+    # # Daten für Diagramm 3 Gewicht vs 500kcal vs 300kcal schreiben
+    # # ===============================
+    #
+    # wsChart.range("K1").value = "Datum"
+    # wsChart.range("L1").value = "Weight (kg) 7 Tage"
+    # wsChart.range("M1").value = "Weight (kg) 500kcal"
+    # wsChart.range("N1").value = "Weight (kg) 300kcal"
+    #
+    # # Daten für Diagramm filtern
+    # start_datum_chart = pd.Timestamp("2025-06-14")
+    # dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
+    #
+    # chart_data3 = pd.DataFrame({
+    #     "Datum": dfChart["Only Date"],
+    #     "Weight (kg)": dfChart["Weight (kg)"],
+    #     "Weight (kg) 500kcal": dfChart["Weight (kg) 500kcal"],
+    #     "Weight (kg) 300kcal": dfChart["Weight (kg) 300kcal"]
+    # })
+    #
+    # wsChart.range("K2").options(
+    #     index=False,
+    #     header=False
+    # ).value = chart_data3
+    #
+    # # ===============================
+    # # Diagramm 3 Gewicht vs 500kcal vs 300kcal
+    # # ===============================
+    #
+    # chart3 = wsChart.charts.add()
+    #
+    # chart3.chart_type = "line"
+    #
+    # chart3.set_source_data(
+    #     wsChart.range(
+    #         f"K1:N{len(chart_data3) + 1}"
+    #     )
+    # )
+    #
+    # # Position unter Diagramm 2
+    # chart3.top = 950
+    # chart3.left = 50
+    #
+    # chart3.width = 800
+    # chart3.height = 400
+    #
+    # # Excel COM Objekt
+    # excel_chart3 = chart3.api[1]
+    #
+    # # Titel
+    # excel_chart3.HasTitle = True
+    # excel_chart3.ChartTitle.Text = "Gewicht vs Defizit kcal"
+    #
+    # # X-Achse
+    # excel_chart3.Axes(1).HasTitle = True
+    # excel_chart3.Axes(1).AxisTitle.Text = "Datum"
+    #
+    # # Y-Achse
+    # excel_chart3.Axes(2).HasTitle = True
+    # excel_chart3.Axes(2).AxisTitle.Text = "KG"
+    #
+    # # Y-Achse Bereich festlegen
+    # excel_chart3.Axes(2).MinimumScale = 65
+    # excel_chart3.Axes(2).MaximumScale = 105
+    #
+    # # Legende unten
+    # excel_chart3.Legend.Position = -4107
+
     # ===============================
-
-    wsChart.range("F1").value = "Datum"
-    wsChart.range("G1").value = "Body Fat (%) 7 Tage"
-    wsChart.range("H1").value = "Fett % Soll"
-
-    # Daten für Diagramm filtern
-    start_datum_chart = pd.Timestamp("2025-06-14")
-    dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
-
-    chart_data2 = pd.DataFrame({
-        "Datum": dfChart["Only Date"],
-        "Body Fat (%) 7 Tage": dfChart["Body Fat (%) 7 Tage"],
-        "Fett % Soll": dfChart["Fett % Soll"]
-    })
-
-    wsChart.range("F2").options(
-        index=False,
-        header=False
-    ).value = chart_data2
-
-    # ===============================
-    # Diagramm 2 Soll Fett vs Ist Fett erstellen
-    # ===============================
-
-    chart2 = wsChart.charts.add()
-
-    chart2.chart_type = "line"
-
-    chart2.set_source_data(
-        wsChart.range(
-            f"F1:H{len(chart_data2) + 1}"
-        )
-    )
-
-    # Position unter Diagramm 1
-    chart2.top = 500
-    chart2.left = 50
-
-    chart2.width = 800
-    chart2.height = 400
-
-    # Excel COM Objekt
-    excel_chart2 = chart2.api[1]
-
-    # Titel
-    excel_chart2.HasTitle = True
-    excel_chart2.ChartTitle.Text = "Körperfett % vs Ziel"
-
-    # X-Achse
-    excel_chart2.Axes(1).HasTitle = True
-    excel_chart2.Axes(1).AxisTitle.Text = "Datum"
-
-    # Y-Achse
-    excel_chart2.Axes(2).HasTitle = True
-    excel_chart2.Axes(2).AxisTitle.Text = "%"
-
-    # Y-Achse Bereich festlegen
-    excel_chart2.Axes(2).MinimumScale = 10
-    excel_chart2.Axes(2).MaximumScale = 35
-
-    # Legende unten
-    excel_chart2.Legend.Position = -4107
-
-    # ===============================================================================
-    # Daten für Diagramm 3 Gewicht vs 500kcal vs 300kcal schreiben
-    # ===============================
-
-    wsChart.range("K1").value = "Datum"
-    wsChart.range("L1").value = "Weight (kg) 7 Tage"
-    wsChart.range("M1").value = "Weight (kg) 500kcal"
-    wsChart.range("N1").value = "Weight (kg) 300kcal"
-
-    # Daten für Diagramm filtern
-    start_datum_chart = pd.Timestamp("2025-06-14")
-    dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
-
-    chart_data3 = pd.DataFrame({
-        "Datum": dfChart["Only Date"],
-        "Weight (kg)": dfChart["Weight (kg)"],
-        "Weight (kg) 500kcal": dfChart["Weight (kg) 500kcal"],
-        "Weight (kg) 300kcal": dfChart["Weight (kg) 300kcal"]
-    })
-
-    wsChart.range("K2").options(
-        index=False,
-        header=False
-    ).value = chart_data3
-
-    # ===============================
-    # Diagramm 3 Gewicht vs 500kcal vs 300kcal
-    # ===============================
-
-    chart3 = wsChart.charts.add()
-
-    chart3.chart_type = "line"
-
-    chart3.set_source_data(
-        wsChart.range(
-            f"K1:N{len(chart_data3) + 1}"
-        )
-    )
-
-    # Position unter Diagramm 2
-    chart3.top = 950
-    chart3.left = 50
-
-    chart3.width = 800
-    chart3.height = 400
-
-    # Excel COM Objekt
-    excel_chart3 = chart3.api[1]
-
-    # Titel
-    excel_chart3.HasTitle = True
-    excel_chart3.ChartTitle.Text = "Gewicht vs Defizit kcal"
-
-    # X-Achse
-    excel_chart3.Axes(1).HasTitle = True
-    excel_chart3.Axes(1).AxisTitle.Text = "Datum"
-
-    # Y-Achse
-    excel_chart3.Axes(2).HasTitle = True
-    excel_chart3.Axes(2).AxisTitle.Text = "KG"
-
-    # Y-Achse Bereich festlegen
-    excel_chart3.Axes(2).MinimumScale = 65
-    excel_chart3.Axes(2).MaximumScale = 105
-
-    # Legende unten
-    excel_chart3.Legend.Position = -4107
-
-    # ===============================================================================
-    # Daten für Diagramm 4 Grundumsätze schreiben
+    # Daten für Diagramm 2 Grundumsätze
     # ===============================
 
     wsChart.range("Q1").value = "Datum"
     wsChart.range("R1").value = "BMR (kcal) Tanita"
-    wsChart.range("S1").value = "Grundumsatz pro Tag errechnet 30 Tage"
-    wsChart.range("T1").value = "Grundumsatz pro Tag errechnet 60 Tage"
-    wsChart.range("U1").value = "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"
+    wsChart.range("S1").value = (
+        "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,3"
+    )
 
     # Daten für Diagramm filtern
     start_datum_chart = pd.Timestamp("2025-06-14")
-    dfChart = dfGesamt[dfGesamt["Only Date"] >= start_datum_chart].copy()
+
+    dfChart = dfGesamt[
+        dfGesamt["Only Date"] >= start_datum_chart
+        ].copy()
 
     chart_data4 = pd.DataFrame({
         "Datum": dfChart["Only Date"],
         "BMR (kcal) Tanita": dfChart["BMR (kcal)"],
-        "Grundumsatz pro Tag errechnet 30 Tage": dfChart["Grundumsatz pro Tag errechnet 30 Tage"],
-        "Grundumsatz pro Tag errechnet 60 Tage": dfChart["Grundumsatz pro Tag errechnet 60 Tage"],
-        "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12": dfChart["Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"]
+        "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,3": (
+            dfChart[
+                "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,3"
+            ]
+        )
     })
 
     wsChart.range("Q2").options(
@@ -254,7 +259,7 @@ def erstelle_diagramme(workbook, dfGesamt):
     ).value = chart_data4
 
     # ===============================
-    # Diagramm 4 Grundumsätze
+    # Diagramm 2 Grundumsätze
     # ===============================
 
     chart4 = wsChart.charts.add()
@@ -263,7 +268,7 @@ def erstelle_diagramme(workbook, dfGesamt):
 
     chart4.set_source_data(
         wsChart.range(
-            f"Q1:U{len(chart_data4) + 1}"
+            f"Q1:S{len(chart_data4) + 1}"
         )
     )
 
