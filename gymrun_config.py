@@ -58,8 +58,8 @@ GYM_EXERCISES = {
 
     "Wadenheben einbeinig stehend mit KH": {
         "start_date": "2026-01-01",
-        "rm_min": 5,
-        "rm_max": 40,
+        "rm_min": 80,
+        "rm_max": 200,
         "vol_min": 0,
         "vol_max": 5000
     },
