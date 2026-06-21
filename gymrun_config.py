@@ -90,8 +90,8 @@ GYM_EXERCISES = {
 
     "Liegestütze breiter Griff": {
         "start_date": "2026-01-01",
-        "rm_min": 0,
-        "rm_max": 30,
+        "rm_min": 40,
+        "rm_max": 100,
         "vol_min": 0,
         "vol_max": 3000
     }
