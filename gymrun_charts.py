@@ -158,7 +158,7 @@ def create_rm_excel_chart(
         ("AH", "AI"),
         ("AL", "AM"),
         ("AP", "AQ"),
-        ("AT", "AV")
+        ("AT", "AU")
     ]
 
     date_col, value_col = (
@@ -299,7 +299,7 @@ def create_volume_excel_chart(
         ("AH", "AI"),
         ("AL", "AM"),
         ("AP", "AQ"),
-        ("AT", "AV")
+        ("AT", "AU")
     ]
 
     date_col, value_col = (
