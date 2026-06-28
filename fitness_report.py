@@ -15,6 +15,11 @@ from gymrun_charts import (
     create_rm_excel_chart,
     create_volume_excel_chart
 )
+print()
+print("=" * 60)
+print("           DASHBOARD KAI")
+print("=" * 60)
+print()
 
 print("Programm gestartet")
 
