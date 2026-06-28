@@ -156,9 +156,7 @@ def create_rm_excel_chart(
         ("Z", "AA"),
         ("AD", "AE"),
         ("AH", "AI"),
-        ("AL", "AM"),
-        ("AP", "AQ"),
-        ("AT", "AU")
+        ("AL", "AM")
     ]
 
     date_col, value_col = (
@@ -297,9 +295,7 @@ def create_volume_excel_chart(
         ("Z", "AA"),
         ("AD", "AE"),
         ("AH", "AI"),
-        ("AL", "AM"),
-        ("AP", "AQ"),
-        ("AT", "AU")
+        ("AL", "AM")
     ]
 
     date_col, value_col = (

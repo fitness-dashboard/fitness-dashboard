@@ -5,102 +5,207 @@ import sys
 
 def lade_daten():
 
+    # CSV import
+
     # ===============================
-    # Neueste Tanita CSV finden
+    # Neueste CSV-Datei automatisch finden
     # ===============================
 
-    downloads_ordner = Path(
-        r"D:\Documents\Eva\Fitness\CSV-Rohdaten"
-    )
+    def finde_neueste_csv(start_string):
 
-    passende_dateien = list(
-        downloads_ordner.rglob(
-            "csv_report_*.csv"
-        )
-    )
+        downloads_ordner = Path(r"D:\Downloads")
 
-    if not passende_dateien:
-
-        sys.exit(
-            "Keine Tanita Datei gefunden."
+        # Alle passenden CSV-Dateien suchen
+        passende_dateien = list(
+            downloads_ordner.rglob(
+                f"{start_string}*.csv"
+            )
         )
 
-    file_tanita = max(
-        passende_dateien,
-        key=lambda datei: (
-            datei.stat().st_mtime
+        # Prüfen ob Datei gefunden wurde
+        if not passende_dateien:
+            sys.exit(
+                f"Keine Datei gefunden: {start_string}"
+            )
+
+        # Neueste Datei auswählen
+        neueste_datei = max(
+            passende_dateien,
+            key=lambda datei: datei.stat().st_mtime
         )
+
+        return str(neueste_datei)
+
+    # ===============================
+    # DATEI 1: Messwerte-Übersicht MyFitnessPal
+    # ===============================
+    file1 = finde_neueste_csv(
+        "Messwerte-Übersicht-202"
     )
 
-    print(
-        "Gefundene Datei:"
+    print("Gefundene Datei:")
+    print(file1)
+
+    # ===============================
+    # Messwerte-Übersicht MyFitnessPal CSV einlesen
+    # ===============================
+
+    dfMesswerte = pd.read_csv(file1)
+
+    dfMesswerte["Only Date"] = pd.to_datetime(
+        dfMesswerte["Datum"],
+        errors="coerce"
+    ).dt.date
+
+    dfMesswerte.drop(columns=["Datum"], inplace=True)
+
+    # ===============================
+    # DATEI 2: Nährwerte-Übersicht MyFitnessPal
+    # ===============================
+    file2 = finde_neueste_csv(
+        "Nährwerte-Übersicht-202"
     )
 
-    print(
-        file_tanita
+    print("Gefundene Datei:")
+    print(file2)
+
+    # ===============================
+    # Nährwerte-übersicht MyFitnessPal CSV einlesen
+    # ===============================
+
+    dfNaehrwerte = pd.read_csv(file2)
+
+    dfNaehrwerte["Only Date"] = pd.to_datetime(
+        dfNaehrwerte["Datum"],
+        errors="coerce"
+    ).dt.date
+
+    dfNaehrwerte.drop(columns=["Datum"], inplace=True)
+
+    for col in dfNaehrwerte.columns:
+
+        if col != "Only Date":
+            dfNaehrwerte[col] = pd.to_numeric(
+                dfNaehrwerte[col],
+                errors="coerce"
+            )
+
+    dfNaehrwerte = dfNaehrwerte.groupby(
+        "Only Date",
+        as_index=False
+    ).sum(numeric_only=True)
+
+    # ===============================
+    # DATEI 3: Trainingsübersicht MyFitnessPal
+    # ===============================
+    file3 = finde_neueste_csv(
+        "Trainingsübersicht-202"
+    )
+
+    print("Gefundene Datei:")
+    print(file3)
+
+    # ===============================
+    # Trainingsübersicht MyFitnessPal CSV einlesen
+    # ===============================
+
+    dfTrainingswerte = pd.read_csv(file3)
+
+    dfTrainingswerte["Only Date"] = pd.to_datetime(
+        dfTrainingswerte["Datum"],
+        errors="coerce"
+    ).dt.date
+
+    dfTrainingswerte.drop(columns=["Datum"], inplace=True)
+
+    for col in dfTrainingswerte.columns:
+
+        if col != "Only Date":
+            dfTrainingswerte[col] = pd.to_numeric(
+                dfTrainingswerte[col],
+                errors="coerce"
+            )
+
+    dfTrainingswerte = dfTrainingswerte.groupby(
+        "Only Date",
+        as_index=False
+    ).sum(numeric_only=True)
+
+    # ===============================
+    # DATEI 4: TANITA neue Waage
+    # ===============================
+    fileTanitaNeu = finde_neueste_csv(
+        "csv_report_"
+    )
+
+    print("Gefundene Datei:")
+    print(fileTanitaNeu)
+
+    # ===============================
+    # TANITA Altdaten einlesen
+    # ===============================
+
+    dfTanitaAlt = pd.read_csv(
+        r"D:\Documents\Gesundheit Kai\Diät\Altdaten Tanita Neu fertig.csv"
     )
 
     # ===============================
-    # Tanita CSV laden
+    # TANITA aktuelle CSV einlesen
     # ===============================
 
-    df = pd.read_csv(
-        file_tanita
+    dfTanitaNeu = pd.read_csv(fileTanitaNeu)
+
+    # ===============================
+    # Datumsfelder getrennt umwandeln
+    # ===============================
+
+    dfTanitaAlt["Date"] = pd.to_datetime(
+        dfTanitaAlt["Date"],
+        format="%d.%m.%Y",
+        errors="coerce"
     )
 
-    # ===============================
-    # Datum umwandeln
-    # ===============================
-
-    df["Date"] = pd.to_datetime(
-        df["Date"],
+    dfTanitaNeu["Date"] = pd.to_datetime(
+        dfTanitaNeu["Date"],
         format="%Y-%m-%d %H:%M:%S",
         errors="coerce"
     )
 
-    df["Only Date"] = (
-        df["Date"].dt.date
+    # ===============================
+    # Beide Dateien zusammenführen
+    # ===============================
+
+    dfTanitaNeu = pd.concat(
+        [dfTanitaAlt, dfTanitaNeu],
+        ignore_index=True
     )
 
-    # ===============================
-    # Wichtige Spalten numerisch
-    # ===============================
 
-    numeric_columns = [
-        "Weight (kg)",
-        "BMI",
-        "Body Fat (%)",
-        "Muscle Mass (kg)",
-        "BMR (kcal)",
 
-        "Muscle mass - right arm",
-        "Muscle mass - left arm",
-        "Muscle mass - right leg",
-        "Muscle mass - left leg",
-        "Muscle mass - trunk",
+    dfTanitaNeu["Only Date"] = (
+        dfTanitaNeu["Date"].dt.date
+    )
 
-        "Body fat (%) - right arm",
-        "Body fat (%) - left arm",
-        "Body fat (%) - right leg",
-        "Body fat (%) - left leg",
-        "Body fat (%) - trunk"
-    ]
+    dfTanitaNeu["Weight (kg)"] = pd.to_numeric(
+        dfTanitaNeu["Weight (kg)"],
+        errors="coerce"
+    )
 
-    for col in numeric_columns:
+    dfTanitaNeu["Body Fat (%)"] = pd.to_numeric(
+        dfTanitaNeu["Body Fat (%)"],
+        errors="coerce"
+    )
 
-        if col in df.columns:
-
-            df[col] = pd.to_numeric(
-                df[col],
-                errors="coerce"
-            )
+    dfTanitaNeu["Muscle Mass (kg)"] = pd.to_numeric(
+        dfTanitaNeu["Muscle Mass (kg)"],
+        errors="coerce"
+    )
 
     # ===============================
     # Muskelmasse Segmente bereinigen
     # ===============================
 
     segment_spalten = [
-
         "Muscle mass - right arm",
         "Muscle mass - left arm",
         "Muscle mass - right leg",
@@ -109,44 +214,61 @@ def lade_daten():
     ]
 
     for spalte in segment_spalten:
+        dfTanitaNeu[spalte] = pd.to_numeric(
+            dfTanitaNeu[spalte],
+            errors="coerce"
+        )
 
-        if spalte in df.columns:
-
-            df[spalte] = (
-                df[spalte]
-                .replace(
-                    0,
-                    pd.NA
-                )
-            )
+        dfTanitaNeu[spalte] = (
+            dfTanitaNeu[spalte]
+            .replace(0, pd.NA)
+        )
 
     # ===============================
-    # Körperfett in kg
+    # Körperfett in kg berechnen
     # ===============================
 
-    df["Körperfettanteil kg"] = (
-
-        df["Weight (kg)"]
-        * df["Body Fat (%)"]
-        / 100
-
+    dfTanitaNeu["Körperfettanteil kg"] = (
+            dfTanitaNeu["Weight (kg)"]
+            * dfTanitaNeu["Body Fat (%)"]
+            / 100
     ).round(2)
 
     # ===============================
     # Nach Datum sortieren
     # ===============================
 
-    df = (
-
-        df
-        .sort_values(
-            "Date"
-        )
+    dfTanitaNeu = (
+        dfTanitaNeu
+        .sort_values("Date")
         .drop_duplicates(
             subset=["Only Date"],
             keep="last"
         )
-
     )
 
-    return df
+    # ===============================
+    # MERGE aller Daten
+    # ===============================
+    dfGesamt = dfMesswerte.copy()
+
+    dfGesamt = dfGesamt.merge(
+        dfNaehrwerte,
+        on="Only Date",
+        how="outer"
+    )
+
+    dfGesamt = dfGesamt.merge(
+        dfTrainingswerte,
+        on="Only Date",
+        how="outer"
+    )
+
+    dfGesamt = dfGesamt.merge(
+        dfTanitaNeu,
+        on="Only Date",
+        how="outer"
+    )
+
+
+    return dfGesamt

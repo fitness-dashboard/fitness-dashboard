@@ -36,26 +36,10 @@ print(
 
 dfGymMaxRM = build_gym_max_rm(dfGymRun)
 
-# =====================================
-# Volumen
-# =====================================
-
-dfGymVolume = build_gym_volume(
-    dfGymRun
-)
-
-all_volume_charts = create_all_volume_chart_data(
-    dfGymVolume
-)
-
-#Hilfe
-# print(dfGymMaxRM.columns.tolist())
-
 dfGymMaxRM.to_csv(
     "gymrun_rm_data.csv",
     index=False
 )
-
 
 import os
 
@@ -93,6 +77,16 @@ print(
     f"{dfGymMaxRM.shape[1]-1} Übungen"
 )
 
+# =====================================
+# Volumen
+# =====================================
+
+dfGymVolume = build_gym_volume(dfGymRun)
+
+volume_info = create_volume_chart_data(
+    dfGymVolume,
+    "Flachbankdrücken Langhantel"
+)
 
 print()
 print("Zeitraum:")
@@ -112,7 +106,6 @@ print(
 
 dfGesamt = lade_daten()
 dfGesamt = berechne_werte(dfGesamt)
-
 
 # CSV-Datei exportieren für Export nach Github
 dfGesamt.to_csv(

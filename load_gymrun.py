@@ -9,7 +9,9 @@ def lade_gymrun():
     # Neueste GymRun CSV finden
     # ==========================================
 
-    downloads_ordner = Path(r"D:\Documents\Eva\Fitness\CSV-Rohdaten")
+    downloads_ordner = Path(
+        r"D:\Documents\GymRun Laptop"
+    )
 
     dateien = list(
         downloads_ordner.rglob(

@@ -137,241 +137,240 @@ def berechne_werte(dfGesamt):
         .round(2)
     )
 
-    # # ===============================
-    # # Fett % Soll berechnen
-    # # ===============================
-    #
-    # start_datum = pd.Timestamp("2025-11-21")
-    # start_wert = 26.2
-    #
-    # # tägliche Reduktion
-    # reduktion_pro_tag = 1 / 30
-    #
-    # # Tage seit Startdatum berechnen
-    # tage_seit_start = (
-    #     dfGesamt["Only Date"] - start_datum
-    # ).dt.days
-    #
-    # # Zielwert berechnen
-    # dfGesamt["Fett % Soll"] = (
-    #     start_wert - tage_seit_start * reduktion_pro_tag
-    # ).round(2)
-    #
-    # # ===============================
-    # # Fett % Soll ab 21.05.2026 einfrieren
-    # # ===============================
-    #
-    # haltedatum = pd.Timestamp("2026-05-21")
-    #
-    # zielwert = dfGesamt.loc[
-    #     dfGesamt["Only Date"] == haltedatum,
-    #     "Fett % Soll"
-    # ].iloc[0]
-    #
-    # dfGesamt.loc[
-    #     dfGesamt["Only Date"] >= haltedatum,
-    #     "Fett % Soll"
-    # ] = zielwert
-
-
-    # # ===============================
-    # # Gewicht 500 kcal Soll berechnen
-    # # ===============================
-    #
-    # start_datum = pd.Timestamp("2025-06-14")
-    #
-    # start_wert_500kcal = (
-    #     dfGesamt.loc[
-    #         dfGesamt["Only Date"] == start_datum,
-    #         "Weight (kg)"
-    #     ]
-    #     .iloc[0]
-    # )
-    #
-    # # tägliche Reduktion
-    # reduktion_pro_tag_500kcal = 1 / 14
-    #
-    # # Tage seit Startdatum berechnen
-    # tage_seit_start = (
-    #         dfGesamt["Only Date"] - start_datum
-    # ).dt.days
-    #
-    # # Zielwert berechnen
-    # dfGesamt["Weight (kg) 500kcal"] = (
-    #         start_wert_500kcal
-    #         - tage_seit_start * reduktion_pro_tag_500kcal
-    # ).round(2)
-    #
-    # # ===============================
-    # # Gewicht 300 kcal Soll berechnen
-    # # ===============================
-    #
-    # start_datum = pd.Timestamp("2025-06-14")
-    #
-    # start_wert_300kcal = (
-    #     dfGesamt.loc[
-    #         dfGesamt["Only Date"] == start_datum,
-    #         "Weight (kg)"
-    #     ]
-    #     .iloc[0]
-    # )
-    #
-    # reduktion_pro_tag_300kcal = 1 / 23.33
-    #
-    # tage_seit_start = (
-    #         dfGesamt["Only Date"] - start_datum
-    # ).dt.days
-    #
-    # dfGesamt["Weight (kg) 300kcal"] = (
-    #         start_wert_300kcal
-    #         - tage_seit_start * reduktion_pro_tag_300kcal
-    # ).round(2)
-
-
-
-    # # ===============================
-    # # Summe Kalorien aus Training letzte 30 Tage
-    # # ===============================
-    #
-    # dfGesamt["Kalorien aus Training Summe 30 Tage"] = (
-    #     dfGesamt["Kalorien aus Training"]
-    #     .rolling(window=30, min_periods=30)
-    #     .sum()
-    #     .round(0)
-    # )
-    #
-    # # ===============================
-    # # Summe Kalorien aus Essen letzte 30 Tage
-    # # ===============================
-    #
-    # dfGesamt["Kalorien aus Essen Summe 30 Tage"] = (
-    #     dfGesamt["Kalorien"]
-    #     .rolling(window=30, min_periods=30)
-    #     .sum()
-    #     .round(0)
-    # )
-    #
-    # # ===============================
-    # # Summe Kalorien aus Training letzte 60 Tage
-    # # ===============================
-    #
-    # dfGesamt["Kalorien aus Training Summe 60 Tage"] = (
-    #     dfGesamt["Kalorien aus Training"]
-    #     .rolling(window=60, min_periods=60)
-    #     .sum()
-    #     .round(0)
-    # )
-    #
-    # # ===============================
-    # # Summe Kalorien aus Essen letzte 60 Tage
-    # # ===============================
-    #
-    # dfGesamt["Kalorien aus Essen Summe 60 Tage"] = (
-    #     dfGesamt["Kalorien"]
-    #     .rolling(window=60, min_periods=60)
-    #     .sum()
-    #     .round(0)
-    # )
-    #
-    # # ===============================
-    # # Kalorien durch Gewichtsänderung
-    # # Vergleich heute vs vor 30 Tagen
-    # # ===============================
-    #
-    # gewicht_vor_30_tagen = (
-    #     dfGesamt["Weight (kg) 7 Tage"]
-    #     .shift(30)
-    # )
-    #
-    # dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"] = (
-    #         (
-    #                 gewicht_vor_30_tagen
-    #                 - dfGesamt["Weight (kg) 7 Tage"]
-    #         )
-    #         * 7000
-    # ).where(
-    #     gewicht_vor_30_tagen.notna()
-    #     &
-    #     dfGesamt["Weight (kg) 7 Tage"].notna()
-    # ).round(0)
-    #
-    #
-    # # ===============================
-    # # Grundumsatz pro Tag errechnet 30 Tage
-    # # ===============================
-    #
-    # dfGesamt["Grundumsatz pro Tag errechnet 30 Tage"] = (
-    #     (
-    #         dfGesamt["Kalorien aus Essen Summe 30 Tage"]
-    #         - dfGesamt["Kalorien aus Training Summe 30 Tage"]
-    #         + dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"]
-    #     )
-    #     / 30
-    # ).where(
-    #     dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"].notna()
-    # ).round(0)
-    #
-    # # ===============================
-    # # Kalorien durch Gewichtsänderung
-    # # Vergleich heute vs vor 60 Tagen
-    # # ===============================
-    #
-    # gewicht_vor_60_tagen = (
-    #     dfGesamt["Weight (kg) 7 Tage"]
-    #     .shift(60)
-    # )
-    #
-    # dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"] = (
-    #         (
-    #                 gewicht_vor_60_tagen
-    #                 - dfGesamt["Weight (kg) 7 Tage"]
-    #         )
-    #         * 7000
-    # ).where(
-    #     gewicht_vor_60_tagen.notna()
-    #     &
-    #     dfGesamt["Weight (kg) 7 Tage"].notna()
-    # ).round(0)
-    #
-    # # ===============================
-    # # Grundumsatz pro Tag errechnet 60 Tage
-    # # ===============================
-    #
-    # dfGesamt["Grundumsatz pro Tag errechnet 60 Tage"] = (
-    #         (
-    #                 dfGesamt["Kalorien aus Essen Summe 60 Tage"]
-    #                 - dfGesamt["Kalorien aus Training Summe 60 Tage"]
-    #                 + dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"]
-    #         )
-    #         / 60
-    # ).where(
-    #     dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"].notna()
-    # ).round(0)
-    #
-    #
     # ===============================
-    # Grundumsatz nach Mifflin-St.-Jeor
-    # Frau, Faktor 1,3
+    # Fett % Soll berechnen
     # ===============================
 
-    geburtsdatum = pd.Timestamp("2012-04-27")
+    start_datum = pd.Timestamp("2025-11-21")
+    start_wert = 26.2
+
+    # tägliche Reduktion
+    reduktion_pro_tag = 1 / 30
+
+    # Tage seit Startdatum berechnen
+    tage_seit_start = (
+        dfGesamt["Only Date"] - start_datum
+    ).dt.days
+
+    # Zielwert berechnen
+    dfGesamt["Fett % Soll"] = (
+        start_wert - tage_seit_start * reduktion_pro_tag
+    ).round(2)
+
+    # ===============================
+    # Fett % Soll ab 21.05.2026 einfrieren
+    # ===============================
+
+    haltedatum = pd.Timestamp("2026-05-21")
+
+    zielwert = dfGesamt.loc[
+        dfGesamt["Only Date"] == haltedatum,
+        "Fett % Soll"
+    ].iloc[0]
+
+    dfGesamt.loc[
+        dfGesamt["Only Date"] >= haltedatum,
+        "Fett % Soll"
+    ] = zielwert
+
+
+    # ===============================
+    # Gewicht 500 kcal Soll berechnen
+    # ===============================
+
+    start_datum = pd.Timestamp("2025-06-14")
+
+    start_wert_500kcal = (
+        dfGesamt.loc[
+            dfGesamt["Only Date"] == start_datum,
+            "Weight (kg)"
+        ]
+        .iloc[0]
+    )
+
+    # tägliche Reduktion
+    reduktion_pro_tag_500kcal = 1 / 14
+
+    # Tage seit Startdatum berechnen
+    tage_seit_start = (
+            dfGesamt["Only Date"] - start_datum
+    ).dt.days
+
+    # Zielwert berechnen
+    dfGesamt["Weight (kg) 500kcal"] = (
+            start_wert_500kcal
+            - tage_seit_start * reduktion_pro_tag_500kcal
+    ).round(2)
+
+    # ===============================
+    # Gewicht 300 kcal Soll berechnen
+    # ===============================
+
+    start_datum = pd.Timestamp("2025-06-14")
+
+    start_wert_300kcal = (
+        dfGesamt.loc[
+            dfGesamt["Only Date"] == start_datum,
+            "Weight (kg)"
+        ]
+        .iloc[0]
+    )
+
+    reduktion_pro_tag_300kcal = 1 / 23.33
+
+    tage_seit_start = (
+            dfGesamt["Only Date"] - start_datum
+    ).dt.days
+
+    dfGesamt["Weight (kg) 300kcal"] = (
+            start_wert_300kcal
+            - tage_seit_start * reduktion_pro_tag_300kcal
+    ).round(2)
+
+
+
+    # ===============================
+    # Summe Kalorien aus Training letzte 30 Tage
+    # ===============================
+
+    dfGesamt["Kalorien aus Training Summe 30 Tage"] = (
+        dfGesamt["Kalorien aus Training"]
+        .rolling(window=30, min_periods=30)
+        .sum()
+        .round(0)
+    )
+
+    # ===============================
+    # Summe Kalorien aus Essen letzte 30 Tage
+    # ===============================
+
+    dfGesamt["Kalorien aus Essen Summe 30 Tage"] = (
+        dfGesamt["Kalorien"]
+        .rolling(window=30, min_periods=30)
+        .sum()
+        .round(0)
+    )
+
+    # ===============================
+    # Summe Kalorien aus Training letzte 60 Tage
+    # ===============================
+
+    dfGesamt["Kalorien aus Training Summe 60 Tage"] = (
+        dfGesamt["Kalorien aus Training"]
+        .rolling(window=60, min_periods=60)
+        .sum()
+        .round(0)
+    )
+
+    # ===============================
+    # Summe Kalorien aus Essen letzte 60 Tage
+    # ===============================
+
+    dfGesamt["Kalorien aus Essen Summe 60 Tage"] = (
+        dfGesamt["Kalorien"]
+        .rolling(window=60, min_periods=60)
+        .sum()
+        .round(0)
+    )
+
+    # ===============================
+    # Kalorien durch Gewichtsänderung
+    # Vergleich heute vs vor 30 Tagen
+    # ===============================
+
+    gewicht_vor_30_tagen = (
+        dfGesamt["Weight (kg) 7 Tage"]
+        .shift(30)
+    )
+
+    dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"] = (
+            (
+                    gewicht_vor_30_tagen
+                    - dfGesamt["Weight (kg) 7 Tage"]
+            )
+            * 7000
+    ).where(
+        gewicht_vor_30_tagen.notna()
+        &
+        dfGesamt["Weight (kg) 7 Tage"].notna()
+    ).round(0)
+
+
+    # ===============================
+    # Grundumsatz pro Tag errechnet 30 Tage
+    # ===============================
+
+    dfGesamt["Grundumsatz pro Tag errechnet 30 Tage"] = (
+        (
+            dfGesamt["Kalorien aus Essen Summe 30 Tage"]
+            - dfGesamt["Kalorien aus Training Summe 30 Tage"]
+            + dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"]
+        )
+        / 30
+    ).where(
+        dfGesamt["Kalorien Gewichtsänderung heute vs vor 30 Tage"].notna()
+    ).round(0)
+
+    # ===============================
+    # Kalorien durch Gewichtsänderung
+    # Vergleich heute vs vor 60 Tagen
+    # ===============================
+
+    gewicht_vor_60_tagen = (
+        dfGesamt["Weight (kg) 7 Tage"]
+        .shift(60)
+    )
+
+    dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"] = (
+            (
+                    gewicht_vor_60_tagen
+                    - dfGesamt["Weight (kg) 7 Tage"]
+            )
+            * 7000
+    ).where(
+        gewicht_vor_60_tagen.notna()
+        &
+        dfGesamt["Weight (kg) 7 Tage"].notna()
+    ).round(0)
+
+    # ===============================
+    # Grundumsatz pro Tag errechnet 60 Tage
+    # ===============================
+
+    dfGesamt["Grundumsatz pro Tag errechnet 60 Tage"] = (
+            (
+                    dfGesamt["Kalorien aus Essen Summe 60 Tage"]
+                    - dfGesamt["Kalorien aus Training Summe 60 Tage"]
+                    + dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"]
+            )
+            / 60
+    ).where(
+        dfGesamt["Kalorien Gewichtsänderung heute vs vor 60 Tage"].notna()
+    ).round(0)
+
+
+    # ===============================
+    # Grundumsatz nach Mifflin-St.-Jeor mit Faktor 1,12 (Den habe ich für mich rausgefunden)
+    # ===============================
+
+    geburtsdatum = pd.Timestamp("1975-01-19")
 
     # Alter berechnen
     dfGesamt["Alter"] = (
-            (
-                    dfGesamt["Only Date"] - geburtsdatum
-            ).dt.days / 365.25
+        (
+            dfGesamt["Only Date"] - geburtsdatum
+        ).dt.days / 365.25
     ).astype(int)
 
-    # Mifflin-St.-Jeor Formel (Frau)
-    dfGesamt["Grundumsatz Mifflin-St.-Jeor mit Faktor 1,3"] = (
-            (
-                    10 * dfGesamt["Weight (kg)"]
-                    + 6.25 * 170
-                    - 5 * dfGesamt["Alter"]
-                    - 161
-            )
-            * 1.3
+    # Mifflin-St.-Jeor Formel (Mann)
+    dfGesamt["Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"] = (
+        (
+            10 * dfGesamt["Weight (kg)"]
+            + 6.25 * 178
+            - 5 * dfGesamt["Alter"]
+            + 5
+        )
+        * 1.12
     ).round(0)
 
     return dfGesamt

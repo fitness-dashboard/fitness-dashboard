@@ -1,98 +1,83 @@
 GYM_EXERCISES = {
 
-    "Schulterdrücken Kurzhantel, Arnold Press (stehend)": {
-        "start_date": "2026-01-01",
-        "rm_min": 5,
-        "rm_max": 30,
+    "Flachbankdrücken Langhantel": {
+        "start_date": "2018-08-07",
+        "rm_min": 60,
+        "rm_max": 130,
         "vol_min": 0,
-        "vol_max": 500
+        "vol_max": 2500
     },
 
-    "Bizeps-Curls Kurzhantel (stehend)": {
-        "start_date": "2026-01-01",
-        "rm_min": 5,
-        "rm_max": 20,
-        "vol_min": 0,
-        "vol_max": 500
-    },
-
-    "Flachbankdips Beine hochgelegt": {
-        "start_date": "2026-01-01",
-        "rm_min": 0,
-        "rm_max": 40,
-        "vol_min": 0,
-        "vol_max": 500
-    },
-
-    "Trizepsdrücken SZ-Stange, French-Press (Flachbank)": {
-        "start_date": "2026-01-01",
-        "rm_min": 5,
-        "rm_max": 35,
-        "vol_min": 0,
-        "vol_max": 500
-    },
-
-    "Bulgarische Kniebeuge": {
-        "start_date": "2026-01-01",
-        "rm_min": 5,
+    "Brustdrücken sitzend Gym90 ein Arm": {
+        "start_date": "2026-06-12",
+        "rm_min": 30,
         "rm_max": 50,
         "vol_min": 0,
-        "vol_max": 1000
+        "vol_max": 800
     },
 
-    "Kniebeuge Langhantel Schulterauflage (stehend)": {
-        "start_date": "2026-01-01",
-        "rm_min": 10,
-        "rm_max": 100,
+    "Latziehen am Turm 1 Arm": {
+        "start_date": "2022-01-10",
+        "rm_min": 20,
+        "rm_max": 65,
         "vol_min": 0,
-        "vol_max": 1000
+        "vol_max": 900
     },
 
-    "Rumänisches Kreuzheben mit Langhantel (stehend)": {
-        "start_date": "2026-01-01",
-        "rm_min": 10,
-        "rm_max": 100,
+    "Kreuzheben Langhantel": {
+        "start_date": "2018-08-25",
+        "rm_min": 50,
+        "rm_max": 130,
         "vol_min": 0,
-        "vol_max": 1000
+        "vol_max": 2500
     },
 
-    "Wadenheben einbeinig stehend mit KH": {
-        "start_date": "2026-01-01",
-        "rm_min": 80,
-        "rm_max": 200,
-        "vol_min": 500,
-        "vol_max": 2000
-    },
-
-    "Klimmzüge mit Band": {
-        "start_date": "2026-01-01",
-        "rm_min": 0,
-        "rm_max": 20,
-        "vol_min": 0,
-        "vol_max": 500
-    },
-
-    "Rudern zur Brust": {
-        "start_date": "2026-01-01",
+    "Beinpresse am Gerät 1 Bein": {
+        "start_date": "2025-08-30",
         "rm_min": 5,
-        "rm_max": 50,
-        "vol_min": 0,
-        "vol_max": 500
-    },
-
-    "Rudern KH 1 Arm": {
-        "start_date": "2026-01-01",
-        "rm_min": 5,
-        "rm_max": 40,
+        "rm_max": 130,
         "vol_min": 0,
         "vol_max": 1500
     },
 
-    "Liegestütze breiter Griff": {
-        "start_date": "2026-01-01",
-        "rm_min": 40,
-        "rm_max": 100,
+    "Wadenheben sitzend 1 Bein": {
+        "start_date": "2021-10-03",
+        "rm_min": 10,
+        "rm_max": 50,
         "vol_min": 0,
-        "vol_max": 1000
+        "vol_max": 700
+    },
+
+    "Schulterdrücken KH 1 Bein": {
+        "start_date": "2022-10-23",
+        "rm_min": 0,
+        "rm_max": 25,
+        "vol_min": 0,
+        "vol_max": 400
+    },
+
+    "Bizeps Panatta": {
+        "start_date": "2026-05-30",
+        "rm_min": 10,
+        "rm_max": 30,
+        "vol_min": 200,
+        "vol_max": 500
+    },
+
+    "Trizepsdrücken am Gerät 1Arm (sitzend)": {
+        "start_date": "2019-05-03",
+        "rm_min": 0,
+        "rm_max": 20,
+        "vol_min": 0,
+        "vol_max": 150
+    },
+
+    "Hammer Bankdrücken am Gerät (sitzend) 1 Arm": {
+        "start_date": "2019-04-29",
+        "rm_min": 20,
+        "rm_max": 80,
+        "vol_min": 300,
+        "vol_max": 2500
     }
+
 }
