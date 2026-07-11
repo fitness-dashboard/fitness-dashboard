@@ -5,7 +5,8 @@ from config import (
     BIRTHDAY,
     HEIGHT_CM,
     ACTIVITY_FACTOR,
-    DIET_START_DATE
+    DIET_START_DATE,
+    DIET_END_DATE
 )
 
 def berechne_werte(dfGesamt):
@@ -155,9 +156,15 @@ def berechne_werte(dfGesamt):
     reduktion_pro_tag = 1 / 30
 
     # Tage seit Startdatum berechnen
+    diät_ende = pd.Timestamp(DIET_END_DATE)
+
     tage_seit_start = (
-        dfGesamt["Only Date"] - start_datum
+            dfGesamt["Only Date"] - start_datum
     ).dt.days
+
+    max_tage = (diät_ende - start_datum).days
+
+    tage_seit_start = tage_seit_start.clip(upper=max_tage)
 
     # Zielwert berechnen
     dfGesamt["Fett % Soll"] = (
