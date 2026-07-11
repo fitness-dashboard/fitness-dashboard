@@ -187,12 +187,12 @@ def berechne_werte(dfGesamt):
         "Fett % Soll"
     ] = zielwert
 
-
     # ===============================
     # Gewicht 500 kcal Soll berechnen
     # ===============================
 
-    start_datum = pd.Timestamp("2025-06-14")
+    start_datum = pd.Timestamp(DIET_START_DATE)
+    ende_datum = pd.Timestamp(DIET_END_DATE)
 
     start_wert_500kcal = (
         dfGesamt.loc[
@@ -202,15 +202,21 @@ def berechne_werte(dfGesamt):
         .iloc[0]
     )
 
-    # tägliche Reduktion
     reduktion_pro_tag_500kcal = 1 / 14
 
-    # Tage seit Startdatum berechnen
     tage_seit_start = (
             dfGesamt["Only Date"] - start_datum
     ).dt.days
 
-    # Zielwert berechnen
+    max_tage = (
+            ende_datum - start_datum
+    ).days
+
+    tage_seit_start = tage_seit_start.clip(
+        lower=0,
+        upper=max_tage
+    )
+
     dfGesamt["Weight (kg) 500kcal"] = (
             start_wert_500kcal
             - tage_seit_start * reduktion_pro_tag_500kcal
@@ -219,8 +225,6 @@ def berechne_werte(dfGesamt):
     # ===============================
     # Gewicht 300 kcal Soll berechnen
     # ===============================
-
-    start_datum = pd.Timestamp("2025-06-14")
 
     start_wert_300kcal = (
         dfGesamt.loc[
@@ -231,10 +235,6 @@ def berechne_werte(dfGesamt):
     )
 
     reduktion_pro_tag_300kcal = 1 / 23.33
-
-    tage_seit_start = (
-            dfGesamt["Only Date"] - start_datum
-    ).dt.days
 
     dfGesamt["Weight (kg) 300kcal"] = (
             start_wert_300kcal
