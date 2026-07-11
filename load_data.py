@@ -1,7 +1,10 @@
 import pandas as pd
 from pathlib import Path
 import sys
-
+from config import (
+    DOWNLOADS_FOLDER,
+    TANITA_OLDDATA_FILE
+)
 
 def lade_daten():
 
@@ -13,7 +16,7 @@ def lade_daten():
 
     def finde_neueste_csv(start_string):
 
-        downloads_ordner = Path(r"D:\Downloads")
+        downloads_ordner = DOWNLOADS_FOLDER
 
         # Alle passenden CSV-Dateien suchen
         passende_dateien = list(
@@ -146,7 +149,7 @@ def lade_daten():
     # ===============================
 
     dfTanitaAlt = pd.read_csv(
-        r"D:\Documents\Gesundheit Kai\Diät\Altdaten Tanita Neu fertig.csv"
+        TANITA_OLDDATA_FILE
     )
 
     # ===============================
