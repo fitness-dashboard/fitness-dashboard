@@ -22,9 +22,13 @@ from config import (
     FITNESS_CSV_FILE
 )
 
+import time
+
+start = time.perf_counter()
+
 print()
 print("=" * 60)
-print("           DASHBOARD KAI")
+print(f"{DASHBOARD_NAME}    Version {VERSION}")
 print("=" * 60)
 print()
 
@@ -255,3 +259,8 @@ subprocess.run(
 
 
 print("GitHub wurde aktualisiert.")
+
+ende = time.perf_counter()
+
+print()
+print(f"Fertig in {ende-start:.1f} Sekunden.")
