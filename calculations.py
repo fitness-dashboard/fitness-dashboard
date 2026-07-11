@@ -1,6 +1,13 @@
 import pandas as pd
 import numpy as np
 
+from config import (
+    BIRTHDAY,
+    HEIGHT_CM,
+    ACTIVITY_FACTOR,
+    DIET_START_DATE
+)
+
 def berechne_werte(dfGesamt):
     # ===============================
     # TAGES-AGGREGATION
@@ -353,7 +360,7 @@ def berechne_werte(dfGesamt):
     # Grundumsatz nach Mifflin-St.-Jeor mit Faktor 1,12 (Den habe ich für mich rausgefunden)
     # ===============================
 
-    geburtsdatum = pd.Timestamp("1975-01-19")
+    geburtsdatum = pd.Timestamp(BIRTHDAY)
 
     # Alter berechnen
     dfGesamt["Alter"] = (
@@ -366,7 +373,7 @@ def berechne_werte(dfGesamt):
     dfGesamt["Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"] = (
         (
             10 * dfGesamt["Weight (kg)"]
-            + 6.25 * 178
+            + 6.25 * HEIGHT_CM
             - 5 * dfGesamt["Alter"]
             + 5
         )

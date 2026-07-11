@@ -15,6 +15,13 @@ from gymrun_charts import (
     create_rm_excel_chart,
     create_volume_excel_chart
 )
+from config import (
+    DASHBOARD_NAME,
+    VERSION,
+    GYMRUN_RM_CSV_FILE,
+    FITNESS_CSV_FILE
+)
+
 print()
 print("=" * 60)
 print("           DASHBOARD KAI")
@@ -42,7 +49,7 @@ print(
 dfGymMaxRM = build_gym_max_rm(dfGymRun)
 
 dfGymMaxRM.to_csv(
-    "gymrun_rm_data.csv",
+    GYMRUN_RM_CSV_FILE,
     index=False
 )
 
@@ -62,7 +69,7 @@ print(
 
 print(
     os.path.abspath(
-        "gymrun_rm_data.csv"
+        GYMRUN_RM_CSV_FILE
     )
 )
 
@@ -114,7 +121,7 @@ dfGesamt = berechne_werte(dfGesamt)
 
 # CSV-Datei exportieren für Export nach Github
 dfGesamt.to_csv(
-    "fitness_dashboard_data.csv",
+    FITNESS_CSV_FILE,
     index=False
 )
 
