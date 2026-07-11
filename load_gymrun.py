@@ -1,7 +1,7 @@
 import pandas as pd
 from pathlib import Path
 import sys
-
+from config import GYMRUN_FOLDER
 
 def lade_gymrun():
 
@@ -9,9 +9,8 @@ def lade_gymrun():
     # Neueste GymRun CSV finden
     # ==========================================
 
-    downloads_ordner = Path(
-        r"D:\Documents\GymRun Laptop"
-    )
+
+    downloads_ordner = GYMRUN_FOLDER
 
     dateien = list(
         downloads_ordner.rglob(
