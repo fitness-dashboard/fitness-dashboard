@@ -142,6 +142,47 @@ dfGesamt.to_csv(
 
 workbook = exportiere_excel(dfGesamt)
 
+# =====================================
+# Ernährungsanalyse
+# =====================================
+
+dfNutrition = build_nutrition_dataframe(
+    dfGesamt
+)
+
+print()
+print("Nutrition Data:")
+print(dfNutrition)
+
+# =====================================
+# Excel-Blatt Data Nutrition
+# =====================================
+
+try:
+
+    workbook.sheets[
+        "Data Nutrition"
+    ].delete()
+
+    print(
+        "Data Nutrition gelöscht"
+    )
+
+except:
+    pass
+
+sheetNutrition = workbook.sheets.add(
+    "Data Nutrition"
+)
+
+sheetNutrition.range("A1").options(
+    index=False
+).value = dfNutrition
+
+print(
+    "Data Nutrition erstellt."
+)
+
 # ===============================
 # Alte GymRun-Blätter löschen
 # ===============================
