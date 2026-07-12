@@ -210,6 +210,10 @@ def build_nutrition_dataframe(dfGesamt):
 # Wochenauswertung Ernährung
 # ==========================================================
 
+# ==========================================================
+# Wochenauswertung Ernährung
+# ==========================================================
+
 def build_weekly_nutrition_summary(dfNutrition):
 
     import pandas as pd
@@ -318,7 +322,7 @@ def build_weekly_nutrition_summary(dfNutrition):
 
     )
 
-    weight_days["Weight Tracking"] = (
+    weight_days["Weight Days"] = (
 
         weight_days["Weight Days"]
 
@@ -335,9 +339,7 @@ def build_weekly_nutrition_summary(dfNutrition):
     dfWeekly = dfWeekly.merge(
 
         period[
-
             ["Week", "Period"]
-
         ],
 
         on="Week"
@@ -347,9 +349,7 @@ def build_weekly_nutrition_summary(dfNutrition):
     dfWeekly = dfWeekly.merge(
 
         nutrition_days[
-
             ["Week", "Nutrition"]
-
         ],
 
         on="Week"
@@ -359,13 +359,30 @@ def build_weekly_nutrition_summary(dfNutrition):
     dfWeekly = dfWeekly.merge(
 
         weight_days[
-
-            ["Week", "Weight Tracking"]
-
+            ["Week", "Weight Days"]
         ],
 
         on="Week"
 
+    )
+
+    # =====================================
+    # Entwicklung zur Vorwoche
+    # =====================================
+
+    dfWeekly["Weight Change"] = (
+        dfWeekly["Weight"]
+        .diff()
+    )
+
+    dfWeekly["Fat Mass Change"] = (
+        dfWeekly["Fat Mass"]
+        .diff()
+    )
+
+    dfWeekly["Muscle Mass Change"] = (
+        dfWeekly["Muscle Mass"]
+        .diff()
     )
 
     # =====================================
@@ -382,7 +399,7 @@ def build_weekly_nutrition_summary(dfNutrition):
 
             "Nutrition",
 
-            "Weight Tracking",
+            "Weight Days",
 
             "Calories %",
 
@@ -394,9 +411,15 @@ def build_weekly_nutrition_summary(dfNutrition):
 
             "Weight",
 
+            "Weight Change",
+
             "Fat Mass",
 
-            "Muscle Mass"
+            "Fat Mass Change",
+
+            "Muscle Mass",
+
+            "Muscle Mass Change"
 
         ]
 
@@ -418,9 +441,15 @@ def build_weekly_nutrition_summary(dfNutrition):
 
         "Weight",
 
+        "Weight Change",
+
         "Fat Mass",
 
-        "Muscle Mass"
+        "Fat Mass Change",
+
+        "Muscle Mass",
+
+        "Muscle Mass Change"
 
     ]:
 
