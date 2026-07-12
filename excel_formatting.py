@@ -70,3 +70,92 @@ def format_table(sheet, cell_range):
 
     table.api.Borders.Weight = 2
 
+# ==========================================================
+# Bedingte Formatierung für Veränderungen
+# ==========================================================
+
+def color_change_column(
+    sheet,
+    column,
+    positive_good=True,
+    first_row=2
+):
+
+    last_row = sheet.range(
+        f"{column}" + str(sheet.cells.last_cell.row)
+    ).end("up").row
+
+    for row in range(first_row, last_row + 1):
+
+        cell = sheet.range(
+            f"{column}{row}"
+        )
+
+        value = cell.value
+
+        if not isinstance(
+                value,
+                (int, float)
+        ):
+            continue
+
+
+        # =====================================
+        # Positive Veränderung ist gut
+        # =====================================
+
+        if positive_good:
+
+            if value > 0:
+
+                cell.color = (
+                    198,
+                    239,
+                    206
+                )
+
+            elif value < 0:
+
+                cell.color = (
+                    255,
+                    199,
+                    206
+                )
+
+            else:
+
+                cell.color = (
+                    255,
+                    235,
+                    156
+                )
+
+        # =====================================
+        # Negative Veränderung ist gut
+        # =====================================
+
+        else:
+
+            if value < 0:
+
+                cell.color = (
+                    198,
+                    239,
+                    206
+                )
+
+            elif value > 0:
+
+                cell.color = (
+                    255,
+                    199,
+                    206
+                )
+
+            else:
+
+                cell.color = (
+                    255,
+                    235,
+                    156
+                )

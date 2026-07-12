@@ -37,6 +37,7 @@ from nutrition import (
 
 from excel_formatting import (
     color_percentage_column,
+    color_change_column,
     format_table
 )
 
@@ -283,7 +284,7 @@ sheetReport = workbook.sheets.add(
 # Überschrift
 # =====================================
 
-sheetReport.range("A1:K1").merge()
+sheetReport.range("A1:N1").merge()
 
 sheetReport.range("A1").value = (
     "Nutrition Report"
@@ -305,7 +306,7 @@ sheetReport.range("A1").api.Font.Color = 16777215
 # Ernährungsphase
 # =====================================
 
-sheetReport.range("A3:K3").merge()
+sheetReport.range("A3:N3").merge()
 
 sheetReport.range("A3").value = (
     NUTRITION_PHASES[0]["name"]
@@ -402,7 +403,7 @@ sheetReport.range("N:N").column_width = 8
 
 
 
-header = sheetReport.range("A9:K9")
+header = sheetReport.range("A9:N9")
 
 header.api.Font.Bold = True
 
@@ -419,14 +420,32 @@ header.color = (
 sheetReport.autofit()
 
 # =====================================
+# Bedingte Formatierung Veränderungen
+# =====================================
+
+color_change_column(
+    sheetReport,
+    "L",
+    positive_good=False,
+    first_row=10
+)
+
+color_change_column(
+    sheetReport,
+    "N",
+    positive_good=True,
+    first_row=10
+)
+
+
+# =====================================
 # Rahmen
 # =====================================
 
-table = sheetReport.range(
-    "A9:K100"
+format_table(
+    sheetReport,
+    "A9:N100"
 )
-
-table.api.Borders.Weight = 2
 
 print(
     "Nutrition Report erstellt."
