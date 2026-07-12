@@ -15,15 +15,21 @@ from gymrun_charts import (
     create_rm_excel_chart,
     create_volume_excel_chart
 )
+
 from config import (
     DASHBOARD_NAME,
     VERSION,
     GYMRUN_RM_CSV_FILE,
-    FITNESS_CSV_FILE
+    FITNESS_CSV_FILE,
+    BIRTHDAY,
+    HEIGHT_CM,
+    ACTIVITY_FACTOR,
+    DIET_START_DATE,
+    NUTRITION_PHASES
 )
 
 import time
-from nutrition import (build_nutrition_dataframe)
+
 from nutrition import (
     build_nutrition_dataframe,
     build_weekly_nutrition_summary
@@ -198,6 +204,47 @@ sheetNutrition.range("A1").options(
 
 print(
     "Data Nutrition erstellt."
+)
+
+# =====================================
+# Excel-Blatt Nutrition Report
+# =====================================
+
+try:
+
+    workbook.sheets[
+        "Nutrition Report"
+    ].delete()
+
+    print(
+        "Nutrition Report gelöscht"
+    )
+
+except:
+    pass
+
+sheetReport = workbook.sheets.add(
+    "Nutrition Report"
+)
+
+sheetReport.range("A1").value = (
+    "Nutrition Report"
+)
+
+sheetReport.range("A3").value = (
+    "Phase"
+)
+
+sheetReport.range("B3").value = (
+    NUTRITION_PHASES[0]["name"]
+)
+
+sheetReport.range("A6").options(
+    index=False
+).value = dfNutritionWeekly
+
+print(
+    "Nutrition Report erstellt."
 )
 
 # ===============================
