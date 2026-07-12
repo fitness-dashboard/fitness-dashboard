@@ -80,7 +80,7 @@ NUTRITION_PHASES = [
         "phase": 1,
         "name": "Sommer Recomposition 2026 – 1900 kcal",
 
-        "start": "2026-07-11",
+        "start": "2026-06-11",
         "end": "2030-12-31",
 
         "calories": 1900,
