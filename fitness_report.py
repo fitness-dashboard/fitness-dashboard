@@ -36,7 +36,8 @@ from nutrition import (
 )
 
 from excel_formatting import (
-    color_percentage_column
+    color_percentage_column,
+    format_table
 )
 
 start = time.perf_counter()
@@ -248,6 +249,11 @@ color_percentage_column(
 color_percentage_column(
     sheetNutrition,
     "R"
+)
+
+format_table(
+    sheetNutrition,
+    "A1:R1000"
 )
 
 print("Data Nutrition erstellt.")

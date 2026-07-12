@@ -56,3 +56,17 @@ def color_percentage_column(sheet, column):
                 239,
                 206
             )
+
+
+# ==========================================================
+# Tabellen formatieren
+# ==========================================================
+
+def format_table(sheet, cell_range):
+
+    table = sheet.range(
+        cell_range
+    )
+
+    table.api.Borders.Weight = 2
+
