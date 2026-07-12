@@ -202,9 +202,87 @@ sheetNutrition.range("A1").options(
     index=False
 ).value = dfNutrition
 
-print(
-    "Data Nutrition erstellt."
+# =====================================
+# Tabellenkopf formatieren
+# =====================================
+
+header = sheetNutrition.range(
+    "A1:R1"
 )
+
+header.api.Font.Bold = True
+
+header.api.Font.Color = 16777215
+
+header.color = (
+    31,
+    78,
+    121
+)
+
+# =====================================
+# Spaltenbreite automatisch anpassen
+# =====================================
+
+sheetNutrition.autofit()
+
+# =====================================
+# Bereichsfarben
+# =====================================
+
+# Body
+sheetNutrition.range(
+    "D:F"
+).color = (
+    221,
+    235,
+    247
+)
+
+# Calories
+sheetNutrition.range(
+    "G:I"
+).color = (
+    252,
+    228,
+    214
+)
+
+# Protein
+sheetNutrition.range(
+    "J:L"
+).color = (
+    226,
+    239,
+    218
+)
+
+# Fat
+sheetNutrition.range(
+    "M:O"
+).color = (
+    255,
+    242,
+    204
+)
+
+# Carbs
+sheetNutrition.range(
+    "P:R"
+).color = (
+    232,
+    220,
+    247
+)
+
+# Kopfzeile erneut dunkelblau
+header.color = (
+    31,
+    78,
+    121
+)
+
+print("Data Nutrition erstellt.")
 
 # =====================================
 # Excel-Blatt Nutrition Report
