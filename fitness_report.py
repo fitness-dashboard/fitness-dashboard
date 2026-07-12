@@ -35,6 +35,10 @@ from nutrition import (
     build_weekly_nutrition_summary
 )
 
+from excel_formatting import (
+    color_percentage_column
+)
+
 start = time.perf_counter()
 
 print()
@@ -226,60 +230,24 @@ header.color = (
 
 sheetNutrition.autofit()
 
-# =====================================
-# Bereichsfarben
-# =====================================
-
-# Body
-sheetNutrition.range(
-    "D:F"
-).color = (
-    221,
-    235,
-    247
+color_percentage_column(
+    sheetNutrition,
+    "I"
 )
 
-# Calories
-sheetNutrition.range(
-    "G:I"
-).color = (
-    252,
-    228,
-    214
+color_percentage_column(
+    sheetNutrition,
+    "L"
 )
 
-# Protein
-sheetNutrition.range(
-    "J:L"
-).color = (
-    226,
-    239,
-    218
+color_percentage_column(
+    sheetNutrition,
+    "O"
 )
 
-# Fat
-sheetNutrition.range(
-    "M:O"
-).color = (
-    255,
-    242,
-    204
-)
-
-# Carbs
-sheetNutrition.range(
-    "P:R"
-).color = (
-    232,
-    220,
-    247
-)
-
-# Kopfzeile erneut dunkelblau
-header.color = (
-    31,
-    78,
-    121
+color_percentage_column(
+    sheetNutrition,
+    "R"
 )
 
 print("Data Nutrition erstellt.")
