@@ -23,6 +23,7 @@ from config import (
 )
 
 import time
+from nutrition import (build_nutrition_dataframe)
 
 start = time.perf_counter()
 
@@ -122,6 +123,16 @@ print(
 
 dfGesamt = lade_daten()
 dfGesamt = berechne_werte(dfGesamt)
+
+# =====================================
+# Ernährungsanalyse
+# =====================================
+
+dfNutrition = build_nutrition_dataframe(dfGesamt)
+
+print()
+print("Nutrition Data:")
+print(dfNutrition.head())
 
 # CSV-Datei exportieren für Export nach Github
 dfGesamt.to_csv(
