@@ -250,35 +250,84 @@ sheetReport.range("A1").color = (
 sheetReport.range("A1").api.Font.Color = 16777215
 
 # =====================================
-# Phase
+# Ernährungsphase
 # =====================================
 
-sheetReport.range("A3").value = (
-    "Phase"
-)
+sheetReport.range("A3:K3").merge()
 
-sheetReport.range("B3").value = (
+sheetReport.range("A3").value = (
     NUTRITION_PHASES[0]["name"]
 )
 
 sheetReport.range("A3").api.Font.Bold = True
-sheetReport.range("B3").api.Font.Bold = True
+sheetReport.range("A3").api.Font.Size = 12
+sheetReport.range("A3").api.HorizontalAlignment = -4108
 
-sheetReport.range("B3").color = (
-    221,
-    235,
-    247
+# =====================================
+# Kennzahlen
+# =====================================
+
+nutrition_days = (
+    dfNutrition["Calories Actual"]
+    .count()
 )
+
+weight_days = (
+    dfNutrition["Weight"]
+    .count()
+)
+
+total_days = len(dfNutrition)
+
+sheetReport.range("A5").value = "Nutrition Days"
+sheetReport.range("B5").value = (
+    f"{nutrition_days} of {total_days}"
+)
+
+sheetReport.range("A6").value = "Weight Days"
+sheetReport.range("B6").value = (
+    f"{weight_days} of {total_days}"
+)
+
+sheetReport.range("D5").value = "Average Calories"
+sheetReport.range("E5").value = round(
+    dfNutrition["Calories %"].mean(),
+    1
+)
+
+sheetReport.range("D6").value = "Average Protein"
+sheetReport.range("E6").value = round(
+    dfNutrition["Protein %"].mean(),
+    1
+)
+
+sheetReport.range("G5").value = "Average Fat"
+sheetReport.range("H5").value = round(
+    dfNutrition["Fat %"].mean(),
+    1
+)
+
+sheetReport.range("G6").value = "Average Carbs"
+sheetReport.range("H6").value = round(
+    dfNutrition["Carbs %"].mean(),
+    1
+)
+
+# Kennzahlen fett
+
+sheetReport.range("A5:A6").api.Font.Bold = True
+sheetReport.range("D5:D6").api.Font.Bold = True
+sheetReport.range("G5:G6").api.Font.Bold = True
 
 # =====================================
 # Wochenübersicht
 # =====================================
 
-sheetReport.range("A6").options(
+sheetReport.range("A9").options(
     index=False
 ).value = dfNutritionWeekly
 
-header = sheetReport.range("A6:K6")
+header = sheetReport.range("A9:K9")
 
 header.api.Font.Bold = True
 
@@ -289,7 +338,7 @@ header.color = (
 )
 
 # =====================================
-# Spaltenbreite automatisch anpassen
+# Spalten automatisch anpassen
 # =====================================
 
 sheetReport.autofit()
@@ -299,7 +348,7 @@ sheetReport.autofit()
 # =====================================
 
 table = sheetReport.range(
-    "A6:K100"
+    "A9:K100"
 )
 
 table.api.Borders.Weight = 2
