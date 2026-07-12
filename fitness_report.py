@@ -279,39 +279,47 @@ weight_days = (
 
 total_days = len(dfNutrition)
 
-sheetReport.range("A5").value = "Nutrition Days"
+sheetReport.range("A5").value = "Nutrition Days:"
 sheetReport.range("B5").value = (
     f"{nutrition_days} of {total_days}"
 )
 
-sheetReport.range("A6").value = "Weight Days"
+sheetReport.range("A6").value = "Weight Days:"
 sheetReport.range("B6").value = (
     f"{weight_days} of {total_days}"
 )
 
-sheetReport.range("D5").value = "Average Calories"
+sheetReport.range("D5").value = "Calories:"
+
 sheetReport.range("E5").value = round(
     dfNutrition["Calories %"].mean(),
     1
 )
 
-sheetReport.range("D6").value = "Average Protein"
+sheetReport.range("D6").value = "Protein:"
+
 sheetReport.range("E6").value = round(
     dfNutrition["Protein %"].mean(),
     1
 )
 
-sheetReport.range("G5").value = "Average Fat"
+sheetReport.range("G5").value = "Fat:"
+
 sheetReport.range("H5").value = round(
     dfNutrition["Fat %"].mean(),
     1
 )
 
-sheetReport.range("G6").value = "Average Carbs"
+sheetReport.range("G6").value = "Carbs:"
+
 sheetReport.range("H6").value = round(
     dfNutrition["Carbs %"].mean(),
     1
 )
+
+# Prozentformat
+
+sheetReport.range("E5:H6").number_format = '0.0 %'
 
 # Kennzahlen fett
 
