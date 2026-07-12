@@ -78,8 +78,11 @@ NUTRITION_PHASES = [
 
     {
         "phase": 1,
+        "name": "Sommer Recomposition 2026 – 1900 kcal",
+
         "start": "2026-07-11",
         "end": "2030-12-31",
+
         "calories": 1900,
         "protein_per_kg": 2.0,
         "fat_per_kg": 0.7,

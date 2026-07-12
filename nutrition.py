@@ -110,6 +110,12 @@ def build_nutrition_dataframe(dfGesamt):
                 if not pd.isna(row["Weight (kg)"])
                 else None,
 
+            "Fat Mass":
+                row["Körperfettanteil kg"],
+
+            "Muscle Mass":
+                row["Muscle Mass (kg)"],
+
             "Calories Target":
                 targets["calories"]
                 if targets
@@ -200,7 +206,233 @@ def build_nutrition_dataframe(dfGesamt):
 
     return pd.DataFrame(rows)
 
+# ==========================================================
+# Wochenauswertung Ernährung
+# ==========================================================
 
+def build_weekly_nutrition_summary(dfNutrition):
+
+    import pandas as pd
+
+    df = dfNutrition.copy()
+
+    # =====================================
+    # Ernährungswochen berechnen
+    # =====================================
+
+    start_date = df["Date"].min()
+
+    df["Week"] = (
+        (
+            df["Date"] - start_date
+        ).dt.days // 7
+    ) + 1
+
+    # =====================================
+    # Zeitraum je Woche
+    # =====================================
+
+    period = (
+
+        df.groupby("Week")["Date"]
+
+        .agg(["min", "max"])
+
+        .reset_index()
+
+    )
+
+    period["Period"] = (
+
+        period["min"].dt.strftime("%d.%m.")
+
+        + " - "
+
+        + period["max"].dt.strftime("%d.%m.")
+
+    )
+
+    # =====================================
+    # Wochendurchschnitte
+    # =====================================
+
+    dfWeekly = (
+
+        df.groupby("Week", as_index=False)
+
+        .agg({
+
+            "Calories %": "mean",
+
+            "Protein %": "mean",
+
+            "Fat %": "mean",
+
+            "Carbs %": "mean",
+
+            "Weight": "mean",
+
+            "Fat Mass": "mean",
+
+            "Muscle Mass": "mean"
+
+        })
+
+    )
+
+    # =====================================
+    # Tracking Ernährung
+    # =====================================
+
+    nutrition_days = (
+
+        df.groupby("Week")["Calories Actual"]
+
+        .count()
+
+        .reset_index(name="Nutrition Days")
+
+    )
+
+    nutrition_days["Nutrition"] = (
+
+        nutrition_days["Nutrition Days"]
+
+        .astype(str)
+
+        + "/7"
+
+    )
+
+    # =====================================
+    # Tracking Gewicht
+    # =====================================
+
+    weight_days = (
+
+        df.groupby("Week")["Weight"]
+
+        .count()
+
+        .reset_index(name="Weight Days")
+
+    )
+
+    weight_days["Weight Tracking"] = (
+
+        weight_days["Weight Days"]
+
+        .astype(str)
+
+        + "/7"
+
+    )
+
+    # =====================================
+    # Alles zusammenführen
+    # =====================================
+
+    dfWeekly = dfWeekly.merge(
+
+        period[
+
+            ["Week", "Period"]
+
+        ],
+
+        on="Week"
+
+    )
+
+    dfWeekly = dfWeekly.merge(
+
+        nutrition_days[
+
+            ["Week", "Nutrition"]
+
+        ],
+
+        on="Week"
+
+    )
+
+    dfWeekly = dfWeekly.merge(
+
+        weight_days[
+
+            ["Week", "Weight Tracking"]
+
+        ],
+
+        on="Week"
+
+    )
+
+    # =====================================
+    # Spalten sortieren
+    # =====================================
+
+    dfWeekly = dfWeekly[
+
+        [
+
+            "Week",
+
+            "Period",
+
+            "Nutrition",
+
+            "Weight Tracking",
+
+            "Calories %",
+
+            "Protein %",
+
+            "Fat %",
+
+            "Carbs %",
+
+            "Weight",
+
+            "Fat Mass",
+
+            "Muscle Mass"
+
+        ]
+
+    ]
+
+    # =====================================
+    # Runden
+    # =====================================
+
+    for col in [
+
+        "Calories %",
+
+        "Protein %",
+
+        "Fat %",
+
+        "Carbs %",
+
+        "Weight",
+
+        "Fat Mass",
+
+        "Muscle Mass"
+
+    ]:
+
+        dfWeekly[col] = (
+
+            dfWeekly[col]
+
+            .round(1)
+
+        )
+
+    return dfWeekly
 # ==========================================================
 # Test
 # ==========================================================

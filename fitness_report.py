@@ -24,6 +24,10 @@ from config import (
 
 import time
 from nutrition import (build_nutrition_dataframe)
+from nutrition import (
+    build_nutrition_dataframe,
+    build_weekly_nutrition_summary
+)
 
 start = time.perf_counter()
 
@@ -128,24 +132,6 @@ dfGesamt = berechne_werte(dfGesamt)
 # Ernährungsanalyse
 # =====================================
 
-dfNutrition = build_nutrition_dataframe(dfGesamt)
-
-print()
-print("Nutrition Data:")
-print(dfNutrition)
-
-# CSV-Datei exportieren für Export nach Github
-dfGesamt.to_csv(
-    FITNESS_CSV_FILE,
-    index=False
-)
-
-workbook = exportiere_excel(dfGesamt)
-
-# =====================================
-# Ernährungsanalyse
-# =====================================
-
 dfNutrition = build_nutrition_dataframe(
     dfGesamt
 )
@@ -153,6 +139,37 @@ dfNutrition = build_nutrition_dataframe(
 print()
 print("Nutrition Data:")
 print(dfNutrition)
+
+# =====================================
+# Wochenauswertung Ernährung
+# =====================================
+
+dfNutritionWeekly = (
+    build_weekly_nutrition_summary(
+        dfNutrition
+    )
+)
+
+print()
+print("Weekly Nutrition:")
+print(dfNutritionWeekly)
+
+# =====================================
+# CSV-Datei exportieren
+# =====================================
+
+dfGesamt.to_csv(
+    FITNESS_CSV_FILE,
+    index=False
+)
+
+# =====================================
+# Excel-Datei öffnen
+# =====================================
+
+workbook = exportiere_excel(
+    dfGesamt
+)
 
 # =====================================
 # Excel-Blatt Data Nutrition
