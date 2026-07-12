@@ -300,7 +300,7 @@ def build_weekly_nutrition_summary(dfNutrition):
 
         .astype(str)
 
-        + "/7"
+        + "of 7"
 
     )
 
@@ -324,7 +324,7 @@ def build_weekly_nutrition_summary(dfNutrition):
 
         .astype(str)
 
-        + "/7"
+        + "of 7"
 
     )
 
