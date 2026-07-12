@@ -317,9 +317,6 @@ sheetReport.range("H6").value = round(
     1
 )
 
-# Prozentformat
-
-sheetReport.range("E5:H6").number_format = '0.0 %'
 
 # Kennzahlen fett
 
