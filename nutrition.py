@@ -116,19 +116,19 @@ def build_nutrition_dataframe(dfGesamt):
                 targets["protein"],
 
             "Protein Actual":
-                row["Eiweiß"],
+                row["Eiweiß (g)"],
 
             "Fat Target":
                 targets["fat"],
 
             "Fat Actual":
-                row["Fett"],
+                row["Fett (g)"],
 
             "Carbs Target":
                 targets["carbs"],
 
             "Carbs Actual":
-                row["Kohlenhydrate"]
+                row["Kohlenhydrate (g)"]
 
         })
 
