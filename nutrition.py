@@ -112,11 +112,27 @@ def build_nutrition_dataframe(dfGesamt):
             "Calories Actual":
                 row["Kalorien"],
 
+            "Calories %":
+                round(
+                    row["Kalorien"]
+                    / targets["calories"]
+                    * 100,
+                    1
+                ),
+
             "Protein Target":
                 targets["protein"],
 
             "Protein Actual":
                 row["Eiweiß (g)"],
+
+            "Protein %":
+                round(
+                    row["Eiweiß (g)"]
+                    / targets["protein"]
+                    * 100,
+                    1
+                ),
 
             "Fat Target":
                 targets["fat"],
@@ -124,11 +140,27 @@ def build_nutrition_dataframe(dfGesamt):
             "Fat Actual":
                 row["Fett (g)"],
 
+            "Fat %":
+                round(
+                    row["Fett (g)"]
+                    / targets["fat"]
+                    * 100,
+                    1
+                ),
+
             "Carbs Target":
                 targets["carbs"],
 
             "Carbs Actual":
-                row["Kohlenhydrate (g)"]
+                row["Kohlenhydrate (g)"],
+
+            "Carbs %":
+                round(
+                    row["Kohlenhydrate (g)"]
+                    / targets["carbs"]
+                    * 100,
+                    1
+                )
 
         })
 

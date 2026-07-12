@@ -132,7 +132,7 @@ dfNutrition = build_nutrition_dataframe(dfGesamt)
 
 print()
 print("Nutrition Data:")
-print(dfNutrition.head())
+print(dfNutrition)
 
 # CSV-Datei exportieren für Export nach Github
 dfGesamt.to_csv(
