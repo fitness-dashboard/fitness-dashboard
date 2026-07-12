@@ -227,9 +227,31 @@ sheetReport = workbook.sheets.add(
     "Nutrition Report"
 )
 
+# =====================================
+# Überschrift
+# =====================================
+
+sheetReport.range("A1:K1").merge()
+
 sheetReport.range("A1").value = (
     "Nutrition Report"
 )
+
+sheetReport.range("A1").api.Font.Bold = True
+sheetReport.range("A1").api.Font.Size = 18
+sheetReport.range("A1").api.HorizontalAlignment = -4108
+
+sheetReport.range("A1").color = (
+    31,
+    78,
+    121
+)
+
+sheetReport.range("A1").api.Font.Color = 16777215
+
+# =====================================
+# Phase
+# =====================================
 
 sheetReport.range("A3").value = (
     "Phase"
@@ -239,9 +261,48 @@ sheetReport.range("B3").value = (
     NUTRITION_PHASES[0]["name"]
 )
 
+sheetReport.range("A3").api.Font.Bold = True
+sheetReport.range("B3").api.Font.Bold = True
+
+sheetReport.range("B3").color = (
+    221,
+    235,
+    247
+)
+
+# =====================================
+# Wochenübersicht
+# =====================================
+
 sheetReport.range("A6").options(
     index=False
 ).value = dfNutritionWeekly
+
+header = sheetReport.range("A6:K6")
+
+header.api.Font.Bold = True
+
+header.color = (
+    221,
+    235,
+    247
+)
+
+# =====================================
+# Spaltenbreite automatisch anpassen
+# =====================================
+
+sheetReport.autofit()
+
+# =====================================
+# Rahmen
+# =====================================
+
+table = sheetReport.range(
+    "A6:K100"
+)
+
+table.api.Borders.Weight = 2
 
 print(
     "Nutrition Report erstellt."
