@@ -384,6 +384,24 @@ sheetReport.range("A9").options(
     index=False
 ).value = dfNutritionWeekly
 
+# =====================================
+# Überschrift überschreiben
+# =====================================
+
+sheetReport.range("J9").value = "Δ Wt"
+
+sheetReport.range("L9").value = "Δ Fat"
+
+sheetReport.range("N9").value = "Δ Mus"
+
+sheetReport.range("J:J").column_width = 8
+
+sheetReport.range("L:L").column_width = 8
+
+sheetReport.range("N:N").column_width = 8
+
+
+
 header = sheetReport.range("A9:K9")
 
 header.api.Font.Bold = True
