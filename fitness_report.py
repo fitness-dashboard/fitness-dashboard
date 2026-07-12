@@ -289,28 +289,28 @@ sheetReport.range("B6").value = (
     f"{weight_days} of {total_days}"
 )
 
-sheetReport.range("D5").value = "Calories:"
+sheetReport.range("D5").value = "Calories (%):"
 
 sheetReport.range("E5").value = round(
     dfNutrition["Calories %"].mean(),
     1
 )
 
-sheetReport.range("D6").value = "Protein:"
+sheetReport.range("D6").value = "Protein (%):"
 
 sheetReport.range("E6").value = round(
     dfNutrition["Protein %"].mean(),
     1
 )
 
-sheetReport.range("G5").value = "Fat:"
+sheetReport.range("G5").value = "Fat (%):"
 
 sheetReport.range("H5").value = round(
     dfNutrition["Fat %"].mean(),
     1
 )
 
-sheetReport.range("G6").value = "Carbs:"
+sheetReport.range("G6").value = "Carbs (%):"
 
 sheetReport.range("H6").value = round(
     dfNutrition["Carbs %"].mean(),
