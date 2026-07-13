@@ -4,10 +4,13 @@ import sys
 from config import (
     DOWNLOADS_FOLDER,
     TANITA_FOLDER,
-    TANITA_OLDDATA_FILE
+    TANITA_OLDDATA_FILE,
+    MFP_ARCHIVE_FOLDER
 )
-
-
+from file_utils import (
+    archive_csv_file
+)
+from datetime import datetime
 
 def lade_daten():
 
@@ -115,6 +118,36 @@ def lade_daten():
 
     print("Gefundene Datei:")
     print(file3)
+
+    # ===============================
+    # Zeitstempel für Archiv
+    # ===============================
+
+    import_timestamp = datetime.now().strftime(
+        "%Y%m%d_%H%M%S"
+    )
+
+    # ===============================
+    # MyFitnessPal CSV-Dateien archivieren
+    # ===============================
+
+    archive_csv_file(
+        file1,
+        MFP_ARCHIVE_FOLDER,
+        import_timestamp
+    )
+
+    archive_csv_file(
+        file2,
+        MFP_ARCHIVE_FOLDER,
+        import_timestamp
+    )
+
+    archive_csv_file(
+        file3,
+        MFP_ARCHIVE_FOLDER,
+        import_timestamp
+    )
 
     # ===============================
     # Trainingsübersicht MyFitnessPal CSV einlesen

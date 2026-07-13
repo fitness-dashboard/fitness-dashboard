@@ -1,6 +1,5 @@
 from pathlib import Path
 from shutil import copy2
-from datetime import datetime
 
 
 # ==========================================================
@@ -8,9 +7,22 @@ from datetime import datetime
 # ==========================================================
 
 def archive_csv_file(
-    source_file,
-    destination_folder
+        source_file,
+        destination_folder,
+        timestamp
 ):
+    """
+    Kopiert eine CSV-Datei in das Archiv
+    und ergänzt den Dateinamen um einen Zeitstempel.
+
+    Beispiel:
+
+    Messwerte-Übersicht-2025-05-31-bis-2026-07-13.csv
+
+    →
+
+    Messwerte-Übersicht_20260713_183015.csv
+    """
 
     source = Path(source_file)
 
@@ -18,16 +30,27 @@ def archive_csv_file(
         destination_folder
     )
 
-    timestamp = datetime.now().strftime(
-        "%Y%m%d_%H%M%S"
+    # Zielordner bei Bedarf erstellen
+
+    destination.mkdir(
+        parents=True,
+        exist_ok=True
     )
 
+    # Dateinamen ohne Datumsbereich erzeugen
+
+    base_name = source.stem.split(
+        "-20"
+    )[0]
+
+    # Neuer Dateiname
+
     new_name = (
-        source.stem.split("-20")[0]
-        + "_"
-        + timestamp
-        + source.suffix
+        f"{base_name}_{timestamp}"
+        f"{source.suffix}"
     )
+
+    # Datei kopieren
 
     copy2(
         source,
@@ -37,10 +60,3 @@ def archive_csv_file(
     print(
         f"Archiviert: {new_name}"
     )
-
-    if __name__ == "__main__":
-        print("Test gestartet")
-
-        archive_csv_file(
-            ...
-        )
