@@ -171,7 +171,7 @@ csv_report_*.csv
 
 Zusätzlich werden historische Daten aus:
 
-D:\Documents\Gesundheit Kai\Diät\Altdaten Tanita Neu fertig.csv
+D:\Documents\Gesundheit Kai\Fitness\Altdaten Tanita Neu fertig.csv
 
 eingelesen.
 

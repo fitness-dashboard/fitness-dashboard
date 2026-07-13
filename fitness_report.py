@@ -473,6 +473,12 @@ for sheet_name in [
     except:
         pass
 
+#Hilfe
+print()
+print("Spalten in dfGesamt:")
+print(dfGesamt.columns.tolist())
+
+
 
 erstelle_diagramme(workbook, dfGesamt)
 

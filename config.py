@@ -23,11 +23,11 @@ DOWNLOADS_FOLDER = Path(
 )
 
 GYMRUN_FOLDER = Path(
-    r"D:\Documents\GymRun Laptop"
+    r"D:\Documents\Gesundheit Kai\Fitness\CSV-Datei GymRun Laptop"
 )
 
 TANITA_OLDDATA_FOLDER = Path(
-    r"D:\Documents\Gesundheit Kai\Diät"
+    r"D:\Documents\Gesundheit Kai\Fitness"
 )
 
 # ==========================================================

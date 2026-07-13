@@ -387,4 +387,9 @@ def berechne_werte(dfGesamt):
         * 1.12
     ).round(0)
 
+    # Interner Kurzname BMR (kcal)=Mifflin-St.-Jeor Formel (Mann)
+    dfGesamt["BMR (kcal)"] = dfGesamt[
+        "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"
+    ]
+
     return dfGesamt
