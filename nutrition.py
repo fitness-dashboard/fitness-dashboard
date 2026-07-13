@@ -26,14 +26,21 @@ def get_nutrition_phase(date):
 # Sollwerte berechnen
 # ==========================================================
 
-def calculate_macro_targets(date, weight):
+def calculate_macro_targets(
+    date,
+    weight,
+    training_calories=0
+):
 
     phase = get_nutrition_phase(date)
 
     if phase is None:
         return None
 
-    calories = phase["calories"]
+    calories = (
+            phase["calories"]
+            + training_calories
+    )
 
     protein = round(
         weight * phase["protein_per_kg"]
@@ -91,7 +98,12 @@ def build_nutrition_dataframe(dfGesamt):
         ):
             targets = calculate_macro_targets(
                 row["Only Date"],
-                row["Weight (kg)"]
+                row["Weight (kg)"],
+                row["Kalorien aus Training"]
+                if not pd.isna(
+                    row["Kalorien aus Training"]
+                )
+                else 0
             )
 
         rows.append({
@@ -205,10 +217,6 @@ def build_nutrition_dataframe(dfGesamt):
         day += 1
 
     return pd.DataFrame(rows)
-
-# ==========================================================
-# Wochenauswertung Ernährung
-# ==========================================================
 
 # ==========================================================
 # Wochenauswertung Ernährung
