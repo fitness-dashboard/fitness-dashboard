@@ -18,18 +18,37 @@ VERSION = "2.3"
 # Ordner
 # ==========================================================
 
+# Download-Ordner
+# (MyFitnessPal ZIP-Export)
+
 DOWNLOADS_FOLDER = Path(
     r"D:\Downloads"
 )
+
+# GymRun CSV-Dateien
+# (Google Drive Synchronisation)
 
 GYMRUN_FOLDER = Path(
     r"D:\Documents\Gesundheit Kai\Fitness\CSV-Datei GymRun Laptop"
 )
 
+# TANITA aktuelle CSV-Dateien
+
+TANITA_FOLDER = Path(
+    r"D:\Documents\Gesundheit Kai\Fitness\CSV-Dateien Tanita"
+)
+
+# MyFitnessPal Archiv
+
+MFP_ARCHIVE_FOLDER = Path(
+    r"D:\Documents\Gesundheit Kai\Fitness\CSV-Dateien MyFitnessPal"
+)
+
+# TANITA Altdaten
+
 TANITA_OLDDATA_FOLDER = Path(
     r"D:\Documents\Gesundheit Kai\Fitness"
 )
-
 # ==========================================================
 # Dateien
 # ==========================================================

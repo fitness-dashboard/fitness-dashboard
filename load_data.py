@@ -3,8 +3,11 @@ from pathlib import Path
 import sys
 from config import (
     DOWNLOADS_FOLDER,
+    TANITA_FOLDER,
     TANITA_OLDDATA_FILE
 )
+
+
 
 def lade_daten():
 
@@ -14,24 +17,24 @@ def lade_daten():
     # Neueste CSV-Datei automatisch finden
     # ===============================
 
-    def finde_neueste_csv(start_string):
+    def finde_neueste_csv(
+            start_string,
+            suchordner
+    ):
 
-        downloads_ordner = DOWNLOADS_FOLDER
+        suchordner = Path(suchordner)
 
-        # Alle passenden CSV-Dateien suchen
         passende_dateien = list(
-            downloads_ordner.rglob(
+            suchordner.rglob(
                 f"{start_string}*.csv"
             )
         )
 
-        # Prüfen ob Datei gefunden wurde
         if not passende_dateien:
             sys.exit(
                 f"Keine Datei gefunden: {start_string}"
             )
 
-        # Neueste Datei auswählen
         neueste_datei = max(
             passende_dateien,
             key=lambda datei: datei.stat().st_mtime
@@ -43,7 +46,8 @@ def lade_daten():
     # DATEI 1: Messwerte-Übersicht MyFitnessPal
     # ===============================
     file1 = finde_neueste_csv(
-        "Messwerte-Übersicht-202"
+        "Messwerte-Übersicht-202",
+        DOWNLOADS_FOLDER
     )
 
     print("Gefundene Datei:")
@@ -65,8 +69,10 @@ def lade_daten():
     # ===============================
     # DATEI 2: Nährwerte-Übersicht MyFitnessPal
     # ===============================
+
     file2 = finde_neueste_csv(
-        "Nährwerte-Übersicht-202"
+        "Nährwerte-Übersicht-202",
+        DOWNLOADS_FOLDER
     )
 
     print("Gefundene Datei:")
@@ -101,8 +107,10 @@ def lade_daten():
     # ===============================
     # DATEI 3: Trainingsübersicht MyFitnessPal
     # ===============================
+
     file3 = finde_neueste_csv(
-        "Trainingsübersicht-202"
+        "Trainingsübersicht-202",
+        DOWNLOADS_FOLDER
     )
 
     print("Gefundene Datei:")
@@ -137,8 +145,10 @@ def lade_daten():
     # ===============================
     # DATEI 4: TANITA neue Waage
     # ===============================
+
     fileTanitaNeu = finde_neueste_csv(
-        "csv_report_"
+        "csv_report_",
+        TANITA_FOLDER
     )
 
     print("Gefundene Datei:")
