@@ -41,7 +41,8 @@ from excel_formatting import (
     format_table
 )
 from training import (
-    build_training_block_dataframe
+    get_training_block,
+    filter_training_block
 )
 
 start = time.perf_counter()
@@ -115,20 +116,6 @@ print(
 )
 
 # =====================================
-# Training Block
-# =====================================
-
-dfTrainingBlock = (
-    build_training_block_dataframe(
-        dfGymMaxRM
-    )
-)
-
-print()
-print("Training Block:")
-print(dfTrainingBlock)
-
-# =====================================
 # Volumen
 # =====================================
 
@@ -157,6 +144,43 @@ print(
 
 dfGesamt = lade_daten()
 dfGesamt = berechne_werte(dfGesamt)
+
+# =====================================
+# Trainingsblock filtern
+# =====================================
+
+dfGymMaxRMBlock = filter_training_block(
+    dfGymMaxRM
+)
+
+dfGymVolumeBlock = filter_training_block(
+    dfGymVolume
+)
+
+print()
+
+print(
+    "Training Block RM:"
+)
+
+print(
+    dfGymMaxRMBlock[
+        ["Date"]
+    ]
+)
+
+print()
+
+print(
+    "Training Block Volume:"
+)
+
+print(
+    dfGymVolumeBlock[
+        ["Date"]
+    ]
+)
+
 
 # =====================================
 # Ernährungsanalyse

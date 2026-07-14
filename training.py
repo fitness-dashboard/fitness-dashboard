@@ -37,40 +37,48 @@ def get_training_block(date):
 
     return None
 
-# ==========================================================
-# Training Block DataFrame
-# ==========================================================
-
 import pandas as pd
 
 
-def build_training_block_dataframe(
-    dfGymMaxRM
+# ==========================================================
+# Daten eines Trainingsblocks filtern
+# ==========================================================
+
+def filter_training_block(
+        df,
+        block_number=1
 ):
 
-    df = dfGymMaxRM.copy()
+    block = next(
 
-    rows = []
+        (
+            b for b in TRAINING_BLOCKS
 
-    for _, row in df.iterrows():
+            if b["block"] == block_number
+        ),
 
-        block = get_training_block(
-            row["Date"]
-        )
+        None
 
-        if block is None:
-            continue
+    )
 
-        row_dict = row.to_dict()
+    if block is None:
 
-        row_dict["Training Block"] = (
-            block["name"]
-        )
+        return df.copy()
 
-        row_dict["Block"] = (
-            block["block"]
-        )
+    start = pd.Timestamp(
+        block["start"]
+    )
 
-        rows.append(row_dict)
+    end = pd.Timestamp(
+        block["end"]
+    )
 
-    return pd.DataFrame(rows)
+    return df[
+
+        (df["Date"] >= start)
+
+        &
+
+        (df["Date"] <= end)
+
+    ].copy()
