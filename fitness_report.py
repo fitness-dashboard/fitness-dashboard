@@ -536,7 +536,6 @@ print("Start Schleife")
 for index, exercise_name in enumerate(
     GYM_EXERCISES
 ):
-
     # =====================================
     # Historie
     # =====================================
@@ -556,7 +555,7 @@ for index, exercise_name in enumerate(
     )
 
     # =====================================
-    # Aktueller Trainingsblock
+    # Trainingsblock
     # =====================================
 
     create_rm_excel_chart(
@@ -565,6 +564,15 @@ for index, exercise_name in enumerate(
         exercise_name,
         index,
         "Data Training Block RM",
+        "Charts Training Block"
+    )
+
+    create_volume_excel_chart(
+        workbook,
+        dfGymVolumeBlock,
+        exercise_name,
+        index,
+        "Data Training Block Volume",
         "Charts Training Block"
     )
 
