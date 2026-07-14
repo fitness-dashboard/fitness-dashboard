@@ -40,6 +40,9 @@ from excel_formatting import (
     color_change_column,
     format_table
 )
+from training import (
+    build_training_block_dataframe
+)
 
 start = time.perf_counter()
 
@@ -62,6 +65,7 @@ print(
     f"GymRun geladen: "
     f"{len(dfGymRun):,} Datensätze"
 )
+
 
 # =====================================
 # MaxRM
@@ -109,6 +113,20 @@ print(
     f"{dfGymMaxRM.shape[0]} Trainingstage, "
     f"{dfGymMaxRM.shape[1]-1} Übungen"
 )
+
+# =====================================
+# Training Block
+# =====================================
+
+dfTrainingBlock = (
+    build_training_block_dataframe(
+        dfGymMaxRM
+    )
+)
+
+print()
+print("Training Block:")
+print(dfTrainingBlock)
 
 # =====================================
 # Volumen
