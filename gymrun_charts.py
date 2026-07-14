@@ -101,7 +101,9 @@ def create_rm_excel_chart(
     workbook,
     dfGymMaxRM,
     exercise_name,
-    index
+    index,
+    data_sheet_name="Data GymRun One RM",
+    chart_sheet_name="Charts GymRun"
 ):
 
     chart_info = create_rm_chart_data(
@@ -121,22 +123,22 @@ def create_rm_excel_chart(
     # Blatt holen oder anlegen
     try:
         wsGymRun = workbook.sheets[
-            "Data GymRun One RM"
+            data_sheet_name
         ]
     except:
         wsGymRun = workbook.sheets.add(
-            "Data GymRun One RM"
+            data_sheet_name
         )
 
     #wsGymRun.clear()
 
     try:
         wsGymRunCharts = workbook.sheets[
-            "Charts GymRun"
+            chart_sheet_name
         ]
     except:
         wsGymRunCharts = workbook.sheets.add(
-            "Charts GymRun"
+            chart_sheet_name
         )
 
     # Vorhandene Diagramme löschen
@@ -218,15 +220,14 @@ def create_rm_excel_chart(
 
     excel_chart.SeriesCollection().NewSeries()
 
-
     excel_chart.SeriesCollection(1).Values = (
-        f"='Data GymRun One RM'!"
+        f"='{data_sheet_name}'!"
         f"${value_col}$4:"
         f"${value_col}${last_row}"
     )
 
     excel_chart.SeriesCollection(1).XValues = (
-        f"='Data GymRun One RM'!"
+        f"='{data_sheet_name}'!"
         f"${date_col}$4:"
         f"${date_col}${last_row}"
     )
