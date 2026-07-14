@@ -157,30 +157,6 @@ dfGymVolumeBlock = filter_training_block(
     dfGymVolume
 )
 
-print()
-
-print(
-    "Training Block RM:"
-)
-
-print(
-    dfGymMaxRMBlock[
-        ["Date"]
-    ]
-)
-
-print()
-
-print(
-    "Training Block Volume:"
-)
-
-print(
-    dfGymVolumeBlock[
-        ["Date"]
-    ]
-)
-
 
 # =====================================
 # Ernährungsanalyse
@@ -514,11 +490,6 @@ for sheet_name in [
 
     except:
         pass
-
-#Hilfe
-print()
-print("Spalten in dfGesamt:")
-print(dfGesamt.columns.tolist())
 
 
 
