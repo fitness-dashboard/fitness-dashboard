@@ -270,7 +270,9 @@ def create_volume_excel_chart(
     workbook,
     dfGymVolume,
     exercise_name,
-    index
+    index,
+    data_sheet_name="Data GymRun Volume",
+    chart_sheet_name="Charts GymRun"
 ):
 
     volume_info = create_volume_chart_data(
@@ -309,11 +311,11 @@ def create_volume_excel_chart(
 
     try:
         wsGymRunVolume = workbook.sheets[
-            "Data GymRun Volume"
+            data_sheet_name
         ]
     except:
         wsGymRunVolume = workbook.sheets.add(
-            "Data GymRun Volume"
+            data_sheet_name
         )
 
     # Nicht mehr löschen
@@ -357,11 +359,11 @@ def create_volume_excel_chart(
 
     try:
         wsGymRunCharts = workbook.sheets[
-            "Charts GymRun"
+            chart_sheet_name
         ]
     except:
         wsGymRunCharts = workbook.sheets.add(
-            "Charts GymRun"
+            chart_sheet_name
         )
 
     chart = wsGymRunCharts.charts.add()
@@ -379,13 +381,13 @@ def create_volume_excel_chart(
     excel_chart.SeriesCollection().NewSeries()
 
     excel_chart.SeriesCollection(1).Values = (
-        f"='Data GymRun Volume'!"
+        f"='{data_sheet_name}'!"
         f"${value_col}$4:"
         f"${value_col}${last_row}"
     )
 
     excel_chart.SeriesCollection(1).XValues = (
-        f"='Data GymRun Volume'!"
+        f"='{data_sheet_name}'!"
         f"${date_col}$4:"
         f"${date_col}${last_row}"
     )
