@@ -532,10 +532,14 @@ erstelle_diagramme(workbook, dfGesamt)
 #Hilfe
 print("Start Schleife")
 
-#Schleife durch die Übungen
+# Schleife durch die Übungen
 for index, exercise_name in enumerate(
     GYM_EXERCISES
 ):
+
+    # =====================================
+    # Historie
+    # =====================================
 
     create_rm_excel_chart(
         workbook,
@@ -549,6 +553,19 @@ for index, exercise_name in enumerate(
         dfGymVolume,
         exercise_name,
         index
+    )
+
+    # =====================================
+    # Aktueller Trainingsblock
+    # =====================================
+
+    create_rm_excel_chart(
+        workbook,
+        dfGymMaxRMBlock,
+        exercise_name,
+        index,
+        "Data Training Block RM",
+        "Charts Training Block"
     )
 
 # ===============================
