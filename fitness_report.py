@@ -581,12 +581,45 @@ for index, exercise_name in enumerate(
 # ===============================
 
 sheet_order = [
+
+    # =====================================
+    # Rohdaten
+    # =====================================
+
     "Data Food and Body",
-    "Data GymRun Volume",
+
+    "Data Nutrition",
+
     "Data GymRun One RM",
+
+    "Data GymRun Volume",
+
+    "Data Training Block RM",
+
+    "Data Training Block Volume",
+
+    # =====================================
+    # Reports
+    # =====================================
+
+    "Nutrition Report",
+
+    # =====================================
+    # Diagramme
+    # =====================================
+
     "Charts Body",
+
     "Charts GymRun",
+
+    "Charts Training Block",
+
+    # =====================================
+    # Dashboard
+    # =====================================
+
     "Körper"
+
 ]
 
 for i, sheet_name in enumerate(sheet_order):
