@@ -157,9 +157,6 @@ def get_training_block_summary(
     }
 
 
-# ==========================================================
-# Neue Personal Records
-# ==========================================================
 
 # ==========================================================
 # Neue Personal Records innerhalb eines Trainingsblocks
@@ -198,16 +195,6 @@ def get_new_prs(
         block["start"]
     )
 
-    # =====================================
-    # Alle Trainings bis einschließlich
-    # Startdatum des Trainingsblocks
-    # =====================================
-
-    dfBefore = dfGymMaxRM[
-
-        dfGymMaxRM["Date"] <= start
-
-    ]
 
     # =====================================
     # Alle Trainings innerhalb
@@ -238,9 +225,14 @@ def get_new_prs(
         # PR zu Beginn des Blocks
         # -----------------------------
 
-        start_pr = dfBefore[
+        erste_werte = dfBlock[
             exercise
-        ].max()
+        ].dropna()
+
+        if len(erste_werte) == 0:
+            continue
+
+        start_pr = erste_werte.iloc[0]
 
         # -----------------------------
         # Aktueller PR im Trainingsblock
