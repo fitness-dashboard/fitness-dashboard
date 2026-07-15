@@ -439,7 +439,7 @@ sheetTraining = workbook.sheets.add(
 # Überschrift
 # =====================================
 
-sheetTraining.range("A1:F1").merge()
+sheetTraining.range("A1:E1").merge()
 
 sheetTraining.range("A1").value = (
     "Training Block Report"
@@ -461,7 +461,7 @@ sheetTraining.range("A1").api.Font.Color = 16777215
 # Trainingsblock
 # =====================================
 
-sheetTraining.range("A3:E3").merge()
+sheetTraining.range("A3:F3").merge()
 
 sheetTraining.range("A3").value = (
     training_summary["name"]
