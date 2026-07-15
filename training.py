@@ -257,7 +257,14 @@ def get_new_prs(
 
         if pd.isna(start_pr):
 
-            start_pr = 0
+            erste_werte = dfBlock[
+                exercise
+            ].dropna()
+
+            if len(erste_werte) == 0:
+                continue
+
+            start_pr = erste_werte.iloc[0]
 
         # -----------------------------
         # Keine Übung im Block
