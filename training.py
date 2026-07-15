@@ -251,6 +251,21 @@ def get_new_prs(
         ].max()
 
         # -----------------------------
+        # Datum des aktuellen PR
+        # -----------------------------
+
+        current_pr_date = None
+
+        if not pd.isna(current_pr):
+            current_pr_date = dfBlock.loc[
+
+                dfBlock[exercise] == current_pr,
+
+                "Date"
+
+            ].max()
+
+        # -----------------------------
         # Falls vor dem Trainingsblock
         # noch kein Wert vorhanden war
         # -----------------------------
@@ -301,8 +316,12 @@ def get_new_prs(
                     round(
                         current_pr - start_pr,
                         1
-                    )
+                    ),
 
+                "Date":
+                    current_pr_date.strftime(
+                        "%d.%m.%Y"
+                    )
             })
 
     # =====================================
