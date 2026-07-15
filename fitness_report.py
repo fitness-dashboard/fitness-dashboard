@@ -182,9 +182,6 @@ dfNutrition = build_nutrition_dataframe(
     dfGesamt
 )
 
-print()
-print("Nutrition Data:")
-print(dfNutrition)
 
 # =====================================
 # Wochenauswertung Ernährung
@@ -195,10 +192,6 @@ dfNutritionWeekly = (
         dfNutrition
     )
 )
-
-print()
-print("Weekly Nutrition:")
-print(dfNutritionWeekly)
 
 # =====================================
 # CSV-Datei exportieren

@@ -117,9 +117,13 @@ def get_training_block_summary(
         block["start"]
     )
 
-    end = pd.Timestamp(
-        block["end"]
-    )
+    if len(df) > 0:
+
+        end = df["Date"].max()
+
+    else:
+
+        end = start
 
     training_days = len(df)
 
