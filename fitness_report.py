@@ -461,7 +461,7 @@ sheetTraining.range("A1").api.Font.Color = 16777215
 # Trainingsblock
 # =====================================
 
-sheetTraining.range("A3:F3").merge()
+sheetTraining.range("A3:E3").merge()
 
 sheetTraining.range("A3").value = (
     training_summary["name"]
