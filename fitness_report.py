@@ -178,7 +178,15 @@ new_prs = get_new_prs(
     dfGymMaxRM
 )
 
+print()
 
+print(
+    "New PRs:"
+)
+
+print(
+    new_prs
+)
 
 # =====================================
 # Ernährungsanalyse

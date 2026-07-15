@@ -1,6 +1,8 @@
 from datetime import datetime
-
 from config import TRAINING_BLOCKS
+from gymrun_config import (
+    GYM_EXERCISES
+)
 
 
 # ==========================================================
@@ -159,10 +161,18 @@ def get_training_block_summary(
 # Neue Personal Records
 # ==========================================================
 
+# ==========================================================
+# Neue Personal Records innerhalb eines Trainingsblocks
+# ==========================================================
+
 def get_new_prs(
         dfGymMaxRM,
         block_number=1
 ):
+
+    # =====================================
+    # Trainingsblock suchen
+    # =====================================
 
     block = next(
 
@@ -180,21 +190,116 @@ def get_new_prs(
 
         return None
 
+    # =====================================
+    # Startdatum des Trainingsblocks
+    # =====================================
+
     start = pd.Timestamp(
         block["start"]
     )
 
+    # =====================================
+    # Alle Trainings bis einschließlich
+    # Startdatum des Trainingsblocks
+    # =====================================
+
     dfBefore = dfGymMaxRM[
+
         dfGymMaxRM["Date"] <= start
+
     ]
 
+    # =====================================
+    # Alle Trainings innerhalb
+    # des Trainingsblocks
+    # =====================================
+
     dfBlock = filter_training_block(
+
         dfGymMaxRM,
+
         block_number
+
     )
 
-    print(dfBefore.head())
+    # =====================================
+    # Ergebnisse sammeln
+    # =====================================
 
-    print(dfBlock.head())
+    results = []
 
-    return None
+    # =====================================
+    # Jede Übung einzeln prüfen
+    # =====================================
+
+    for exercise in GYM_EXERCISES:
+
+        # -----------------------------
+        # PR zu Beginn des Blocks
+        # -----------------------------
+
+        start_pr = dfBefore[
+            exercise
+        ].max()
+
+        # -----------------------------
+        # Aktueller PR im Trainingsblock
+        # -----------------------------
+
+        current_pr = dfBlock[
+            exercise
+        ].max()
+
+        # -----------------------------
+        # Falls vor dem Trainingsblock
+        # noch kein Wert vorhanden war
+        # -----------------------------
+
+        if pd.isna(start_pr):
+
+            start_pr = 0
+
+        # -----------------------------
+        # Keine Übung im Block
+        # -----------------------------
+
+        if pd.isna(current_pr):
+
+            continue
+
+        # -----------------------------
+        # Nur Verbesserungen aufnehmen
+        # -----------------------------
+
+        if current_pr > start_pr:
+
+            results.append({
+
+                "Exercise":
+                    exercise,
+
+                "PR at Start":
+                    round(
+                        start_pr,
+                        1
+                    ),
+
+                "Current PR":
+                    round(
+                        current_pr,
+                        1
+                    ),
+
+                "Δ PR":
+                    round(
+                        current_pr - start_pr,
+                        1
+                    )
+
+            })
+
+    # =====================================
+    # Ergebnis zurückgeben
+    # =====================================
+
+    return pd.DataFrame(results)
