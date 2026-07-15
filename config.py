@@ -119,7 +119,7 @@ TRAINING_BLOCKS = [
 
         "name": "Clean Bulk 2026",
 
-        "start": "2026-05-11",
+        "start": "2026-06-11",
 
         "end": "2026-12-31",
     },

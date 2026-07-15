@@ -3,8 +3,15 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 
+st.set_page_config(
+    page_title="Fitness Dashboard",
+    page_icon="💪",
+    layout="wide"
+)
 
-st.title("Fitness Dashboard")
+st.title("🏠 Dashboard")
+
+#st.title("Fitness Dashboard")
 
 
 dfGesamt = pd.read_csv(

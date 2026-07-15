@@ -505,7 +505,7 @@ sheetTraining.range("E6").value = (
 )
 
 sheetTraining.range("A5:A7").api.Font.Bold = True
-sheetTraining.range("D5:D6").api.Font.Bold = True
+sheetTraining.range("D5:D7").api.Font.Bold = True
 
 sheetTraining.range("D7").value = (
     "Average Δ RM:"
