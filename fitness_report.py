@@ -482,6 +482,13 @@ sheetTraining.range("B5").value = (
 sheetTraining.range("A6").value = "Training Days:"
 sheetTraining.range("B6").value = training_summary["training_days"]
 
+sheetTraining.range("A7").value = (
+    "Exercises Improved:"
+)
+sheetTraining.range("B7").value = (
+    f"{len(new_prs)} of {len(GYM_EXERCISES)}"
+)
+
 sheetTraining.range("D5").value = "Duration:"
 sheetTraining.range("E5").value = (
     f'{training_summary["duration_days"]} days'
@@ -492,7 +499,7 @@ sheetTraining.range("E6").value = (
     f'{training_summary["frequency"]} / week'
 )
 
-sheetTraining.range("A5:A6").api.Font.Bold = True
+sheetTraining.range("A5:A7").api.Font.Bold = True
 sheetTraining.range("D5:D6").api.Font.Bold = True
 
 sheetTraining.autofit()
