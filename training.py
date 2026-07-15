@@ -82,3 +82,70 @@ def filter_training_block(
         (df["Date"] <= end)
 
     ].copy()
+
+# ==========================================================
+# Training Block Kennzahlen
+# ==========================================================
+
+def get_training_block_summary(
+        dfGymMaxRM,
+        block_number=1
+):
+
+    df = filter_training_block(
+        dfGymMaxRM,
+        block_number
+    )
+
+    block = next(
+
+        (
+            b for b in TRAINING_BLOCKS
+
+            if b["block"] == block_number
+        ),
+
+        None
+
+    )
+
+    if block is None:
+
+        return None
+
+    start = pd.Timestamp(
+        block["start"]
+    )
+
+    end = pd.Timestamp(
+        block["end"]
+    )
+
+    training_days = len(df)
+
+    duration_days = (
+        end - start
+    ).days + 1
+
+    weeks = duration_days / 7
+
+    frequency = round(
+        training_days / weeks,
+        1
+    )
+
+    return {
+
+        "name": block["name"],
+
+        "start": start,
+
+        "end": end,
+
+        "training_days": training_days,
+
+        "duration_days": duration_days,
+
+        "frequency": frequency
+
+    }

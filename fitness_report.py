@@ -41,8 +41,8 @@ from excel_formatting import (
     format_table
 )
 from training import (
-    get_training_block,
-    filter_training_block
+    filter_training_block,
+    get_training_block_summary
 )
 
 start = time.perf_counter()
@@ -155,6 +155,22 @@ dfGymMaxRMBlock = filter_training_block(
 
 dfGymVolumeBlock = filter_training_block(
     dfGymVolume
+)
+
+training_summary = (
+    get_training_block_summary(
+        dfGymMaxRM
+    )
+)
+
+print()
+
+print(
+    "Training Block Summary:"
+)
+
+print(
+    training_summary
 )
 
 
