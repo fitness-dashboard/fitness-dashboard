@@ -502,7 +502,7 @@ sheetTraining.autofit()
 # =====================================
 
 sheetTraining.range("A9").value = (
-    "New Personal Records"
+    "Exercise Progress"
 )
 
 sheetTraining.range("A9").api.Font.Bold = True

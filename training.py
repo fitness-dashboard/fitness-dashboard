@@ -292,19 +292,19 @@ def get_new_prs(
                 "Exercise":
                     exercise,
 
-                "PR at Start":
+                "Start RM":
                     round(
                         start_pr,
                         1
                     ),
 
-                "Current PR":
+                "Best RM":
                     round(
                         current_pr,
                         1
                     ),
 
-                "Δ PR":
+                "Δ RM":
                     round(
                         current_pr - start_pr,
                         1
@@ -323,7 +323,7 @@ def get_new_prs(
     results = pd.DataFrame(results)
 
     results = results.sort_values(
-        "Δ PR",
+        "Δ RM",
         ascending=False
     )
 
