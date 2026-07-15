@@ -328,4 +328,15 @@ def get_new_prs(
     # Ergebnis zurückgeben
     # =====================================
 
-    return pd.DataFrame(results)
+    results = pd.DataFrame(results)
+
+    results = results.sort_values(
+        "Δ PR",
+        ascending=False
+    )
+
+    results = results.reset_index(
+        drop=True
+    )
+
+    return results
