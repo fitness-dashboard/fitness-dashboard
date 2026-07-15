@@ -153,3 +153,48 @@ def get_training_block_summary(
         "frequency": frequency
 
     }
+
+
+# ==========================================================
+# Neue Personal Records
+# ==========================================================
+
+def get_new_prs(
+        dfGymMaxRM,
+        block_number=1
+):
+
+    block = next(
+
+        (
+            b for b in TRAINING_BLOCKS
+
+            if b["block"] == block_number
+        ),
+
+        None
+
+    )
+
+    if block is None:
+
+        return None
+
+    start = pd.Timestamp(
+        block["start"]
+    )
+
+    dfBefore = dfGymMaxRM[
+        dfGymMaxRM["Date"] <= start
+    ]
+
+    dfBlock = filter_training_block(
+        dfGymMaxRM,
+        block_number
+    )
+
+    print(dfBefore.head())
+
+    print(dfBlock.head())
+
+    return None

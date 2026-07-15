@@ -42,7 +42,8 @@ from excel_formatting import (
 )
 from training import (
     filter_training_block,
-    get_training_block_summary
+    get_training_block_summary,
+    get_new_prs
 )
 
 start = time.perf_counter()
@@ -172,6 +173,11 @@ print(
 print(
     training_summary
 )
+
+new_prs = get_new_prs(
+    dfGymMaxRM
+)
+
 
 
 # =====================================
