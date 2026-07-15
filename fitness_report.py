@@ -178,6 +178,11 @@ new_prs = get_new_prs(
     dfGymMaxRM
 )
 
+average_delta_rm = round(
+    new_prs["Δ RM"].mean(),
+    1
+)
+
 print()
 
 print(
@@ -501,6 +506,15 @@ sheetTraining.range("E6").value = (
 
 sheetTraining.range("A5:A7").api.Font.Bold = True
 sheetTraining.range("D5:D6").api.Font.Bold = True
+
+sheetTraining.range("D7").value = (
+    "Average Δ RM:"
+)
+sheetTraining.range("E7").value = (
+    f"{average_delta_rm} kg"
+)
+sheetTraining.range("D5:D6").api.Font.Bold = True
+
 
 sheetTraining.autofit()
 
