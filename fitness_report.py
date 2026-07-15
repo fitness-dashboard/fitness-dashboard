@@ -521,7 +521,7 @@ sheetReport.range("A9").options(
     index=False
 ).value = dfNutritionWeekly
 
-header = sheetTraining.range("A11:D11")
+header = sheetTraining.range("A11:E11")
 
 header.api.Font.Bold = True
 
@@ -532,7 +532,7 @@ header.color = (
 )
 
 table = sheetTraining.range(
-    f"A11:D{len(new_prs)+11}"
+    f"A11:E{len(new_prs)+11}"
 )
 
 table.api.Borders.Weight = 2
