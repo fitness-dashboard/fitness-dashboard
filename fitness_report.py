@@ -405,12 +405,93 @@ sheetReport.range("D5:D6").api.Font.Bold = True
 sheetReport.range("G5:G6").api.Font.Bold = True
 
 # =====================================
+# Excel-Blatt Training Block Report
+# =====================================
+
+try:
+
+    workbook.sheets[
+        "Training Block Report"
+    ].delete()
+
+except:
+    pass
+
+sheetTraining = workbook.sheets.add(
+    "Training Block Report"
+)
+
+# =====================================
+# Überschrift
+# =====================================
+
+sheetTraining.range("A1:F1").merge()
+
+sheetTraining.range("A1").value = (
+    "Training Block Report"
+)
+
+sheetTraining.range("A1").api.Font.Bold = True
+sheetTraining.range("A1").api.Font.Size = 18
+sheetTraining.range("A1").api.HorizontalAlignment = -4108
+
+sheetTraining.range("A1").color = (
+    31,
+    78,
+    121
+)
+
+sheetTraining.range("A1").api.Font.Color = 16777215
+
+# =====================================
+# Trainingsblock
+# =====================================
+
+sheetTraining.range("A3:F3").merge()
+
+sheetTraining.range("A3").value = (
+    training_summary["name"]
+)
+
+sheetTraining.range("A3").api.Font.Bold = True
+sheetTraining.range("A3").api.Font.Size = 12
+sheetTraining.range("A3").api.HorizontalAlignment = -4108
+
+sheetTraining.range("A5").value = "Period:"
+
+sheetTraining.range("B5").value = (
+    training_summary["start"].strftime("%d.%m.%Y")
+    + " - "
+    + training_summary["end"].strftime("%d.%m.%Y")
+)
+
+sheetTraining.range("A6").value = "Training Days:"
+sheetTraining.range("B6").value = training_summary["training_days"]
+
+sheetTraining.range("D5").value = "Duration:"
+sheetTraining.range("E5").value = (
+    f'{training_summary["duration_days"]} days'
+)
+
+sheetTraining.range("D6").value = "Frequency:"
+sheetTraining.range("E6").value = (
+    f'{training_summary["frequency"]} / week'
+)
+
+sheetTraining.range("A5:A6").api.Font.Bold = True
+sheetTraining.range("D5:D6").api.Font.Bold = True
+
+sheetTraining.autofit()
+
+# =====================================
 # Wochenübersicht
 # =====================================
 
 sheetReport.range("A9").options(
     index=False
 ).value = dfNutritionWeekly
+
+
 
 # =====================================
 # Überschrift überschreiben
