@@ -498,6 +498,22 @@ sheetTraining.range("D5:D6").api.Font.Bold = True
 sheetTraining.autofit()
 
 # =====================================
+# Neue Personal Records
+# =====================================
+
+sheetTraining.range("A9").value = (
+    "New Personal Records"
+)
+
+sheetTraining.range("A9").api.Font.Bold = True
+sheetTraining.range("A9").api.Font.Size = 12
+
+sheetTraining.range("A11").options(
+    index=False
+).value = new_prs
+
+
+# =====================================
 # Wochenübersicht
 # =====================================
 
@@ -505,7 +521,23 @@ sheetReport.range("A9").options(
     index=False
 ).value = dfNutritionWeekly
 
+header = sheetTraining.range("A11:D11")
 
+header.api.Font.Bold = True
+
+header.color = (
+    221,
+    235,
+    247
+)
+
+table = sheetTraining.range(
+    f"A11:D{len(new_prs)+11}"
+)
+
+table.api.Borders.Weight = 2
+
+sheetTraining.autofit()
 
 # =====================================
 # Überschrift überschreiben
