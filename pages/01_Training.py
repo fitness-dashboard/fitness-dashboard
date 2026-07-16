@@ -130,3 +130,42 @@ st.dataframe(
     hide_index=True
 
 )
+
+st.markdown("---")
+
+# =====================================
+# Exercise Chart
+# =====================================
+
+st.subheader(
+    "Exercise Chart"
+)
+
+exercise = st.selectbox(
+
+    "Exercise",
+
+    sorted(
+        exercise_progress["Exercise"].unique()
+    )
+
+)
+
+view = st.radio(
+
+    "View",
+
+    [
+
+        "Training Block",
+        "All Time"
+
+    ],
+
+    horizontal=True
+
+)
+
+st.info(
+    "Chart will be added in the next step."
+)
