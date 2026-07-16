@@ -80,27 +80,35 @@ st.subheader(
 # Kennzahlen
 # =====================================
 
-col1, col2, col3, col4, col5 = st.columns(5)
+left, right = st.columns(2)
 
-with col1:
+with left:
+
     st.markdown("**Training Days**")
-    st.write(training_summary["Training Days"])
+    st.markdown(f"### {training_summary['Training Days']}")
 
-with col2:
     st.markdown("**Frequency**")
-    st.write(f"{training_summary['Frequency']} / week")
+    st.markdown(f"### {training_summary['Frequency']} / week")
 
-with col3:
     st.markdown("**Duration**")
-    st.write(f"{training_summary['Duration']} days")
+    st.markdown(f"### {training_summary['Duration']} days")
 
-with col4:
+with right:
+
     st.markdown("**Exercises Improved**")
-    st.write(training_summary["Exercises Improved"])
+    st.markdown(f"### {training_summary['Exercises Improved']}")
 
-with col5:
     st.markdown("**Average Δ RM**")
-    st.write(f"{training_summary['Average Δ RM']} kg")
+    st.markdown(f"### {training_summary['Average Δ RM']} kg")
+
+    st.markdown("**Period**")
+    st.markdown(
+        training_summary["Start"].strftime("%d.%m.%Y")
+        + " - "
+        + training_summary["End"].strftime("%d.%m.%Y")
+    )
+
+st.markdown("---")
 
 # =====================================
 # Exercise Progress
