@@ -63,6 +63,10 @@ EXCEL_FILE = (
     / "Gewicht mit Python.xlsm"
 )
 
+# ==========================================================
+# Export-Dateien
+# ==========================================================
+
 FITNESS_CSV_FILE = Path(
     "fitness_dashboard_data.csv"
 )
@@ -71,10 +75,13 @@ GYMRUN_RM_CSV_FILE = Path(
     "gymrun_rm_data.csv"
 )
 
+TRAINING_BLOCK_SUMMARY_CSV_FILE = Path(
+    "training_block_summary.csv"
+)
 
-# ==========================================================
-# Persönliche Daten
-# ==========================================================
+TRAINING_BLOCK_PROGRESS_CSV_FILE = Path(
+    "training_block_progress.csv"
+)
 
 BIRTHDAY = "1975-01-19"
 HEIGHT_CM = 178

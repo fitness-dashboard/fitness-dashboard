@@ -156,7 +156,63 @@ def get_training_block_summary(
 
     }
 
+# ==========================================================
+# Training Block Summary DataFrame
+# ==========================================================
 
+def get_training_block_summary_df(
+        dfGymMaxRM
+):
+
+    rows = []
+
+    for block in TRAINING_BLOCKS:
+
+        summary = get_training_block_summary(
+
+            dfGymMaxRM,
+
+            block["block"]
+
+        )
+
+        new_prs = get_new_prs(
+
+            dfGymMaxRM,
+
+            block["block"]
+
+        )
+
+        rows.append({
+
+            "Block": block["block"],
+
+            "Name": summary["name"],
+
+            "Start": summary["start"],
+
+            "End": summary["end"],
+
+            "Training Days": summary["training_days"],
+
+            "Duration": summary["duration_days"],
+
+            "Frequency": summary["frequency"],
+
+            "Exercises Improved": len(new_prs),
+
+            "Average Δ RM": round(
+
+                new_prs["Δ RM"].mean(),
+
+                1
+
+            ) if len(new_prs) > 0 else 0
+
+        })
+
+    return pd.DataFrame(rows)
 
 # ==========================================================
 # Neue Personal Records innerhalb eines Trainingsblocks

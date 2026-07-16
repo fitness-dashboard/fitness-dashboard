@@ -43,6 +43,7 @@ from excel_formatting import (
 from training import (
     filter_training_block,
     get_training_block_summary,
+    get_training_block_summary_df,
     get_new_prs
 )
 
@@ -158,6 +159,10 @@ dfGymVolumeBlock = filter_training_block(
     dfGymVolume
 )
 
+# =====================================
+# Training Block Summary
+# =====================================
+
 training_summary = (
     get_training_block_summary(
         dfGymMaxRM
@@ -172,6 +177,26 @@ print(
 
 print(
     training_summary
+)
+
+# =====================================
+# Training Block Summary DataFrame
+# =====================================
+
+dfTrainingSummary = (
+    get_training_block_summary_df(
+        dfGymMaxRM
+    )
+)
+
+print()
+
+print(
+    "Training Block Summary DataFrame:"
+)
+
+print(
+    dfTrainingSummary
 )
 
 new_prs = get_new_prs(
