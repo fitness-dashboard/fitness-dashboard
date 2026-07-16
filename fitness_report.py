@@ -173,15 +173,6 @@ training_summary = (
     )
 )
 
-print()
-
-print(
-    "Training Block Summary:"
-)
-
-print(
-    training_summary
-)
 
 # =====================================
 # Training Block Summary DataFrame
@@ -193,15 +184,7 @@ dfTrainingSummary = (
     )
 )
 
-print()
 
-print(
-    "Training Block Summary DataFrame:"
-)
-
-print(
-    dfTrainingSummary
-)
 
 dfTrainingSummary.to_csv(
 
@@ -227,15 +210,6 @@ average_delta_rm = round(
     1
 )
 
-print()
-
-print(
-    "New PRs:"
-)
-
-print(
-    new_prs
-)
 
 # =====================================
 # Training Block Progress DataFrame
@@ -247,15 +221,6 @@ dfTrainingProgress = (
     )
 )
 
-print()
-
-print(
-    "Training Block Progress:"
-)
-
-print(
-    dfTrainingProgress
-)
 
 dfTrainingProgress.to_csv(
 
