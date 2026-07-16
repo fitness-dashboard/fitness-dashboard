@@ -1,15 +1,11 @@
 import streamlit as st
+import pandas as pd
 
 from training import TRAINING_BLOCKS
-from load_gymrun import lade_gymrun
 
-from gymrun_calculations import (
-    build_gym_max_rm
-)
-
-from training import (
-    get_training_block_summary,
-    get_new_prs
+from config import (
+    TRAINING_BLOCK_SUMMARY_CSV_FILE,
+    TRAINING_BLOCK_PROGRESS_CSV_FILE
 )
 
 st.title("💪 Training")
@@ -45,39 +41,35 @@ selected_block = next(
 )
 
 # =====================================
-# GymRun laden
+# CSV-Dateien laden
 # =====================================
 
-dfGymRun = lade_gymrun()
-
-dfGymMaxRM = build_gym_max_rm(
-    dfGymRun
+dfSummary = pd.read_csv(
+    TRAINING_BLOCK_SUMMARY_CSV_FILE
 )
 
-training_summary = (
-    get_training_block_summary(
-
-        dfGymMaxRM,
-
-        selected_block["block"]
-
-    )
+dfProgress = pd.read_csv(
+    TRAINING_BLOCK_PROGRESS_CSV_FILE
 )
 
-exercise_progress = get_new_prs(
+# =====================================
+# Trainingsblock filtern
+# =====================================
 
-    dfGymMaxRM,
+training_summary = dfSummary[
+    dfSummary["Block"] == selected_block["block"]
+].iloc[0]
 
-    selected_block["block"]
-
-)
+exercise_progress = dfProgress[
+    dfProgress["Block"] == selected_block["block"]
+]
 
 # =====================================
 # Training Block Report
 # =====================================
 
 st.subheader(
-    training_summary["name"]
+    training_summary["Name"]
 )
 
 # =====================================
