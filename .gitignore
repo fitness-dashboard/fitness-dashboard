@@ -11,3 +11,5 @@ venv/
 *.csv
 !fitness_dashboard_data.csv
 !gymrun_rm_data.csv
+!training_block_summary.csv
+!training_block_progress.csv
