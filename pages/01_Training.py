@@ -166,6 +166,22 @@ view = st.radio(
 
 )
 
-st.info(
-    "Chart will be added in the next step."
+fig = create_exercise_chart(
+
+    dfGymRM,
+
+    exercise,
+
+    selected_block,
+
+    view
+
+)
+
+st.plotly_chart(
+
+    fig,
+
+    use_container_width=True
+
 )

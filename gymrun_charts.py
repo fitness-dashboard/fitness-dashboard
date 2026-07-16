@@ -441,3 +441,94 @@ def create_volume_chart_data(
         ]["vol_max"],
         "exercise_name": exercise_name
     }
+
+# =====================================
+# Streamlit Charts
+# =====================================
+
+import plotly.express as px
+
+
+def create_exercise_chart(
+    dfGymRM,
+    exercise,
+    selected_block,
+    view
+):
+
+    df = dfGymRM.copy()
+
+    df["Date"] = pd.to_datetime(
+        df["Date"]
+    )
+
+    # =====================================
+    # Trainingsblock filtern
+    # =====================================
+
+    if view == "Training Block":
+
+        start = selected_block["start"]
+        end = selected_block["end"]
+
+        df = df[
+            (df["Date"] >= start)
+            &
+            (df["Date"] <= end)
+        ]
+
+    # =====================================
+    # Nur benötigte Daten
+    # =====================================
+
+    df = df[
+        ["Date", exercise]
+    ].dropna()
+
+    # =====================================
+    # Diagramm
+    # =====================================
+
+    fig = px.line(
+
+        df,
+
+        x="Date",
+
+        y=exercise,
+
+        markers=True,
+
+        title=exercise
+
+    )
+
+    fig.update_traces(
+
+        line=dict(width=3),
+
+        marker=dict(size=8)
+
+    )
+
+    fig.update_layout(
+
+        height=450,
+
+        showlegend=False
+
+    )
+
+    fig.update_yaxes(
+
+        title="RM"
+
+    )
+
+    fig.update_xaxes(
+
+        title=""
+
+    )
+
+    return fig
