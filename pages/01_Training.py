@@ -45,7 +45,11 @@ selected_block = next(
 # =====================================
 
 dfSummary = pd.read_csv(
-    TRAINING_BLOCK_SUMMARY_CSV_FILE
+    TRAINING_BLOCK_SUMMARY_CSV_FILE,
+    parse_dates=[
+        "Start",
+        "End"
+    ]
 )
 
 dfProgress = pd.read_csv(
