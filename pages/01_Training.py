@@ -82,7 +82,7 @@ with col1:
 
     st.metric(
         "Training Days",
-        training_summary["Training_days"]
+        training_summary["Training Days"]
     )
 
     st.metric(
