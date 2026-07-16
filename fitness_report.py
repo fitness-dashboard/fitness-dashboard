@@ -27,6 +27,7 @@ from config import (
     ACTIVITY_FACTOR,
     DIET_START_DATE,
     TRAINING_BLOCK_SUMMARY_CSV_FILE,
+    TRAINING_BLOCK_PROGRESS_CSV_FILE,
     NUTRITION_PHASES
 )
 
@@ -255,6 +256,21 @@ print(
 print(
     dfTrainingProgress
 )
+
+dfTrainingProgress.to_csv(
+
+    TRAINING_BLOCK_PROGRESS_CSV_FILE,
+
+    index=False
+
+)
+
+print()
+
+print(
+    "Training Block Progress CSV exportiert."
+)
+
 
 # =====================================
 # Ernährungsanalyse
