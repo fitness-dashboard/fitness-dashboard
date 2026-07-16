@@ -120,7 +120,12 @@ st.subheader(
 
 st.dataframe(
 
-    exercise_progress,
+    exercise_progress.drop(
+        columns=[
+            "Block",
+            "Name"
+        ]
+    ),
 
     use_container_width=True,
     hide_index=True
