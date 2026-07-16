@@ -83,49 +83,24 @@ st.subheader(
 col1, col2, col3, col4, col5 = st.columns(5)
 
 with col1:
-
-    st.metric(
-        "Training Days",
-        training_summary["Training Days"]
-    )
+    st.markdown("**Training Days**")
+    st.write(training_summary["Training Days"])
 
 with col2:
-
-    st.metric(
-        "Frequency",
-        f"{training_summary['Frequency']} / week"
-    )
+    st.markdown("**Frequency**")
+    st.write(f"{training_summary['Frequency']} / week")
 
 with col3:
-
-    st.metric(
-        "Duration",
-        f"{training_summary['Duration']} days"
-    )
+    st.markdown("**Duration**")
+    st.write(f"{training_summary['Duration']} days")
 
 with col4:
-
-    st.metric(
-        "Exercises Improved",
-        training_summary["Exercises Improved"]
-    )
+    st.markdown("**Exercises Improved**")
+    st.write(training_summary["Exercises Improved"])
 
 with col5:
-
-    st.metric(
-        "Average Δ RM",
-        f"{training_summary['Average Δ RM']} kg"
-    )
-
-st.markdown("**Period**")
-
-st.write(
-    training_summary["Start"].strftime("%d.%m.%Y")
-    + " - "
-    + training_summary["End"].strftime("%d.%m.%Y")
-)
-
-st.write("")
+    st.markdown("**Average Δ RM**")
+    st.write(f"{training_summary['Average Δ RM']} kg")
 
 # =====================================
 # Exercise Progress
