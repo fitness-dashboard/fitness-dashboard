@@ -80,22 +80,13 @@ st.subheader(
 # Kennzahlen
 # =====================================
 
-col1, col2 = st.columns(2)
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
 
     st.metric(
         "Training Days",
         training_summary["Training Days"]
-    )
-
-    st.metric(
-        "Period",
-        (
-            training_summary["Start"].strftime("%d.%m.%Y")
-            + " - "
-            + training_summary["End"].strftime("%d.%m.%Y")
-        )
     )
 
 with col2:
@@ -105,20 +96,33 @@ with col2:
         f"{training_summary['Frequency']} / week"
     )
 
+with col3:
+
     st.metric(
         "Duration",
         f"{training_summary['Duration']} days"
     )
+
+with col4:
 
     st.metric(
         "Exercises Improved",
         training_summary["Exercises Improved"]
     )
 
-    st.metric(
-        "Average Δ RM",
-        f"{training_summary['Average Δ RM']} kg"
+st.metric(
+    "Period",
+    (
+        training_summary["Start"].strftime("%d.%m.%Y")
+        + " - "
+        + training_summary["End"].strftime("%d.%m.%Y")
     )
+)
+
+st.metric(
+    "Average Δ RM",
+    f"{training_summary['Average Δ RM']} kg"
+)
 
 # =====================================
 # Exercise Progress
