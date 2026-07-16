@@ -5,7 +5,8 @@ from training import TRAINING_BLOCKS
 
 from config import (
     TRAINING_BLOCK_SUMMARY_CSV_FILE,
-    TRAINING_BLOCK_PROGRESS_CSV_FILE
+    TRAINING_BLOCK_PROGRESS_CSV_FILE,
+    GYMRUN_RM_CSV_FILE
 )
 
 from gymrun_charts import (
@@ -58,6 +59,11 @@ dfSummary = pd.read_csv(
 
 dfProgress = pd.read_csv(
     TRAINING_BLOCK_PROGRESS_CSV_FILE
+)
+
+dfGymRM = pd.read_csv(
+    GYMRUN_RM_CSV_FILE,
+    parse_dates=["Date"]
 )
 
 # =====================================
