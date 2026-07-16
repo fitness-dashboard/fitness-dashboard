@@ -46,6 +46,7 @@ from training import (
     filter_training_block,
     get_training_block_summary,
     get_training_block_summary_df,
+    get_training_block_progress_df,
     get_new_prs
 )
 
@@ -233,6 +234,26 @@ print(
 
 print(
     new_prs
+)
+
+# =====================================
+# Training Block Progress DataFrame
+# =====================================
+
+dfTrainingProgress = (
+    get_training_block_progress_df(
+        dfGymMaxRM
+    )
+)
+
+print()
+
+print(
+    "Training Block Progress:"
+)
+
+print(
+    dfTrainingProgress
 )
 
 # =====================================

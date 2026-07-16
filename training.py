@@ -215,6 +215,50 @@ def get_training_block_summary_df(
     return pd.DataFrame(rows)
 
 # ==========================================================
+# Training Block Progress DataFrame
+# ==========================================================
+
+def get_training_block_progress_df(
+        dfGymMaxRM
+):
+
+    dfs = []
+
+    for block in TRAINING_BLOCKS:
+
+        dfProgress = get_new_prs(
+
+            dfGymMaxRM,
+
+            block["block"]
+
+        ).copy()
+
+        dfProgress["Block"] = (
+            block["block"]
+        )
+
+        dfProgress["Name"] = (
+            block["name"]
+        )
+
+        dfs.append(
+            dfProgress
+        )
+
+    if len(dfs) == 0:
+
+        return pd.DataFrame()
+
+    return pd.concat(
+
+        dfs,
+
+        ignore_index=True
+
+    )
+
+# ==========================================================
 # Neue Personal Records innerhalb eines Trainingsblocks
 # ==========================================================
 
