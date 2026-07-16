@@ -110,6 +110,16 @@ with col2:
         f"{training_summary['Duration']} days"
     )
 
+    st.metric(
+        "Exercises Improved",
+        training_summary["Exercises Improved"]
+    )
+
+    st.metric(
+        "Average Δ RM",
+        f"{training_summary['Average Δ RM']} kg"
+    )
+
 # =====================================
 # Exercise Progress
 # =====================================
