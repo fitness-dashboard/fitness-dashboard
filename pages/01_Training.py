@@ -8,6 +8,10 @@ from config import (
     TRAINING_BLOCK_PROGRESS_CSV_FILE
 )
 
+from gymrun_charts import (
+    create_exercise_chart
+)
+
 st.title("💪 Training")
 
 # =====================================
