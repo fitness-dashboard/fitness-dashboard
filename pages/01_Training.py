@@ -103,9 +103,8 @@ with right:
 
     st.markdown("**Period**")
     st.markdown(
-        training_summary["Start"].strftime("%d.%m.%Y")
-        + " - "
-        + training_summary["End"].strftime("%d.%m.%Y")
+        f"### {training_summary['Start'].strftime('%d.%m.%Y')} - "
+        f"{training_summary['End'].strftime('%d.%m.%Y')}"
     )
 
 st.markdown("---")
