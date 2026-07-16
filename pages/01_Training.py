@@ -88,9 +88,9 @@ with col1:
     st.metric(
         "Period",
         (
-            training_summary["start"].strftime("%d.%m.%Y")
+            training_summary["Start"].strftime("%d.%m.%Y")
             + " - "
-            + training_summary["end"].strftime("%d.%m.%Y")
+            + training_summary["End"].strftime("%d.%m.%Y")
         )
     )
 
@@ -98,12 +98,12 @@ with col2:
 
     st.metric(
         "Frequency",
-        f"{training_summary['frequency']} / week"
+        f"{training_summary['Frequency']} / week"
     )
 
     st.metric(
         "Duration",
-        f"{training_summary['duration_days']} days"
+        f"{training_summary['Duration']} days"
     )
 
 # =====================================
