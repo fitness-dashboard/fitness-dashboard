@@ -16,6 +16,7 @@ from gymrun_charts import (
     create_volume_excel_chart
 )
 
+
 from config import (
     DASHBOARD_NAME,
     VERSION,
@@ -25,6 +26,7 @@ from config import (
     HEIGHT_CM,
     ACTIVITY_FACTOR,
     DIET_START_DATE,
+    TRAINING_BLOCK_SUMMARY_CSV_FILE,
     NUTRITION_PHASES
 )
 
@@ -198,6 +200,21 @@ print(
 print(
     dfTrainingSummary
 )
+
+dfTrainingSummary.to_csv(
+
+    TRAINING_BLOCK_SUMMARY_CSV_FILE,
+
+    index=False
+
+)
+
+print()
+
+print(
+    "Training Block Summary CSV exportiert."
+)
+
 
 new_prs = get_new_prs(
     dfGymMaxRM
