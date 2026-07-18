@@ -47,17 +47,47 @@ dfGymRM = pd.read_csv(
 )
 
 # =====================================
-# Trainingsblock filtern
+# Zeitraum filtern
 # =====================================
 
-training_summary = dfSummary[
-    dfSummary["Block"] == selected_block["block"]
-].iloc[0]
+if period["type"] == "Training Block":
 
-exercise_progress = dfProgress[
-    dfProgress["Block"] == selected_block["block"]
-]
+    training_summary = dfSummary[
+        dfSummary["Block"] == period["key"]
+    ].iloc[0]
 
+    exercise_progress = dfProgress[
+        dfProgress["Block"] == period["key"]
+    ]
+
+else:
+
+    # Training Blocks, die in den gewählten Zeitraum fallen
+    matching_blocks = dfSummary[
+        (dfSummary["Start"] <= period["end"])
+        &
+        (dfSummary["End"] >= period["start"])
+    ]
+
+    training_summary = {
+        "Name": period["name"],
+        "Training Days": matching_blocks["Training Days"].sum(),
+        "Frequency": "-",
+        "Duration": (period["end"] - period["start"]).days + 1,
+        "Exercises Improved": matching_blocks["Exercises Improved"].sum(),
+        "Average Δ RM": round(
+            matching_blocks["Average Δ RM"].mean(),
+            1
+        ),
+        "Start": period["start"],
+        "End": period["end"],
+    }
+
+    exercise_progress = dfProgress[
+        dfProgress["Block"].isin(
+            matching_blocks["Block"]
+        )
+    ]
 # =====================================
 # Training Block Report
 # =====================================
