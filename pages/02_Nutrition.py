@@ -211,3 +211,48 @@ st.plotly_chart(
     fig,
     use_container_width=True,
 )
+
+# ==========================================================
+# Daily Nutrition
+# ==========================================================
+
+st.subheader("Daily Nutrition")
+
+dfTable = (
+    dfChart
+    .sort_values(
+        "Date",
+        ascending=False,
+    )
+    .copy()
+)
+
+dfTable = dfTable[
+    [
+        "Date",
+        "Calories Actual",
+        "Protein Actual",
+        "Carbs Actual",
+        "Fat Actual",
+    ]
+]
+
+dfTable = dfTable.rename(
+    columns={
+        "Calories Actual": "Calories (kcal)",
+        "Protein Actual": "Protein (g)",
+        "Carbs Actual": "Carbs (g)",
+        "Fat Actual": "Fat (g)",
+    }
+)
+
+dfTable["Date"] = (
+    dfTable["Date"]
+    .dt.strftime("%d.%m.%Y")
+)
+
+st.dataframe(
+    dfTable,
+    use_container_width=True,
+    hide_index=True,
+)
