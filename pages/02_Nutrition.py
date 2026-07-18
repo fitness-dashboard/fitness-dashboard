@@ -290,36 +290,28 @@ dfTable["Date"] = (
     .dt.strftime("%d.%m.%Y")
 )
 
-dfTable["Calories"] = (
-    dfTable["Calories"]
-    .round(0)
-    .astype(int)
-)
+# =====================================
+# Zahlen formatieren
+# =====================================
 
-for col in [
+numeric_columns = [
+    "Calories",
     "Protein",
     "Carbs",
     "Fat",
-]:
-    dfTable[col] = (
-        dfTable[col]
-        .round(0)
-        .astype(int)
-    )
-
-for col in [
     "Cal %",
     "Prot %",
     "Carb %",
     "Fat %",
-]:
+]
+
+for col in numeric_columns:
+
     dfTable[col] = (
         dfTable[col]
         .round(0)
-        .astype(int)
+        .astype("Int64")
     )
-
-    dfTable[col] = dfTable[col].round(0)
 
 def highlight_percent(val):
 
