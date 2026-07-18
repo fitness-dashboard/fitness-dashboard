@@ -141,7 +141,7 @@ else:
 
 value_column = f"{metric} Actual"
 
-dfChart["7-Day Average"] = (
+dfChart["Average"] = (
     dfChart[value_column]
     .rolling(window=7, min_periods=1)
     .mean()
@@ -162,7 +162,9 @@ fig = px.line(
     x="Date",
     y=value_column,
     markers=True,
-    title=f"{metric} Over Time",
+    labels={
+        value_column: "Actual",
+    },
 )
 
 if show_target:
@@ -192,11 +194,11 @@ if show_average:
         go.Scatter(
 
             x=dfChart["Date"],
-            y=dfChart["7-Day Average"],
+            y=dfChart["Average"],
 
             mode="lines",
 
-            name="7-Day Average",
+            name="Average",
 
             line=dict(
                 width=3,
