@@ -145,19 +145,19 @@ target_column = TARGET_COLUMNS[metric]
 view = st.radio(
     "View",
     [
-        "Current Phase",
-        "All Phases",
+        "Selected Period",
+        "All Time",
     ],
     horizontal=True,
 )
 
-if view == "Current Phase":
+if view == "Selected Period":
 
     dfChart = dfNutrition[
-        (dfNutrition["Date"] >= summary["Start"])
+        (dfNutrition["Date"] >= period["start"])
         &
-        (dfNutrition["Date"] <= summary["End"])
-        ].copy()
+        (dfNutrition["Date"] <= period["end"])
+    ].copy()
 
 else:
 
