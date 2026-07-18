@@ -162,6 +162,7 @@ fig = px.line(
     x="Date",
     y=value_column,
     markers=True,
+    title=None,
     labels={
         value_column: "Actual",
     },
