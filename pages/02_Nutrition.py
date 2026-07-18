@@ -326,7 +326,7 @@ percent_columns = [
 
 styler = (
     dfTable.style
-    .applymap(
+    .map(
         highlight_percent,
         subset=percent_columns,
     )
