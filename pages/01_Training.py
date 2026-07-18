@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-from training import TRAINING_BLOCKS
-
 from config import (
     TRAINING_BLOCK_SUMMARY_CSV_FILE,
     TRAINING_BLOCK_PROGRESS_CSV_FILE,
@@ -89,7 +87,7 @@ else:
         )
     ]
 # =====================================
-# Training Block Report
+# Training Report
 # =====================================
 
 st.subheader(
@@ -177,7 +175,7 @@ view = st.radio(
 
     [
 
-        "Training Block",
+        "Selected Period",
         "All Time"
 
     ],

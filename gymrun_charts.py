@@ -465,7 +465,7 @@ def create_exercise_chart(
     # Zeitraum filtern
     # =====================================
 
-    if view == "Training Block":
+    if view == "Selected Period":
         df = df[
             (df["Date"] >= period["start"])
             &

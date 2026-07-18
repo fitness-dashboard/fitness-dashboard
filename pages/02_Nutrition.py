@@ -8,6 +8,8 @@ from config import (
 )
 import plotly.graph_objects as go
 
+from filters import select_period
+
 # ==========================================================
 # Seite
 # ==========================================================
@@ -39,17 +41,39 @@ dfNutrition["Date"] = pd.to_datetime(
 )
 
 # ==========================================================
-# Ernährungsphase auswählen
+# Zeitraum auswählen
 # ==========================================================
 
-phase = st.selectbox(
-    "Nutrition Phase",
-    dfSummary["Phase"]
-)
+period = select_period()
 
-summary = dfSummary[
-    dfSummary["Phase"] == phase
-].iloc[0]
+# ==========================================================
+# Zeitraum filtern
+# ==========================================================
+
+if period["type"] == "Nutrition Phase":
+
+    summary = dfSummary[
+        dfSummary["Phase"] == period["name"]
+    ].iloc[0]
+
+else:
+
+    matching_phases = dfSummary[
+        (dfSummary["Start"] <= period["end"])
+        &
+        (dfSummary["End"] >= period["start"])
+    ]
+
+    summary = {
+        "Phase": period["name"],
+        "Average Calories": matching_phases["Average Calories"].mean(),
+        "Average Protein": matching_phases["Average Protein"].mean(),
+        "Average Carbs": matching_phases["Average Carbs"].mean(),
+        "Average Fat": matching_phases["Average Fat"].mean(),
+        "Days": (period["end"] - period["start"]).days + 1,
+        "Start": period["start"],
+        "End": period["end"],
+    }
 
 # ==========================================================
 # Nutrition Report
