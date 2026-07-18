@@ -299,16 +299,16 @@ for col in [
 
 def highlight_percent(val):
 
-    if val < 90:
+    if val < 80:
         color = "#f8d7da"      # hellrot
 
-    elif val < 97:
+    elif val < 90:
         color = "#fff3cd"      # hellgelb
 
-    elif val <= 103:
+    elif val <= 110:
         color = "#d4edda"      # hellgrün
 
-    elif val <= 110:
+    elif val <= 120:
         color = "#fff3cd"      # hellgelb
 
     else:
