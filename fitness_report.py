@@ -262,8 +262,9 @@ dfNutrition = build_nutrition_dataframe(
 )
 
 # Hilfe
+print("Hilfe Kai")
 print(len(dfNutrition))
-print(dfNutrition.head())
+print(dfNutrition.head(15))
 print(dfNutrition.tail())
 
 

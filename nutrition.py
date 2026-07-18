@@ -73,7 +73,6 @@ def calculate_macro_targets(
 
 
 
-
 # ==========================================================
 # Nutrition DataFrame erzeugen
 # ==========================================================
@@ -90,17 +89,17 @@ def build_nutrition_dataframe(dfGesamt):
             row["Only Date"]
         )
 
-        if phase is None:
-            continue
-
         # =====================================
         # Sollwerte berechnen
         # =====================================
 
         targets = None
 
-        if not pd.isna(
-                row["Weight (kg)"]
+        if (
+                phase is not None
+                and not pd.isna(
+                    row["Weight (kg)"]
+                )
         ):
             targets = calculate_macro_targets(
                 row["Only Date"],
@@ -121,7 +120,9 @@ def build_nutrition_dataframe(dfGesamt):
                 row["Only Date"],
 
             "Nutrition Phase":
-                f"Phase {phase['phase']}",
+                f"Phase {phase['phase']}"
+                if phase is not None
+                else None,
 
             "Weight":
                 round(row["Weight (kg)"], 1)
@@ -150,8 +151,10 @@ def build_nutrition_dataframe(dfGesamt):
                     1
                 )
                 if (
-                        targets
-                        and not pd.isna(row["Kalorien"])
+                    targets
+                    and not pd.isna(
+                        row["Kalorien"]
+                    )
                 )
                 else None,
 
@@ -171,8 +174,10 @@ def build_nutrition_dataframe(dfGesamt):
                     1
                 )
                 if (
-                        targets
-                        and not pd.isna(row["Eiweiß (g)"])
+                    targets
+                    and not pd.isna(
+                        row["Eiweiß (g)"]
+                    )
                 )
                 else None,
 
@@ -192,8 +197,10 @@ def build_nutrition_dataframe(dfGesamt):
                     1
                 )
                 if (
-                        targets
-                        and not pd.isna(row["Fett (g)"])
+                    targets
+                    and not pd.isna(
+                        row["Fett (g)"]
+                    )
                 )
                 else None,
 
@@ -213,8 +220,10 @@ def build_nutrition_dataframe(dfGesamt):
                     1
                 )
                 if (
-                        targets
-                        and not pd.isna(row["Kohlenhydrate (g)"])
+                    targets
+                    and not pd.isna(
+                        row["Kohlenhydrate (g)"]
+                    )
                 )
                 else None
 
@@ -223,7 +232,6 @@ def build_nutrition_dataframe(dfGesamt):
         day += 1
 
     return pd.DataFrame(rows)
-
 # ==========================================================
 # Wochenauswertung Ernährung
 # ==========================================================
