@@ -113,6 +113,39 @@ NUTRITION_PHASES = [
 
     {
         "phase": 1,
+        "name": "One Year Cut – 1600 kcal",
+
+        "start": "2025-06-21",
+        "end": "2026-01-21",
+
+        "calories": 1600,
+        "protein_per_kg": 2.0,
+        "fat_per_kg": 0.7,
+    },
+    {
+        "phase": 2,
+        "name": "One Year Cut – 1400 kcal",
+
+        "start": "2026-01-22",
+        "end": "2026-06-07",
+
+        "calories": 1400,
+        "protein_per_kg": 2.0,
+        "fat_per_kg": 0.7,
+    },
+    {
+        "phase": 3,
+        "name": "Sommer Recomposition 2026 – 1600 kcal",
+
+        "start": "2026-06-08",
+        "end": "2026-07-10",
+
+        "calories": 1600,
+        "protein_per_kg": 2.0,
+        "fat_per_kg": 0.7,
+    },
+    {
+        "phase": 4,
         "name": "Sommer Recomposition 2026 – 1900 kcal",
 
         "start": "2026-07-11",
@@ -132,12 +165,16 @@ TRAINING_BLOCKS = [
 
     {
         "block": 1,
-
-        "name": "Clean Bulk 2026",
-
-        "start": "2026-06-11",
-
+        "name": "One Year Cut",
+        "start": "2025-06-21",
+        "end": "2026-06-08",
+    },
+    {
+        "block": 2,
+        "name": "Clean Bulk No. 1",
+        "start": "2026-06-09",
         "end": "2026-12-31",
     },
+
 
 ]
