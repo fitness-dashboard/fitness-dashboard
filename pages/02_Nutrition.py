@@ -251,6 +251,19 @@ dfTable["Date"] = (
     .dt.strftime("%d.%m.%Y")
 )
 
+dfTable["Calories (kcal)"] = (
+    dfTable["Calories (kcal)"]
+    .round(0)
+    .astype(int)
+)
+
+for col in [
+    "Protein (g)",
+    "Carbs (g)",
+    "Fat (g)",
+]:
+    dfTable[col] = dfTable[col].round(1)
+
 st.dataframe(
     dfTable,
     use_container_width=True,
