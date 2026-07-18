@@ -22,6 +22,8 @@ from config import (
     VERSION,
     GYMRUN_RM_CSV_FILE,
     FITNESS_CSV_FILE,
+    NUTRITION_CSV_FILE,
+    NUTRITION_PHASE_SUMMARY_CSV_FILE,
     BIRTHDAY,
     HEIGHT_CM,
     ACTIVITY_FACTOR,
@@ -35,7 +37,8 @@ import time
 
 from nutrition import (
     build_nutrition_dataframe,
-    build_weekly_nutrition_summary
+    build_weekly_nutrition_summary,
+    get_nutrition_phase_summary_df
 )
 
 from excel_formatting import (
@@ -245,6 +248,15 @@ dfNutrition = build_nutrition_dataframe(
     dfGesamt
 )
 
+# =====================================
+# Nutrition Phase Summary
+# =====================================
+
+dfNutritionSummary = (
+    get_nutrition_phase_summary_df(
+        dfNutrition
+    )
+)
 
 # =====================================
 # Wochenauswertung Ernährung
@@ -257,7 +269,7 @@ dfNutritionWeekly = (
 )
 
 # =====================================
-# CSV-Datei exportieren
+# CSV-Dateien exportieren
 # =====================================
 
 dfGesamt.to_csv(
@@ -265,6 +277,15 @@ dfGesamt.to_csv(
     index=False
 )
 
+dfNutrition.to_csv(
+    NUTRITION_CSV_FILE,
+    index=False
+)
+
+dfNutritionSummary.to_csv(
+    NUTRITION_PHASE_SUMMARY_CSV_FILE,
+    index=False
+)
 # =====================================
 # Excel-Datei öffnen
 # =====================================

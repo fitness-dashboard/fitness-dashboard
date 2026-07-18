@@ -470,6 +470,72 @@ def build_weekly_nutrition_summary(dfNutrition):
         )
 
     return dfWeekly
+
+
+# ==========================================================
+# Nutrition Phase Summary
+# ==========================================================
+
+def get_nutrition_phase_summary_df(dfNutrition):
+
+    rows = []
+
+    for phase in NUTRITION_PHASES:
+
+        start = pd.Timestamp(phase["start"])
+        end = pd.Timestamp(phase["end"])
+
+        dfPhase = dfNutrition[
+            (dfNutrition["Date"] >= start)
+            &
+            (dfNutrition["Date"] <= end)
+        ].copy()
+
+        if dfPhase.empty:
+            continue
+
+        rows.append({
+
+            "Phase":
+                phase["name"],
+
+            "Start":
+                start,
+
+            "End":
+                end,
+
+            "Days":
+                len(dfPhase),
+
+            "Average Calories":
+                round(
+                    dfPhase["Calories Actual"].mean(),
+                    0
+                ),
+
+            "Average Protein":
+                round(
+                    dfPhase["Protein Actual"].mean(),
+                    1
+                ),
+
+            "Average Carbs":
+                round(
+                    dfPhase["Carbs Actual"].mean(),
+                    1
+                ),
+
+            "Average Fat":
+                round(
+                    dfPhase["Fat Actual"].mean(),
+                    1
+                )
+
+        })
+
+    return pd.DataFrame(rows)
+
 # ==========================================================
 # Test
 # ==========================================================

@@ -75,6 +75,14 @@ GYMRUN_RM_CSV_FILE = Path(
     "gymrun_rm_data.csv"
 )
 
+NUTRITION_CSV_FILE = Path(
+    "nutrition_data.csv"
+)
+
+NUTRITION_PHASE_SUMMARY_CSV_FILE = Path(
+    "nutrition_phase_summary.csv"
+)
+
 TRAINING_BLOCK_SUMMARY_CSV_FILE = Path(
     "training_block_summary.csv"
 )
@@ -82,6 +90,7 @@ TRAINING_BLOCK_SUMMARY_CSV_FILE = Path(
 TRAINING_BLOCK_PROGRESS_CSV_FILE = Path(
     "training_block_progress.csv"
 )
+
 
 BIRTHDAY = "1975-01-19"
 HEIGHT_CM = 178
