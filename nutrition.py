@@ -2,6 +2,9 @@ import pandas as pd
 
 from config import NUTRITION_PHASES
 
+#Hilfe
+print("Hilfe für Kai")
+print(NUTRITION_PHASES)
 
 # ==========================================================
 # Ernährungsphase für ein Datum finden

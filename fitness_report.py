@@ -239,18 +239,18 @@ print(
     "Training Block Progress CSV exportiert."
 )
 
-# Hilfe
-
-print(dfGesamt["Only Date"].min())
-print(dfGesamt["Only Date"].max())
-
-print(
-
-    dfGesamt[
-        ["Only Date", "Kalorien"]
-    ]
-
-)
+# # Hilfe
+#
+# print(dfGesamt["Only Date"].min())
+# print(dfGesamt["Only Date"].max())
+#
+# print(
+#
+#     dfGesamt[
+#         ["Only Date", "Kalorien"]
+#     ]
+#
+# )
 
 
 # =====================================
