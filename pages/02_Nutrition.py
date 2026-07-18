@@ -141,8 +141,19 @@ else:
 
 value_column = f"{metric} Actual"
 
+dfChart["7-Day Average"] = (
+    dfChart[value_column]
+    .rolling(window=7, min_periods=1)
+    .mean()
+)
+
 show_target = st.checkbox(
     "Show Target",
+    value=True,
+)
+
+show_average = st.checkbox(
+    "Show 7-Day Average",
     value=True,
 )
 
@@ -170,6 +181,25 @@ if show_target:
             line=dict(
                 dash="dash",
                 width=2,
+            ),
+        )
+    )
+
+if show_average:
+
+    fig.add_trace(
+
+        go.Scatter(
+
+            x=dfChart["Date"],
+            y=dfChart["7-Day Average"],
+
+            mode="lines",
+
+            name="7-Day Average",
+
+            line=dict(
+                width=3,
             ),
         )
     )
