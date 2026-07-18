@@ -262,7 +262,7 @@ for col in [
     "Carbs (g)",
     "Fat (g)",
 ]:
-    dfTable[col] = dfTable[col].round(1)
+    dfTable[col] = dfTable[col].round(0)
 
 st.dataframe(
     dfTable,
