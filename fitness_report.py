@@ -252,6 +252,7 @@ print(
 
 )
 
+
 # =====================================
 # Ernährungsanalyse
 # =====================================
@@ -259,6 +260,13 @@ print(
 dfNutrition = build_nutrition_dataframe(
     dfGesamt
 )
+
+# Hilfe
+print(len(dfNutrition))
+print(dfNutrition.head())
+print(dfNutrition.tail())
+
+
 
 # =====================================
 # Nutrition Phase Summary
