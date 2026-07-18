@@ -6,6 +6,7 @@ from config import (
     NUTRITION_CSV_FILE,
     NUTRITION_PHASE_SUMMARY_CSV_FILE,
 )
+import plotly.graph_objects as go
 
 # ==========================================================
 # Seite
@@ -108,6 +109,15 @@ metric_label = st.selectbox(
 
 metric = METRICS[metric_label]
 
+TARGET_COLUMNS = {
+    "Calories": "Calories Target",
+    "Protein": "Protein Target",
+    "Carbs": "Carbs Target",
+    "Fat": "Fat Target",
+}
+
+target_column = TARGET_COLUMNS[metric]
+
 view = st.radio(
     "View",
     [
@@ -131,6 +141,11 @@ else:
 
 value_column = f"{metric} Actual"
 
+show_target = st.checkbox(
+    "Show Target",
+    value=True,
+)
+
 fig = px.line(
     dfChart,
     x="Date",
@@ -138,6 +153,26 @@ fig = px.line(
     markers=True,
     title=f"{metric} Over Time",
 )
+
+if show_target:
+
+    fig.add_trace(
+
+        go.Scatter(
+
+            x=dfChart["Date"],
+            y=dfChart[target_column],
+
+            mode="lines",
+
+            name="Target",
+
+            line=dict(
+                dash="dash",
+                width=2,
+            ),
+        )
+    )
 
 st.plotly_chart(
     fig,
