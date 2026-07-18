@@ -452,10 +452,9 @@ import plotly.express as px
 def create_exercise_chart(
     dfGymRM,
     exercise,
-    selected_block,
+    period,
     view
 ):
-
     df = dfGymRM.copy()
 
     df["Date"] = pd.to_datetime(
@@ -463,19 +462,15 @@ def create_exercise_chart(
     )
 
     # =====================================
-    # Trainingsblock filtern
+    # Zeitraum filtern
     # =====================================
 
     if view == "Training Block":
-
-        start = selected_block["start"]
-        end = selected_block["end"]
-
         df = df[
-            (df["Date"] >= start)
+            (df["Date"] >= period["start"])
             &
-            (df["Date"] <= end)
-        ]
+            (df["Date"] <= period["end"])
+            ]
 
     # =====================================
     # Nur benötigte Daten

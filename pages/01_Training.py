@@ -192,7 +192,7 @@ fig = create_exercise_chart(
 
     exercise,
 
-    selected_block,
+    period,
 
     view
 
