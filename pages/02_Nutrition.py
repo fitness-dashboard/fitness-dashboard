@@ -88,54 +88,54 @@ with col2:
         f"{summary['End'].strftime('%d.%m.%Y')}"
     )
 
-    # ==========================================================
-    # Nutrition Chart
-    # ==========================================================
+# ==========================================================
+# Nutrition Chart
+# ==========================================================
 
-    st.subheader("Nutrition Chart")
+st.subheader("Nutrition Chart")
 
-    metric = st.selectbox(
-        "Metric",
-        [
-            "Calories",
-            "Protein",
-            "Carbs",
-            "Fat",
-        ],
-    )
+metric = st.selectbox(
+    "Metric",
+    [
+        "Calories",
+        "Protein",
+        "Carbs",
+        "Fat",
+    ],
+)
 
-    view = st.radio(
-        "View",
-        [
-            "Current Phase",
-            "All Phases",
-        ],
-        horizontal=True,
-    )
+view = st.radio(
+    "View",
+    [
+        "Current Phase",
+        "All Phases",
+    ],
+    horizontal=True,
+)
 
-    if view == "Current Phase":
+if view == "Current Phase":
 
-        dfChart = dfNutrition[
-            (dfNutrition["Date"] >= summary["Start"])
-            &
-            (dfNutrition["Date"] <= summary["End"])
-            ].copy()
+    dfChart = dfNutrition[
+        (dfNutrition["Date"] >= summary["Start"])
+        &
+        (dfNutrition["Date"] <= summary["End"])
+        ].copy()
 
-    else:
+else:
 
-        dfChart = dfNutrition.copy()
+    dfChart = dfNutrition.copy()
 
-    value_column = f"{metric} Actual"
+value_column = f"{metric} Actual"
 
-    fig = px.line(
-        dfChart,
-        x="Date",
-        y=value_column,
-        markers=True,
-        title=f"{metric} Over Time",
-    )
+fig = px.line(
+    dfChart,
+    x="Date",
+    y=value_column,
+    markers=True,
+    title=f"{metric} Over Time",
+)
 
-    st.plotly_chart(
-        fig,
-        use_container_width=True,
-    )
+st.plotly_chart(
+    fig,
+    use_container_width=True,
+)
