@@ -13,37 +13,17 @@ from gymrun_charts import (
     create_exercise_chart
 )
 
+from filters import select_period
+
+
+
 st.title("💪 Training")
 
 # =====================================
-# Trainingsblock auswählen
+# Zeitraum auswählen
 # =====================================
 
-block_names = [
-
-    block["name"]
-
-    for block in TRAINING_BLOCKS
-
-]
-
-selected_name = st.selectbox(
-
-    "Training Block",
-
-    block_names
-
-)
-
-selected_block = next(
-
-    block
-
-    for block in TRAINING_BLOCKS
-
-    if block["name"] == selected_name
-
-)
+period = select_period()
 
 # =====================================
 # CSV-Dateien laden
