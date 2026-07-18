@@ -94,15 +94,19 @@ with col2:
 
 st.subheader("Nutrition Chart")
 
-metric = st.selectbox(
+METRICS = {
+    "Calories (kcal)": "Calories",
+    "Protein (g)": "Protein",
+    "Carbs (g)": "Carbs",
+    "Fat (g)": "Fat",
+}
+
+metric_label = st.selectbox(
     "Metric",
-    [
-        "Calories",
-        "Protein",
-        "Carbs",
-        "Fat",
-    ],
+    list(METRICS.keys())
 )
+
+metric = METRICS[metric_label]
 
 view = st.radio(
     "View",
