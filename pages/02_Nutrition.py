@@ -230,19 +230,34 @@ dfTable = (
 dfTable = dfTable[
     [
         "Date",
+
         "Calories Actual",
+        "Calories %",
+
         "Protein Actual",
+        "Protein %",
+
         "Carbs Actual",
+        "Carbs %",
+
         "Fat Actual",
+        "Fat %",
     ]
 ]
 
 dfTable = dfTable.rename(
     columns={
-        "Calories Actual": "Calories (kcal)",
-        "Protein Actual": "Protein (g)",
-        "Carbs Actual": "Carbs (g)",
-        "Fat Actual": "Fat (g)",
+        "Calories Actual": "Calories",
+        "Calories %": "Cal %",
+
+        "Protein Actual": "Protein",
+        "Protein %": "Prot %",
+
+        "Carbs Actual": "Carbs",
+        "Carbs %": "Carb %",
+
+        "Fat Actual": "Fat",
+        "Fat %": "Fat %",
     }
 )
 
@@ -251,21 +266,74 @@ dfTable["Date"] = (
     .dt.strftime("%d.%m.%Y")
 )
 
-dfTable["Calories (kcal)"] = (
-    dfTable["Calories (kcal)"]
+dfTable["Calories"] = (
+    dfTable["Calories"]
     .round(0)
     .astype(int)
 )
 
 for col in [
-    "Protein (g)",
-    "Carbs (g)",
-    "Fat (g)",
+    "Protein",
+    "Carbs",
+    "Fat",
 ]:
+    dfTable[col] = (
+        dfTable[col]
+        .round(0)
+        .astype(int)
+    )
+
+for col in [
+    "Cal %",
+    "Prot %",
+    "Carb %",
+    "Fat %",
+]:
+    dfTable[col] = (
+        dfTable[col]
+        .round(0)
+        .astype(int)
+    )
+
     dfTable[col] = dfTable[col].round(0)
 
+def highlight_percent(val):
+
+    if val < 90:
+        color = "#f8d7da"      # hellrot
+
+    elif val < 97:
+        color = "#fff3cd"      # hellgelb
+
+    elif val <= 103:
+        color = "#d4edda"      # hellgrün
+
+    elif val <= 110:
+        color = "#fff3cd"      # hellgelb
+
+    else:
+        color = "#f8d7da"      # hellrot
+
+    return f"background-color: {color}"
+
+
+percent_columns = [
+    "Cal %",
+    "Prot %",
+    "Carb %",
+    "Fat %",
+]
+
+styler = (
+    dfTable.style
+    .applymap(
+        highlight_percent,
+        subset=percent_columns,
+    )
+)
+
 st.dataframe(
-    dfTable,
+    styler,
     use_container_width=True,
     hide_index=True,
-)
+))
