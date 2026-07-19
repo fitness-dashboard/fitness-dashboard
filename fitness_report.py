@@ -61,9 +61,6 @@ from training import (
     get_new_prs
 )
 
-print("Hilfe Kai 1")
-import body
-print("Body-Modul:", body.__file__)
 
 start = time.perf_counter()
 
@@ -259,12 +256,6 @@ dfNutrition = build_nutrition_dataframe(
     dfGesamt
 )
 
-print("Hilfe Kai")
-print()
-print("===== Spalten in dfGesamt =====")
-
-for col in dfGesamt.columns:
-    print(col)
 
 # =====================================
 # Body DataFrame
@@ -297,23 +288,34 @@ dfNutritionWeekly = (
 )
 
 # =====================================
-# CSV-Dateien exportieren
+# CSV-Dateien exportieren für Steamlit
 # =====================================
 
 dfGesamt.to_csv(
     DAILY_FITNESS_DATA_CSV_FILE,
     index=False
 )
+print(f"✓ {DAILY_FITNESS_DATA_CSV_FILE.name} wurde erzeugt.")
 
 dfNutrition.to_csv(
     NUTRITION_CSV_FILE,
     index=False
 )
+print(f"✓ {NUTRITION_CSV_FILE.name} wurde erzeugt.")
+
+dfBody.to_csv(
+    BODY_CSV_FILE,
+    index=False
+)
+print(f"✓ {BODY_CSV_FILE.name} wurde erzeugt.")
 
 dfNutritionSummary.to_csv(
     NUTRITION_PHASE_SUMMARY_CSV_FILE,
     index=False
 )
+print(f"✓ {NUTRITION_PHASE_SUMMARY_CSV_FILE.name} wurde erzeugt.")
+
+
 # =====================================
 # Excel-Datei öffnen
 # =====================================
