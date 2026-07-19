@@ -35,11 +35,6 @@ dfBody = pd.read_csv(
     BODY_CSV_FILE
 )
 
-dfGymRun = lade_gymrun()
-
-dfGymMaxRM = pd.read_csv(
-    GYMRUN_RM_CSV_FILE
-)
 
 dfFitness["Only Date"] = pd.to_datetime(
     dfFitness["Only Date"]
