@@ -162,12 +162,6 @@ print(
 dfGesamt = lade_daten()
 dfGesamt = berechne_werte(dfGesamt)
 
-# #Hilfe Kai
-# print("Hilfe Kai 1")
-# print(dfGesamt.columns.tolist())
-# # Ende Hilfe
-
-
 # =====================================
 # Trainingsblock filtern
 # =====================================
