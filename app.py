@@ -53,6 +53,12 @@ dfDashboard = build_dashboard_dataframe(
 
 period = select_period()
 
+dfDashboard = dfDashboard[
+    (dfDashboard["Start"] >= period["start"])
+    &
+    (dfDashboard["End"] <= period["end"])
+].copy()
+
 st.divider()
 
 # ==========================================================

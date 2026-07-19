@@ -1,57 +1,101 @@
 import pandas as pd
 
 
+import pandas as pd
+
+
 def build_dashboard_dataframe(
     dfFitness,
     dfBody,
 ):
     """
-    Erstellt die Wochenübersicht für das Dashboard.
-
-    Aktuell wird nur eine Zeile pro Kalenderwoche erzeugt.
-    Weitere Kennzahlen werden anschließend Schritt für Schritt ergänzt.
+    Erstellt eine Wochenübersicht für das Dashboard.
+    Jede Zeile entspricht einer Kalenderwoche.
     """
 
-    df = dfFitness.copy()
+    dfFitness = dfFitness.copy()
 
-    df["Week"] = (
-        pd.to_datetime(df["Only Date"])
+    dfFitness["Week"] = (
+        pd.to_datetime(dfFitness["Only Date"])
         .dt.isocalendar()
         .week
     )
 
-    df["Year"] = (
-        pd.to_datetime(df["Only Date"])
-        .dt.year
+    dfFitness["Year"] = (
+        pd.to_datetime(dfFitness["Only Date"])
+        .dt.isocalendar()
+        .year
     )
 
-    dashboard = (
-        df.groupby(
-            ["Year", "Week"],
-            as_index=False
-        )
-        .agg(
-            Start=("Only Date", "min"),
-            End=("Only Date", "max"),
+    rows = []
 
-            Calories=("Kalorien", "mean"),
-            Protein=("Eiweiß (g)", "mean"),
-            Fat=("Fett (g)", "mean"),
-            Carbs=("Kohlenhydrate (g)", "mean"),
+    weeks = (
+        dfFitness[
+            ["Year", "Week"]
+        ]
+        .drop_duplicates()
+        .sort_values(
+            ["Year", "Week"]
         )
     )
 
-    dashboard["Calories"] = dashboard["Calories"].round(0)
-    dashboard["Protein"] = dashboard["Protein"].round(0)
-    dashboard["Fat"] = dashboard["Fat"].round(0)
-    dashboard["Carbs"] = dashboard["Carbs"].round(0)
+    for _, week in weeks.iterrows():
 
+        year = week["Year"]
+        week_no = week["Week"]
 
+        weekFitness = dfFitness[
+            (dfFitness["Year"] == year)
+            &
+            (dfFitness["Week"] == week_no)
+        ].copy()
 
-    dashboard["Period"] = (
-        dashboard["Start"].dt.strftime("%d.%m.")
-        + " - "
-        + dashboard["End"].dt.strftime("%d.%m.")
+        start = weekFitness["Only Date"].min()
+        end = weekFitness["Only Date"].max()
+
+        row = {
+            "Year": year,
+            "Week": week_no,
+            "Start": start,
+            "End": end,
+            "Period":
+                f"{start:%d.%m.} - {end:%d.%m.}",
+
+            "Calories":
+                weekFitness["Kalorien"].mean(),
+
+            "Protein":
+                weekFitness["Eiweiß (g)"].mean(),
+
+            "Fat":
+                weekFitness["Fett (g)"].mean(),
+
+            "Carbs":
+                weekFitness["Kohlenhydrate (g)"].mean(),
+        }
+
+        rows.append(row)
+
+    dashboard = pd.DataFrame(rows)
+
+    dashboard["Calories"] = (
+        dashboard["Calories"]
+        .round(0)
+    )
+
+    dashboard["Protein"] = (
+        dashboard["Protein"]
+        .round(0)
+    )
+
+    dashboard["Fat"] = (
+        dashboard["Fat"]
+        .round(0)
+    )
+
+    dashboard["Carbs"] = (
+        dashboard["Carbs"]
+        .round(0)
     )
 
     return dashboard
