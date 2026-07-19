@@ -123,4 +123,72 @@ def build_body_dataframe(dfGesamt):
         .mean()
     )
 
+    # --------------------------------------------------
+    # Segment Muscle Mass (7 Tage)
+    # --------------------------------------------------
+
+    dfBody["Muscle Right Arm 7 Days"] = (
+        dfBody["Muscle Right Arm"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Muscle Left Arm 7 Days"] = (
+        dfBody["Muscle Left Arm"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Muscle Trunk 7 Days"] = (
+        dfBody["Muscle Trunk"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Muscle Right Leg 7 Days"] = (
+        dfBody["Muscle Right Leg"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Muscle Left Leg 7 Days"] = (
+        dfBody["Muscle Left Leg"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    # --------------------------------------------------
+    # Segment Body Fat (7 Tage)
+    # --------------------------------------------------
+
+    dfBody["Body Fat Right Arm 7 Days"] = (
+        dfBody["Body Fat Right Arm"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Body Fat Left Arm 7 Days"] = (
+        dfBody["Body Fat Left Arm"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Body Fat Trunk 7 Days"] = (
+        dfBody["Body Fat Trunk"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Body Fat Right Leg 7 Days"] = (
+        dfBody["Body Fat Right Leg"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Body Fat Left Leg 7 Days"] = (
+        dfBody["Body Fat Left Leg"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
     return dfBody

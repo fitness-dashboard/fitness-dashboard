@@ -254,3 +254,73 @@ st.plotly_chart(
     fig,
     use_container_width=True,
 )
+
+st.divider()
+
+# --------------------------------------------------
+# Segment Analysis - Muscle Mass
+# --------------------------------------------------
+
+st.subheader("Segment Analysis")
+
+muscle_regions = [
+    ("Right Arm", "Muscle Right Arm 7 Days"),
+    ("Left Arm", "Muscle Left Arm 7 Days"),
+    ("Trunk", "Muscle Trunk 7 Days"),
+    ("Right Leg", "Muscle Right Leg 7 Days"),
+    ("Left Leg", "Muscle Left Leg 7 Days"),
+]
+
+rows = []
+
+for region, column in muscle_regions:
+
+    rows.append({
+        "Body Region": region,
+        "Start": round(first[column], 2),
+        "End": round(latest[column], 2),
+        "Δ": round(latest[column] - first[column], 2),
+    })
+
+dfMuscle = pd.DataFrame(rows)
+
+st.markdown("#### Muscle Mass")
+
+st.dataframe(
+    dfMuscle,
+    hide_index=True,
+    use_container_width=True,
+)
+
+# --------------------------------------------------
+# Segment Analysis - Body Fat
+# --------------------------------------------------
+
+fat_regions = [
+    ("Right Arm", "Body Fat Right Arm 7 Days"),
+    ("Left Arm", "Body Fat Left Arm 7 Days"),
+    ("Trunk", "Body Fat Trunk 7 Days"),
+    ("Right Leg", "Body Fat Right Leg 7 Days"),
+    ("Left Leg", "Body Fat Left Leg 7 Days"),
+]
+
+rows = []
+
+for region, column in fat_regions:
+
+    rows.append({
+        "Body Region": region,
+        "Start": round(first[column], 1),
+        "End": round(latest[column], 1),
+        "Δ": round(latest[column] - first[column], 1),
+    })
+
+dfFat = pd.DataFrame(rows)
+
+st.markdown("#### Body Fat")
+
+st.dataframe(
+    dfFat,
+    hide_index=True,
+    use_container_width=True,
+)
