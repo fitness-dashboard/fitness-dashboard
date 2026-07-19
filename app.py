@@ -44,13 +44,6 @@ dfBody["Date"] = pd.to_datetime(
     dfBody["Date"]
 )
 
-dfGymRun["Date"] = pd.to_datetime(
-    dfGymRun["Date"]
-)
-
-dfGymMaxRM["Date"] = pd.to_datetime(
-    dfGymMaxRM["Date"]
-)
 
 dfDashboard = build_dashboard_dataframe(
     dfFitness,
