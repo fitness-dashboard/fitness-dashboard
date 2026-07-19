@@ -128,6 +128,31 @@ st.caption(
     f'{period["start"]:%d.%m.%Y} - {period["end"]:%d.%m.%Y}'
 )
 
+# --------------------------------------------------
+# Chart Selection
+# --------------------------------------------------
+
+chart_options = {
+    "Weight": "Weight",
+    "Body Fat %": "Body Fat % 7 Days",
+    "Fat Mass": "Fat Mass 7 Days",
+    "Muscle Mass": "Muscle Mass 7 Days",
+    "BMI": "BMI",
+    "Visceral Fat": "Visceral Fat",
+    "Body Water %": "Body Water %",
+    "Bone Mass": "Bone Mass",
+    "BMR": "BMR",
+}
+
+# selected_chart = st.selectbox(
+#     "Chart",
+#     options=list(chart_options.keys()),
+#     index=0,
+# )
+#
+# chart_column = chart_options[selected_chart]
+
+
 duration_days = (
     period["end"] - period["start"]
 ).days + 1
@@ -178,16 +203,54 @@ with col2:
         )
     )
 
+st.divider()
 
+# --------------------------------------------------
+# Body Trend Chart
+# --------------------------------------------------
 
-# ==========================================================
-# Seite
-# ==========================================================
+#Chart Überschrift
+st.subheader("Body Trend")
 
+# Chart drop down Auswahl
+chart_options = {
+    "Weight": "Weight",
+    "Body Fat %": "Body Fat % 7 Days",
+    "Fat Mass": "Fat Mass 7 Days",
+    "Muscle Mass": "Muscle Mass 7 Days",
+    "BMI": "BMI",
+    "Visceral Fat": "Visceral Fat",
+    "Body Water %": "Body Water %",
+    "Bone Mass": "Bone Mass",
+    "BMR": "BMR",
+}
 
+selected_chart = st.selectbox(
+    "Chart",
+    options=list(chart_options.keys()),
+    index=0,
+)
 
+#Chat anzeigen
+chart_column = chart_options[selected_chart]
 
-st.dataframe(
+fig = px.line(
     dfBody,
-    use_container_width=True
+    x="Date",
+    y=chart_column,
+    markers=True,
+    template="plotly_white",
+)
+
+fig.update_layout(
+    height=450,
+    margin=dict(l=20, r=20, t=20, b=20),
+    xaxis_title="",
+    yaxis_title="",
+    hovermode="x unified",
+)
+
+st.plotly_chart(
+    fig,
+    use_container_width=True,
 )

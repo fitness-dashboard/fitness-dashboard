@@ -53,6 +53,8 @@ def build_body_dataframe(dfGesamt):
             "Metabolic Age":
                 row["Metab Age"],
 
+
+
         })
 
         day += 1
