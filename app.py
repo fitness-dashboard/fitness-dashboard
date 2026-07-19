@@ -48,8 +48,7 @@ dfBody["Date"] = pd.to_datetime(
 dfDashboard = build_dashboard_dataframe(
     dfFitness,
     dfBody,
-    dfGymRun,
-    dfGymMaxRM,
+    dfTraining,
 )
 # ==========================================================
 # Zeitraum auswählen
