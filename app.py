@@ -35,6 +35,9 @@ dfBody = pd.read_csv(
     BODY_CSV_FILE
 )
 
+dfTraining = pd.read_csv(
+    TRAINING_DATA_CSV_FILE
+)
 
 dfFitness["Only Date"] = pd.to_datetime(
     dfFitness["Only Date"]
@@ -44,12 +47,16 @@ dfBody["Date"] = pd.to_datetime(
     dfBody["Date"]
 )
 
+dfTraining["Date"] = pd.to_datetime(
+    dfTraining["Date"]
+)
 
 dfDashboard = build_dashboard_dataframe(
     dfFitness,
     dfBody,
     dfTraining,
 )
+
 # ==========================================================
 # Zeitraum auswählen
 # ==========================================================
