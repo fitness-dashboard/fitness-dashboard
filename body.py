@@ -26,6 +26,9 @@ def build_body_dataframe(dfGesamt):
                 if not pd.isna(row["Weight (kg)"])
                 else None,
 
+            "Weight 7 Days":
+                row["Weight (kg) 7 Tage"],
+
             "Body Fat %":
                 row["Body Fat (%)"],
 
