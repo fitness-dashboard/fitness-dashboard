@@ -9,6 +9,7 @@ from config import (
 )
 
 from filters import select_period
+from dashboard import build_dashboard_dataframe
 
 st.set_page_config(
     page_title="Fitness Dashboard",
@@ -40,21 +41,16 @@ dfBody["Date"] = pd.to_datetime(
     dfBody["Date"]
 )
 
+dfDashboard = build_dashboard_dataframe(
+    dfFitness,
+    dfBody,
+)
+
 # ==========================================================
 # Zeitraum auswählen
 # ==========================================================
 
 period = select_period()
-
-dfFitness = dfFitness[
-    (dfFitness["Only Date"] >= period["start"]) &
-    (dfFitness["Only Date"] <= period["end"])
-].copy()
-
-dfBody = dfBody[
-    (dfBody["Date"] >= period["start"]) &
-    (dfBody["Date"] <= period["end"])
-].copy()
 
 st.divider()
 
@@ -64,6 +60,8 @@ st.divider()
 
 st.subheader("Weekly Dashboard")
 
-st.info(
-    "The weekly dashboard will be displayed here."
+st.dataframe(
+    dfDashboard,
+    hide_index=True,
+    use_container_width=True,
 )
