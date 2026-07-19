@@ -20,9 +20,10 @@ from gymrun_charts import (
 from config import (
     DASHBOARD_NAME,
     VERSION,
+    DAILY_FITNESS_DATA_CSV_FILE,
     GYMRUN_RM_CSV_FILE,
-    FITNESS_CSV_FILE,
     NUTRITION_CSV_FILE,
+    BODY_CSV_FILE,
     NUTRITION_PHASE_SUMMARY_CSV_FILE,
     BIRTHDAY,
     HEIGHT_CM,
@@ -41,6 +42,12 @@ from nutrition import (
     get_nutrition_phase_summary_df
 )
 
+from body import (
+    build_body_dataframe
+)
+
+
+
 from excel_formatting import (
     color_percentage_column,
     color_change_column,
@@ -53,6 +60,10 @@ from training import (
     get_training_block_progress_df,
     get_new_prs
 )
+
+print("Hilfe Kai 1")
+import body
+print("Body-Modul:", body.__file__)
 
 start = time.perf_counter()
 
@@ -239,19 +250,6 @@ print(
     "Training Block Progress CSV exportiert."
 )
 
-# # Hilfe
-#
-# print(dfGesamt["Only Date"].min())
-# print(dfGesamt["Only Date"].max())
-#
-# print(
-#
-#     dfGesamt[
-#         ["Only Date", "Kalorien"]
-#     ]
-#
-# )
-
 
 # =====================================
 # Ernährungsanalyse
@@ -261,11 +259,20 @@ dfNutrition = build_nutrition_dataframe(
     dfGesamt
 )
 
-# Hilfe
 print("Hilfe Kai")
-print(len(dfNutrition))
-print(dfNutrition.head(15))
-print(dfNutrition.tail())
+print()
+print("===== Spalten in dfGesamt =====")
+
+for col in dfGesamt.columns:
+    print(col)
+
+# =====================================
+# Body DataFrame
+# =====================================
+
+dfBody = build_body_dataframe(
+    dfGesamt
+)
 
 
 
@@ -294,7 +301,7 @@ dfNutritionWeekly = (
 # =====================================
 
 dfGesamt.to_csv(
-    FITNESS_CSV_FILE,
+    DAILY_FITNESS_DATA_CSV_FILE,
     index=False
 )
 
@@ -738,12 +745,8 @@ for sheet_name in [
 
 erstelle_diagramme(workbook, dfGesamt)
 
-#Hilfe
-# print(
-#     len(GYM_EXERCISES)
-# )
 
-#Hilfe
+
 print("Start Schleife")
 
 # Schleife durch die Übungen

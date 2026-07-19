@@ -67,8 +67,8 @@ EXCEL_FILE = (
 # Export-Dateien
 # ==========================================================
 
-FITNESS_CSV_FILE = Path(
-    "fitness_dashboard_data.csv"
+DAILY_FITNESS_DATA_CSV_FILE = Path(
+    "daily_fitness_data.csv"
 )
 
 GYMRUN_RM_CSV_FILE = Path(
@@ -77,6 +77,10 @@ GYMRUN_RM_CSV_FILE = Path(
 
 NUTRITION_CSV_FILE = Path(
     "nutrition_data.csv"
+)
+
+BODY_CSV_FILE = Path(
+    "body_data.csv"
 )
 
 NUTRITION_PHASE_SUMMARY_CSV_FILE = Path(
