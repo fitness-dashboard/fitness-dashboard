@@ -44,7 +44,7 @@ st.divider()
 
 latest = (
     dfBody
-    .dropna(subset=["Weight"])
+    .dropna(subset=["Weight 7 Days"])
     .iloc[-1]
 )
 
@@ -54,7 +54,7 @@ latest = (
 
 first = (
     dfBody
-    .dropna(subset=["Weight"])
+    .dropna(subset=["Weight 7 Days"])
     .iloc[0]
 )
 
@@ -86,7 +86,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.metric(
         "Weight",
-        f'{latest["Weight"]:.1f} kg'
+        f'{latest["Weight 7 Days"]:.1f} kg'
     )
 
     st.metric(
@@ -128,29 +128,6 @@ st.caption(
     f'{period["start"]:%d.%m.%Y} - {period["end"]:%d.%m.%Y}'
 )
 
-# --------------------------------------------------
-# Chart Selection
-# --------------------------------------------------
-
-chart_options = {
-    "Weight": "Weight",
-    "Body Fat %": "Body Fat % 7 Days",
-    "Fat Mass": "Fat Mass 7 Days",
-    "Muscle Mass": "Muscle Mass 7 Days",
-    "BMI": "BMI",
-    "Visceral Fat": "Visceral Fat",
-    "Body Water %": "Body Water %",
-    "Bone Mass": "Bone Mass",
-    "BMR": "BMR",
-}
-
-# selected_chart = st.selectbox(
-#     "Chart",
-#     options=list(chart_options.keys()),
-#     index=0,
-# )
-#
-# chart_column = chart_options[selected_chart]
 
 
 duration_days = (
@@ -169,8 +146,8 @@ with col1:
     st.metric(
         "Δ Weight",
         format_delta(
-            first["Weight"],
-            latest["Weight"],
+            first["Weight 7 Days"],
+            latest["Weight 7 Days"],
             "kg"
         )
     )
@@ -214,7 +191,7 @@ st.subheader("Body Trend")
 
 # Chart drop down Auswahl
 chart_options = {
-    "Weight": "Weight",
+    "Weight": "Weight 7 Days",
     "Body Fat %": "Body Fat % 7 Days",
     "Fat Mass": "Fat Mass 7 Days",
     "Muscle Mass": "Muscle Mass 7 Days",
