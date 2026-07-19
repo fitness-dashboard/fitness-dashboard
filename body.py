@@ -57,4 +57,32 @@ def build_body_dataframe(dfGesamt):
 
         day += 1
 
-    return pd.DataFrame(rows)
+    # --------------------------------------------------
+    # DataFrame erzeugen
+    # --------------------------------------------------
+
+    dfBody = pd.DataFrame(rows)
+
+    # --------------------------------------------------
+    # 7-Tage-Durchschnitte
+    # --------------------------------------------------
+
+    dfBody["Body Fat % 7 Days"] = (
+        dfBody["Body Fat %"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Fat Mass 7 Days"] = (
+        dfBody["Fat Mass"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    dfBody["Muscle Mass 7 Days"] = (
+        dfBody["Muscle Mass"]
+        .rolling(window=7, min_periods=1)
+        .mean()
+    )
+
+    return dfBody
