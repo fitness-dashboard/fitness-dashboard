@@ -57,3 +57,13 @@ dfBody = dfBody[
 ].copy()
 
 st.divider()
+
+# ==========================================================
+# Weekly Dashboard
+# ==========================================================
+
+st.subheader("Weekly Dashboard")
+
+st.info(
+    "The weekly dashboard will be displayed here."
+)
