@@ -18,6 +18,17 @@ dfBody["Date"] = pd.to_datetime(
     dfBody["Date"]
 )
 
+#Hilfe
+print("Hilfe Kai 1")
+st.write(f"Anzahl Zeilen nach Filter: {len(dfBody)}")
+
+st.dataframe(
+    dfBody.head(),
+    use_container_width=True
+)
+#Ende Hilfe
+
+
 # ==========================================================
 # Seitenüberschrift
 # ==========================================================
