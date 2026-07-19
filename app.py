@@ -6,6 +6,7 @@ import pandas as pd
 from config import (
     DAILY_FITNESS_DATA_CSV_FILE,
     BODY_CSV_FILE,
+    TRAINING_DATA_CSV_FILE,
 )
 
 from filters import select_period
@@ -20,6 +21,7 @@ st.set_page_config(
 st.title("🏠 Fitness Dashboard")
 
 st.divider()
+
 
 # ==========================================================
 # Daten laden
@@ -61,7 +63,6 @@ dfDashboard = build_dashboard_dataframe(
     dfGymRun,
     dfGymMaxRM,
 )
-
 # ==========================================================
 # Zeitraum auswählen
 # ==========================================================
