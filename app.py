@@ -31,6 +31,7 @@ dfFitness = pd.read_csv(
 
 #Hilfe Kai
 print("Hilfe Kai 1")
+st.error("STOPP TEST")
 st.write(dfFitness.columns.tolist())
 st.stop()
 #Ende Hilfe Kai
