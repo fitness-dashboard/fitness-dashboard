@@ -315,6 +315,9 @@ dfNutritionSummary.to_csv(
 )
 print(f"✓ {NUTRITION_PHASE_SUMMARY_CSV_FILE.name} wurde erzeugt.")
 
+print("\n===================================")
+print("Alle CSV-Dateien wurden erfolgreich erzeugt.")
+print("===================================")
 
 # =====================================
 # Excel-Datei öffnen

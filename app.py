@@ -14,8 +14,10 @@ st.title("🏠 Dashboard")
 #st.title("Fitness Dashboard")
 
 
+from config import DAILY_FITNESS_DATA_CSV_FILE
+
 dfGesamt = pd.read_csv(
-    "fitness_dashboard_data.csv"
+    DAILY_FITNESS_DATA_CSV_FILE
 )
 
 dfGymRM = pd.read_csv(
