@@ -53,7 +53,43 @@ def build_body_dataframe(dfGesamt):
             "Metabolic Age":
                 row["Metab Age"],
 
+            # --------------------------------------------------
+            # Segment Muscle Mass (kg)
+            # --------------------------------------------------
 
+            "Muscle Right Arm":
+                row["Muscle mass - right arm"],
+
+            "Muscle Left Arm":
+                row["Muscle mass - left arm"],
+
+            "Muscle Trunk":
+                row["Muscle mass - trunk"],
+
+            "Muscle Right Leg":
+                row["Muscle mass - right leg"],
+
+            "Muscle Left Leg":
+                row["Muscle mass - left leg"],
+
+            # --------------------------------------------------
+            # Segment Body Fat (%)
+            # --------------------------------------------------
+
+            "Body Fat Right Arm":
+                row["Body fat (%) - right arm"],
+
+            "Body Fat Left Arm":
+                row["Body fat (%) - left arm"],
+
+            "Body Fat Trunk":
+                row["Body fat (%) - trunk"],
+
+            "Body Fat Right Leg":
+                row["Body fat (%) - right leg"],
+
+            "Body Fat Left Leg":
+                row["Body fat (%) - left leg"],
 
         })
 
