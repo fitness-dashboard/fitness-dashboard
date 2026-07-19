@@ -95,6 +95,10 @@ TRAINING_BLOCK_PROGRESS_CSV_FILE = Path(
     "training_block_progress.csv"
 )
 
+TRAINING_DATA_CSV_FILE = Path(
+    "training_data.csv"
+)
+
 
 BIRTHDAY = "1975-01-19"
 HEIGHT_CM = 178

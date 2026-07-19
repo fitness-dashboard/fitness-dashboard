@@ -264,7 +264,8 @@ def get_training_block_progress_df(
 
 def get_new_prs(
         dfGymMaxRM,
-        block_number=1
+        block_number=1,
+        format_date=True
 ):
 
     # =====================================
@@ -410,10 +411,11 @@ def get_new_prs(
                         1
                     ),
 
-                "Date":
-                    current_pr_date.strftime(
-                        "%d.%m.%Y"
-                    )
+                "Date": (
+                current_pr_date.strftime("%d.%m.%Y")
+                if format_date
+                else current_pr_date
+)
             })
 
     # =====================================

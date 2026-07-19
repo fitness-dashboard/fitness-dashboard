@@ -25,13 +25,14 @@ from config import (
     NUTRITION_CSV_FILE,
     BODY_CSV_FILE,
     NUTRITION_PHASE_SUMMARY_CSV_FILE,
+    TRAINING_DATA_CSV_FILE,
     BIRTHDAY,
     HEIGHT_CM,
     ACTIVITY_FACTOR,
     DIET_START_DATE,
     TRAINING_BLOCK_SUMMARY_CSV_FILE,
     TRAINING_BLOCK_PROGRESS_CSV_FILE,
-    NUTRITION_PHASES
+    NUTRITION_PHASES,
 )
 
 import time
@@ -119,6 +120,51 @@ print(
 
 print(
     "GymRun RM CSV exportiert."
+)
+
+# =====================================
+# Training Dashboard Data
+# =====================================
+
+# Ein Workout = mindestens ein Satz an einem Datum
+dfWorkoutDays = (
+    dfGymRun[["Date"]]
+    .drop_duplicates()
+    .assign(**{"Workout Days": 1})
+)
+
+dfPRs = (
+    get_new_prs(
+        dfGymMaxRM,
+        format_date=False
+    )
+    .groupby("Date", as_index=False)
+    .size()
+    .rename(columns={"size": "PRs"})
+)
+
+# Beide Tabellen zusammenführen
+dfTrainingData = (
+    dfWorkoutDays.merge(
+        dfPRs,
+        on="Date",
+        how="left"
+    )
+)
+
+dfTrainingData["PRs"] = (
+    dfTrainingData["PRs"]
+    .fillna(0)
+    .astype(int)
+)
+
+dfTrainingData.to_csv(
+    TRAINING_DATA_CSV_FILE,
+    index=False
+)
+
+print(
+    "Training Dashboard CSV exportiert."
 )
 
 all_rm_charts = create_all_rm_chart_data(

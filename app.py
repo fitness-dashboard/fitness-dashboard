@@ -29,9 +29,14 @@ dfFitness = pd.read_csv(
     DAILY_FITNESS_DATA_CSV_FILE
 )
 
-
 dfBody = pd.read_csv(
     BODY_CSV_FILE
+)
+
+dfGymRun = lade_gymrun()
+
+dfGymMaxRM = pd.read_csv(
+    GYMRUN_RM_CSV_FILE
 )
 
 dfFitness["Only Date"] = pd.to_datetime(
@@ -42,9 +47,19 @@ dfBody["Date"] = pd.to_datetime(
     dfBody["Date"]
 )
 
+dfGymRun["Date"] = pd.to_datetime(
+    dfGymRun["Date"]
+)
+
+dfGymMaxRM["Date"] = pd.to_datetime(
+    dfGymMaxRM["Date"]
+)
+
 dfDashboard = build_dashboard_dataframe(
     dfFitness,
     dfBody,
+    dfGymRun,
+    dfGymMaxRM,
 )
 
 # ==========================================================
@@ -68,7 +83,62 @@ st.divider()
 st.subheader("Weekly Dashboard")
 
 st.dataframe(
-    dfDashboard,
+    dfDashboard[
+        [
+            "Week",
+            "Period",
+            "Calories",
+            "Protein",
+            "Fat",
+            "Carbs",
+            "Nutrition Days",
+            "Weight",
+            "Body Fat",
+            "Muscle",
+            "Weight Days",
+            "Workout Days",
+            "Training Minutes",
+            "Training Calories",
+        ]
+    ],
     hide_index=True,
     use_container_width=True,
+    column_config={
+        "Calories": st.column_config.NumberColumn(
+            "Calories",
+            format="%.0f kcal",
+        ),
+        "Protein": st.column_config.NumberColumn(
+            "Protein",
+            format="%.0f g",
+        ),
+        "Fat": st.column_config.NumberColumn(
+            "Fat",
+            format="%.0f g",
+        ),
+        "Carbs": st.column_config.NumberColumn(
+            "Carbs",
+            format="%.0f g",
+        ),
+        "Weight": st.column_config.NumberColumn(
+            "Weight",
+            format="%.2f kg",
+        ),
+        "Body Fat": st.column_config.NumberColumn(
+            "Body Fat",
+            format="%.1f %%",   # Doppeltes % ist korrekt
+        ),
+        "Muscle": st.column_config.NumberColumn(
+            "Muscle",
+            format="%.2f kg",
+        ),
+        "Training Minutes": st.column_config.NumberColumn(
+            "Minutes",
+            format="%d min",
+        ),
+        "Training Calories": st.column_config.NumberColumn(
+            "Training kcal",
+            format="%d kcal",
+        ),
+    },
 )

@@ -10,10 +10,11 @@ def build_dashboard_dataframe(
 ):
     """
     Erstellt eine Wochenübersicht für das Dashboard.
-    Jede Zeile entspricht einer Kalenderwoche.
+    Eine Zeile entspricht genau einer Kalenderwoche.
     """
 
     dfFitness = dfFitness.copy()
+    dfBody = dfBody.copy()
 
     dfFitness["Week"] = (
         pd.to_datetime(dfFitness["Only Date"])
@@ -53,49 +54,114 @@ def build_dashboard_dataframe(
         start = weekFitness["Only Date"].min()
         end = weekFitness["Only Date"].max()
 
-        row = {
+        weekBody = dfBody[
+            (dfBody["Date"] >= start)
+            &
+            (dfBody["Date"] <= end)
+        ].copy()
+
+        # ======================================================
+        # Zeitraum
+        # ======================================================
+
+        period_data = {
             "Year": year,
             "Week": week_no,
             "Start": start,
             "End": end,
-            "Period":
-                f"{start:%d.%m.} - {end:%d.%m.}",
-
-            "Calories":
-                weekFitness["Kalorien"].mean(),
-
-            "Protein":
-                weekFitness["Eiweiß (g)"].mean(),
-
-            "Fat":
-                weekFitness["Fett (g)"].mean(),
-
-            "Carbs":
-                weekFitness["Kohlenhydrate (g)"].mean(),
+            "Period": f"{start:%d.%m.} - {end:%d.%m.}",
         }
+
+        # ======================================================
+        # Ernährung
+        # ======================================================
+
+        nutrition_data = {
+            "Calories": weekFitness["Kalorien"].mean(),
+            "Protein": weekFitness["Eiweiß (g)"].mean(),
+            "Fat": weekFitness["Fett (g)"].mean(),
+            "Carbs": weekFitness["Kohlenhydrate (g)"].mean(),
+            "Nutrition Days": weekFitness["Kalorien"].notna().sum(),
+        }
+
+        # ======================================================
+        # Körper
+        # ======================================================
+
+        body_data = {
+            "Weight": weekBody["Weight 7 Days"].mean(),
+            "Body Fat": weekBody["Body Fat % 7 Days"].mean(),
+            "Muscle": weekBody["Muscle Mass 7 Days"].mean(),
+            "Weight Days": len(weekBody),
+        }
+
+        # ======================================================
+        # Training
+        # ======================================================
+
+        training_data = {
+            "Workout Days": weekFitness["Training"].notna().sum(),
+            "Training Minutes": weekFitness["Minuten für dieses Training"].sum(),
+            "Training Calories": weekFitness["Kalorien aus Training"].sum(),
+        }
+
+        # ======================================================
+        # Gesamte Zeile
+        # ======================================================
+
+        row = (
+            period_data
+            | nutrition_data
+            | body_data
+            | training_data
+        )
 
         rows.append(row)
 
     dashboard = pd.DataFrame(rows)
 
-    dashboard["Calories"] = (
-        dashboard["Calories"]
-        .round(0)
+    dashboard["Calories"] = dashboard["Calories"].round(0)
+    dashboard["Protein"] = dashboard["Protein"].round(0)
+    dashboard["Fat"] = dashboard["Fat"].round(0)
+    dashboard["Carbs"] = dashboard["Carbs"].round(0)
+
+    dashboard["Weight"] = dashboard["Weight"].round(2)
+    dashboard["Body Fat"] = dashboard["Body Fat"].round(1)
+    dashboard["Muscle"] = dashboard["Muscle"].round(2)
+
+    dashboard["Training Minutes"] = (
+        dashboard["Training Minutes"]
+        .fillna(0)
+        .astype(int)
     )
 
-    dashboard["Protein"] = (
-        dashboard["Protein"]
+    dashboard["Training Calories"] = (
+        dashboard["Training Calories"]
+        .fillna(0)
         .round(0)
+        .astype(int)
     )
 
-    dashboard["Fat"] = (
-        dashboard["Fat"]
-        .round(0)
+    # ======================================================
+    # Veränderungen zur Vorwoche
+    # ======================================================
+
+    dashboard["Δ Weight"] = (
+        dashboard["Weight"]
+        .diff()
+        .round(2)
     )
 
-    dashboard["Carbs"] = (
-        dashboard["Carbs"]
-        .round(0)
+    dashboard["Δ Body Fat"] = (
+        dashboard["Body Fat"]
+        .diff()
+        .round(1)
+    )
+
+    dashboard["Δ Muscle"] = (
+        dashboard["Muscle"]
+        .diff()
+        .round(2)
     )
 
     return dashboard
