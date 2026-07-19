@@ -15,3 +15,4 @@ venv/
 !nutrition_phase_summary.csv
 !training_block_summary.csv
 !training_block_progress.csv
+!body_data.csv

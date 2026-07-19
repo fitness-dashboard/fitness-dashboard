@@ -78,6 +78,10 @@ def format_delta(start, end, unit):
 st.subheader("Latest Measurement")
 
 st.caption(
+    "All values shown are based on 7-day rolling averages where applicable."
+)
+
+st.caption(
     latest["Date"].strftime("%d.%m.%Y")
 )
 
@@ -254,9 +258,9 @@ for region, column in muscle_regions:
 
     rows.append({
         "Body Region": region,
-        "Start": round(first[column], 2),
-        "End": round(latest[column], 2),
-        "Δ": round(latest[column] - first[column], 2),
+        "Start": f"{first[column]:.2f} kg",
+        "End": f"{latest[column]:.2f} kg",
+        "Δ": f"{latest[column] - first[column]:+.2f} kg",
     })
 
 dfMuscle = pd.DataFrame(rows)
@@ -284,12 +288,11 @@ fat_regions = [
 rows = []
 
 for region, column in fat_regions:
-
     rows.append({
         "Body Region": region,
-        "Start": round(first[column], 1),
-        "End": round(latest[column], 1),
-        "Δ": round(latest[column] - first[column], 1),
+        "Start": f"{first[column]:.1f} %",
+        "End": f"{latest[column]:.1f} %",
+        "Δ": f"{latest[column] - first[column]:+.1f} %",
     })
 
 dfFat = pd.DataFrame(rows)
