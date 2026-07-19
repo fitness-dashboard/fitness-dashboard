@@ -29,12 +29,6 @@ dfFitness = pd.read_csv(
     DAILY_FITNESS_DATA_CSV_FILE
 )
 
-#Hilfe Kai
-print("Hilfe Kai 1")
-st.error("STOPP TEST")
-st.write(dfFitness.columns.tolist())
-st.stop()
-#Ende Hilfe Kai
 
 dfBody = pd.read_csv(
     BODY_CSV_FILE

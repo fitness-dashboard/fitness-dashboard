@@ -34,32 +34,19 @@ def build_dashboard_dataframe(
             Start=("Only Date", "min"),
             End=("Only Date", "max"),
 
-            Calories=("Calories (kcal)", "mean"),
-            Protein=("Protein (g)", "mean"),
-            Fat=("Fat (g)", "mean"),
-            Carbs=("Carbohydrates (g)", "mean"),
+            Calories=("Kalorien", "mean"),
+            Protein=("Eiweiß (g)", "mean"),
+            Fat=("Fett (g)", "mean"),
+            Carbs=("Kohlenhydrate (g)", "mean"),
         )
     )
 
-    dashboard["Calories"] = (
-        dashboard["Calories"]
-        .round(0)
-    )
+    dashboard["Calories"] = dashboard["Calories"].round(0)
+    dashboard["Protein"] = dashboard["Protein"].round(0)
+    dashboard["Fat"] = dashboard["Fat"].round(0)
+    dashboard["Carbs"] = dashboard["Carbs"].round(0)
 
-    dashboard["Protein"] = (
-        dashboard["Protein"]
-        .round(0)
-    )
 
-    dashboard["Fat"] = (
-        dashboard["Fat"]
-        .round(0)
-    )
-
-    dashboard["Carbs"] = (
-        dashboard["Carbs"]
-        .round(0)
-    )
 
     dashboard["Period"] = (
         dashboard["Start"].dt.strftime("%d.%m.")
