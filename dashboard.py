@@ -7,6 +7,7 @@ import pandas as pd
 def build_dashboard_dataframe(
     dfFitness,
     dfBody,
+    dfTraining,
 ):
     """
     Erstellt eine Wochenübersicht für das Dashboard.
@@ -15,6 +16,20 @@ def build_dashboard_dataframe(
 
     dfFitness = dfFitness.copy()
     dfBody = dfBody.copy()
+
+    dfTraining = dfTraining.copy()
+
+    dfTraining["Week"] = (
+        dfTraining["Date"]
+        .dt.isocalendar()
+        .week
+    )
+
+    dfTraining["Year"] = (
+        dfTraining["Date"]
+        .dt.isocalendar()
+        .year
+    )
 
     dfFitness["Week"] = (
         pd.to_datetime(dfFitness["Only Date"])
@@ -60,6 +75,12 @@ def build_dashboard_dataframe(
             (dfBody["Date"] <= end)
         ].copy()
 
+        weekTraining = dfTraining[
+            (dfTraining["Year"] == year)
+            &
+            (dfTraining["Week"] == week_no)
+            ].copy()
+
         # ======================================================
         # Zeitraum
         # ======================================================
@@ -100,7 +121,8 @@ def build_dashboard_dataframe(
         # ======================================================
 
         training_data = {
-            "Workout Days": weekFitness["Training"].notna().sum(),
+            "Workout Days": weekTraining["Workout Days"].sum(),
+            "PRs": weekTraining["PRs"].sum(),
             "Training Minutes": weekFitness["Minuten für dieses Training"].sum(),
             "Training Calories": weekFitness["Kalorien aus Training"].sum(),
         }
