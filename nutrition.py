@@ -76,159 +76,166 @@ def calculate_macro_targets(
 
 def build_nutrition_dataframe(dfGesamt):
 
-    rows = []
+    dfGesamt = dfGesamt.reset_index(
+        drop=True
+    )
 
-    day = 1
+    dfNutrition = pd.DataFrame({
 
-    for _, row in dfGesamt.iterrows():
+        "Day": range(
+            1,
+            len(dfGesamt) + 1
+        ),
 
-        phase = get_nutrition_phase(
-            row["Only Date"]
+        "Date": dfGesamt["Only Date"],
+
+        "Nutrition Phase": None,
+
+        "Weight": dfGesamt[
+            "Weight (kg)"
+        ].round(1),
+
+        "Fat Mass": dfGesamt[
+            "Körperfettanteil kg"
+        ],
+
+        "Muscle Mass": dfGesamt[
+            "Muscle Mass (kg)"
+        ],
+
+        "Calories Target": float("nan"),
+
+        "Calories Actual": dfGesamt[
+            "Kalorien"
+        ],
+
+        "Calories %": float("nan"),
+
+        "Protein Target": float("nan"),
+
+        "Protein Actual": dfGesamt[
+            "Eiweiß (g)"
+        ],
+
+        "Protein %": float("nan"),
+
+        "Fat Target": float("nan"),
+
+        "Fat Actual": dfGesamt[
+            "Fett (g)"
+        ],
+
+        "Fat %": float("nan"),
+
+        "Carbs Target": float("nan"),
+
+        "Carbs Actual": dfGesamt[
+            "Kohlenhydrate (g)"
+        ],
+
+        "Carbs %": float("nan")
+
+    })
+
+    for phase in NUTRITION_PHASES:
+
+        phase_mask = (
+            (dfNutrition["Date"] >= pd.Timestamp(phase["start"]))
+            &
+            (dfNutrition["Date"] <= pd.Timestamp(phase["end"]))
         )
 
-        # =====================================
-        # Sollwerte berechnen
-        # =====================================
+        target_mask = (
+            phase_mask
+            &
+            dfGesamt["Weight (kg)"].notna()
+        )
 
-        targets = None
+        dfNutrition.loc[
+            phase_mask,
+            "Nutrition Phase"
+        ] = f"Phase {phase['phase']}"
 
-        if (
-                phase is not None
-                and not pd.isna(
-                    row["Weight (kg)"]
-                )
-        ):
-            targets = calculate_macro_targets(
-                row["Only Date"],
-                row["Weight (kg)"],
-                row["Kalorien aus Training"]
-                if not pd.isna(
-                    row["Kalorien aus Training"]
-                )
-                else 0
+        training_calories = dfGesamt.loc[
+            target_mask,
+            "Kalorien aus Training"
+        ].fillna(0)
+
+        calories_target = (
+            phase["calories"]
+            + training_calories
+        )
+
+        protein_target = (
+            dfGesamt.loc[
+                target_mask,
+                "Weight (kg)"
+            ]
+            * phase["protein_per_kg"]
+        ).round()
+
+        fat_target = (
+            dfGesamt.loc[
+                target_mask,
+                "Weight (kg)"
+            ]
+            * phase["fat_per_kg"]
+        ).round()
+
+        carbs_target = (
+            (
+                calories_target
+                - protein_target * 4
+                - fat_target * 9
             )
+            / 4
+        ).round()
 
-        rows.append({
+        dfNutrition.loc[
+            target_mask,
+            "Calories Target"
+        ] = calories_target
 
-            "Day":
-                day,
+        dfNutrition.loc[
+            target_mask,
+            "Protein Target"
+        ] = protein_target
 
-            "Date":
-                row["Only Date"],
+        dfNutrition.loc[
+            target_mask,
+            "Fat Target"
+        ] = fat_target
 
-            "Nutrition Phase":
-                f"Phase {phase['phase']}"
-                if phase is not None
-                else None,
+        dfNutrition.loc[
+            target_mask,
+            "Carbs Target"
+        ] = carbs_target
 
-            "Weight":
-                round(row["Weight (kg)"], 1)
-                if not pd.isna(row["Weight (kg)"])
-                else None,
+    dfNutrition["Calories %"] = (
+        dfNutrition["Calories Actual"]
+        / dfNutrition["Calories Target"]
+        * 100
+    ).round(1)
 
-            "Fat Mass":
-                row["Körperfettanteil kg"],
+    dfNutrition["Protein %"] = (
+        dfNutrition["Protein Actual"]
+        / dfNutrition["Protein Target"]
+        * 100
+    ).round(1)
 
-            "Muscle Mass":
-                row["Muscle Mass (kg)"],
+    dfNutrition["Fat %"] = (
+        dfNutrition["Fat Actual"]
+        / dfNutrition["Fat Target"]
+        * 100
+    ).round(1)
 
-            "Calories Target":
-                targets["calories"]
-                if targets
-                else None,
+    dfNutrition["Carbs %"] = (
+        dfNutrition["Carbs Actual"]
+        / dfNutrition["Carbs Target"]
+        * 100
+    ).round(1)
 
-            "Calories Actual":
-                row["Kalorien"],
-
-            "Calories %":
-                round(
-                    row["Kalorien"]
-                    / targets["calories"]
-                    * 100,
-                    1
-                )
-                if (
-                    targets
-                    and not pd.isna(
-                        row["Kalorien"]
-                    )
-                )
-                else None,
-
-            "Protein Target":
-                targets["protein"]
-                if targets
-                else None,
-
-            "Protein Actual":
-                row["Eiweiß (g)"],
-
-            "Protein %":
-                round(
-                    row["Eiweiß (g)"]
-                    / targets["protein"]
-                    * 100,
-                    1
-                )
-                if (
-                    targets
-                    and not pd.isna(
-                        row["Eiweiß (g)"]
-                    )
-                )
-                else None,
-
-            "Fat Target":
-                targets["fat"]
-                if targets
-                else None,
-
-            "Fat Actual":
-                row["Fett (g)"],
-
-            "Fat %":
-                round(
-                    row["Fett (g)"]
-                    / targets["fat"]
-                    * 100,
-                    1
-                )
-                if (
-                    targets
-                    and not pd.isna(
-                        row["Fett (g)"]
-                    )
-                )
-                else None,
-
-            "Carbs Target":
-                targets["carbs"]
-                if targets
-                else None,
-
-            "Carbs Actual":
-                row["Kohlenhydrate (g)"],
-
-            "Carbs %":
-                round(
-                    row["Kohlenhydrate (g)"]
-                    / targets["carbs"]
-                    * 100,
-                    1
-                )
-                if (
-                    targets
-                    and not pd.isna(
-                        row["Kohlenhydrate (g)"]
-                    )
-                )
-                else None
-
-        })
-
-        day += 1
-
-    return pd.DataFrame(rows)
+    return dfNutrition
 # ==========================================================
 # Wochenauswertung Ernährung
 # ==========================================================

@@ -769,7 +769,10 @@ print(
 for sheet_name in [
     "Data GymRun One RM",
     "Data GymRun Volume",
-    "Charts GymRun"
+    "Charts GymRun",
+    "Data Training Block RM",
+    "Data Training Block Volume",
+    "Charts Training Block"
 ]:
 
     if delete_sheet_if_exists(
@@ -930,37 +933,75 @@ for i, sheet_name in enumerate(sheet_order):
 
 print("GymRun RM CSV exportiert.")
 
-subprocess.run(
-    ["git", "add", "."]
+def run_git_command(command, action):
+
+    try:
+
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True
+        )
+
+    except FileNotFoundError as error:
+
+        raise RuntimeError(
+            "Git ist nicht installiert oder nicht im PATH verfügbar."
+        ) from error
+
+    if result.returncode != 0:
+
+        error_message = (
+            result.stderr.strip()
+            or result.stdout.strip()
+            or "Unbekannter Git-Fehler"
+        )
+
+        raise RuntimeError(
+            f"{action} fehlgeschlagen: {error_message}"
+        )
+
+    return result
+
+
+run_git_command(
+    ["git", "add", "."],
+    "Git Add"
 )
 
-subprocess.run(
-    ["git", "status"]
+status_result = run_git_command(
+    ["git", "status", "--short"],
+    "Git Status"
 )
 
-commit_result = subprocess.run(
-    [
-        "git",
-        "commit",
-        "-m",
-        "Automatisches Dashboard Update"
-    ],
-    capture_output=True,
-    text=True
-)
+if status_result.stdout.strip():
 
-if commit_result.returncode == 0:
+    print(
+        status_result.stdout.strip()
+    )
+
+    run_git_command(
+        [
+            "git",
+            "commit",
+            "-m",
+            "Automatisches Dashboard Update"
+        ],
+        "Git Commit"
+    )
+
     print("Git Commit erstellt.")
+
+    run_git_command(
+        ["git", "push"],
+        "Git Push"
+    )
+
+    print("GitHub wurde aktualisiert.")
+
 else:
+
     print("Keine Änderungen für Commit vorhanden.")
-
-subprocess.run(
-    ["git", "push"]
-)
-
-
-
-print("GitHub wurde aktualisiert.")
 
 ende = time.perf_counter()
 

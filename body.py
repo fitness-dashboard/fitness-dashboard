@@ -7,102 +7,104 @@ import pandas as pd
 
 def build_body_dataframe(dfGesamt):
 
-    rows = []
+    dfGesamt = dfGesamt.reset_index(
+        drop=True
+    )
 
-    day = 1
+    dfBody = pd.DataFrame({
 
-    for _, row in dfGesamt.iterrows():
+        "Day": range(
+            1,
+            len(dfGesamt) + 1
+        ),
 
-        rows.append({
+        "Date": dfGesamt["Only Date"],
 
-            "Day":
-                day,
+        "Weight": dfGesamt[
+            "Weight (kg)"
+        ].round(1),
 
-            "Date":
-                row["Only Date"],
+        "Weight 7 Days": dfGesamt[
+            "Weight (kg) 7 Tage"
+        ],
 
-            "Weight":
-                round(row["Weight (kg)"], 1)
-                if not pd.isna(row["Weight (kg)"])
-                else None,
+        "Body Fat %": dfGesamt[
+            "Body Fat (%)"
+        ],
 
-            "Weight 7 Days":
-                row["Weight (kg) 7 Tage"],
+        "Fat Mass": dfGesamt[
+            "Körperfettanteil kg"
+        ],
 
-            "Body Fat %":
-                row["Body Fat (%)"],
+        "Muscle Mass": dfGesamt[
+            "Muscle Mass (kg)"
+        ],
 
-            "Fat Mass":
-                row["Körperfettanteil kg"],
+        "BMI": dfGesamt["BMI"],
 
-            "Muscle Mass":
-                row["Muscle Mass (kg)"],
+        "BMR": dfGesamt["BMR (kcal)"],
 
-            "BMI":
-                row["BMI"],
+        "Visceral Fat": dfGesamt["Visc Fat"],
 
-            "BMR":
-                row["BMR (kcal)"],
+        "Body Water %": dfGesamt[
+            "Body Water (%)"
+        ],
 
-            "Visceral Fat":
-                row["Visc Fat"],
+        "Bone Mass": dfGesamt[
+            "Bone Mass (kg)"
+        ],
 
-            "Body Water %":
-                row["Body Water (%)"],
+        "Metabolic Age": dfGesamt["Metab Age"],
 
-            "Bone Mass":
-                row["Bone Mass (kg)"],
+        # --------------------------------------------------
+        # Segment Muscle Mass (kg)
+        # --------------------------------------------------
 
-            "Metabolic Age":
-                row["Metab Age"],
+        "Muscle Right Arm": dfGesamt[
+            "Muscle mass - right arm"
+        ],
 
-            # --------------------------------------------------
-            # Segment Muscle Mass (kg)
-            # --------------------------------------------------
+        "Muscle Left Arm": dfGesamt[
+            "Muscle mass - left arm"
+        ],
 
-            "Muscle Right Arm":
-                row["Muscle mass - right arm"],
+        "Muscle Trunk": dfGesamt[
+            "Muscle mass - trunk"
+        ],
 
-            "Muscle Left Arm":
-                row["Muscle mass - left arm"],
+        "Muscle Right Leg": dfGesamt[
+            "Muscle mass - right leg"
+        ],
 
-            "Muscle Trunk":
-                row["Muscle mass - trunk"],
+        "Muscle Left Leg": dfGesamt[
+            "Muscle mass - left leg"
+        ],
 
-            "Muscle Right Leg":
-                row["Muscle mass - right leg"],
+        # --------------------------------------------------
+        # Segment Body Fat (%)
+        # --------------------------------------------------
 
-            "Muscle Left Leg":
-                row["Muscle mass - left leg"],
+        "Body Fat Right Arm": dfGesamt[
+            "Body fat (%) - right arm"
+        ],
 
-            # --------------------------------------------------
-            # Segment Body Fat (%)
-            # --------------------------------------------------
+        "Body Fat Left Arm": dfGesamt[
+            "Body fat (%) - left arm"
+        ],
 
-            "Body Fat Right Arm":
-                row["Body fat (%) - right arm"],
+        "Body Fat Trunk": dfGesamt[
+            "Body fat (%) - trunk"
+        ],
 
-            "Body Fat Left Arm":
-                row["Body fat (%) - left arm"],
+        "Body Fat Right Leg": dfGesamt[
+            "Body fat (%) - right leg"
+        ],
 
-            "Body Fat Trunk":
-                row["Body fat (%) - trunk"],
+        "Body Fat Left Leg": dfGesamt[
+            "Body fat (%) - left leg"
+        ]
 
-            "Body Fat Right Leg":
-                row["Body fat (%) - right leg"],
-
-            "Body Fat Left Leg":
-                row["Body fat (%) - left leg"],
-
-        })
-
-        day += 1
-
-    # --------------------------------------------------
-    # DataFrame erzeugen
-    # --------------------------------------------------
-
-    dfBody = pd.DataFrame(rows)
+    })
 
     # --------------------------------------------------
     # 7-Tage-Durchschnitte

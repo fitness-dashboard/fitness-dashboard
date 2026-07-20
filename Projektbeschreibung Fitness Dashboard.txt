@@ -359,6 +359,16 @@ https://fitness-dashboard-8gzsgon9ehsqssnygrv5tp.streamlit.app/
 
 Projekt aktiv in Entwicklung.
 
+# Tests
+
+Die automatisierten Tests prüfen die Kernlogik ohne Excel-Datei,
+externe Importordner oder Git-Veröffentlichung.
+
+Ausführung:
+
+python -m pip install -r requirements.txt
+python -m unittest discover -s tests
+
 Letzte größere Erweiterungen:
 
 * Tanita-Altdaten integriert
