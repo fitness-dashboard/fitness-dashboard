@@ -88,10 +88,14 @@ st.dataframe(
             "Carbs",
             "Nutrition Days",
             "Weight",
+            "Δ Weight",
             "Body Fat",
+            "Δ Body Fat",
             "Muscle",
+            "Δ Muscle",
             "Weight Days",
             "Workout Days",
+            "PRs",
             "Training Minutes",
             "Training Calories",
         ]
@@ -119,13 +123,29 @@ st.dataframe(
             "Weight",
             format="%.2f kg",
         ),
+        "Δ Weight": st.column_config.NumberColumn(
+            "Δ Weight",
+            format="%+.2f kg",
+        ),
         "Body Fat": st.column_config.NumberColumn(
             "Body Fat",
             format="%.1f %%",   # Doppeltes % ist korrekt
         ),
+        "Δ Body Fat": st.column_config.NumberColumn(
+            "Δ Body Fat",
+            format="%+.1f %%",
+        ),
         "Muscle": st.column_config.NumberColumn(
             "Muscle",
             format="%.2f kg",
+        ),
+        "Δ Muscle": st.column_config.NumberColumn(
+            "Δ Muscle",
+            format="%+.2f kg",
+        ),
+        "PRs": st.column_config.NumberColumn(
+            "PRs",
+            format="%d",
         ),
         "Training Minutes": st.column_config.NumberColumn(
             "Minutes",
