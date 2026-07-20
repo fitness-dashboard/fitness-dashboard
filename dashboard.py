@@ -18,22 +18,6 @@ def get_weekly_pr_counts(
         subset=["Date"]
     )
 
-    if start is not None:
-
-        start = pd.Timestamp(start)
-
-        df = df[
-            df["Date"] >= start
-        ]
-
-    if end is not None:
-
-        end = pd.Timestamp(end)
-
-        df = df[
-            df["Date"] <= end
-        ]
-
     exercise_columns = [
         column
         for column in df.columns
@@ -56,6 +40,34 @@ def get_weekly_pr_counts(
         subset=["RM"]
     )
 
+    historical_max = pd.Series(
+        dtype="float64"
+    )
+
+    if start is not None:
+
+        start = pd.Timestamp(start)
+
+        historical_max = (
+            df[
+                df["Date"] < start
+            ]
+            .groupby("Exercise")["RM"]
+            .max()
+        )
+
+        df = df[
+            df["Date"] >= start
+        ]
+
+    if end is not None:
+
+        end = pd.Timestamp(end)
+
+        df = df[
+            df["Date"] <= end
+        ]
+
     if df.empty:
 
         return pd.DataFrame(
@@ -77,6 +89,21 @@ def get_weekly_pr_counts(
         "Exercise"
     )["RM"].transform(
         lambda values: values.cummax().shift()
+    )
+
+    df["Historical Max"] = df[
+        "Exercise"
+    ].map(
+        historical_max
+    )
+
+    df["Previous Max"] = df[
+        [
+            "Previous Max",
+            "Historical Max"
+        ]
+    ].max(
+        axis=1
     )
 
     df = df[

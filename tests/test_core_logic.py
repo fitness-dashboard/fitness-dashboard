@@ -282,7 +282,7 @@ class DashboardTests(unittest.TestCase):
             1
         )
 
-    def test_get_weekly_pr_counts_uses_selected_period_as_baseline(self):
+    def test_get_weekly_pr_counts_uses_historical_values_as_baseline(self):
 
         df_gym_rm = pd.DataFrame(
             {
@@ -309,16 +309,29 @@ class DashboardTests(unittest.TestCase):
 
         self.assertEqual(
             len(result),
+            2
+        )
+
+        first_week = result.loc[
+            result["Week"] == 23
+        ].iloc[0]
+
+        self.assertEqual(
+            first_week["PRs"],
             1
         )
 
+        second_week = result.loc[
+            result["Week"] == 24
+        ].iloc[0]
+
         self.assertEqual(
-            result.loc[0, "Week"],
+            second_week["Week"],
             24
         )
 
         self.assertEqual(
-            result.loc[0, "PRs"],
+            second_week["PRs"],
             1
         )
 
