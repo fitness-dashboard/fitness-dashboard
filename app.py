@@ -11,7 +11,28 @@ from config import (
 )
 
 from filters import select_period
-from dashboard import build_dashboard_dataframe
+from dashboard import (
+    build_dashboard_dataframe,
+    get_dashboard_summary
+)
+
+
+def format_value(value, unit, decimals=1):
+
+    if pd.isna(value):
+
+        return "—"
+
+    return f"{value:.{decimals}f} {unit}"
+
+
+def format_delta(value, unit, decimals=1):
+
+    if pd.isna(value):
+
+        return None
+
+    return f"{value:+.{decimals}f} {unit}"
 
 st.set_page_config(
     page_title="Fitness Dashboard",
@@ -79,6 +100,173 @@ dfDashboard = dfDashboard[
     &
     (dfDashboard["End"] <= period["end"])
 ].copy()
+
+st.divider()
+
+# ==========================================================
+# Period Summary
+# ==========================================================
+
+summary = get_dashboard_summary(
+    dfFitness,
+    dfBody,
+    dfGymRM,
+    period
+)
+
+st.subheader("Period Summary")
+
+st.caption(
+    f'{period["start"]:%d.%m.%Y} - '
+    f'{period["end"]:%d.%m.%Y}'
+)
+
+st.markdown("#### Nutrition")
+
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+
+    st.metric(
+        "Ø Calories",
+        format_value(
+            summary["Calories"],
+            "kcal",
+            decimals=0
+        )
+    )
+
+with col2:
+
+    st.metric(
+        "Ø Protein",
+        format_value(
+            summary["Protein"],
+            "g",
+            decimals=0
+        )
+    )
+
+with col3:
+
+    st.metric(
+        "Ø Carbs",
+        format_value(
+            summary["Carbs"],
+            "g",
+            decimals=0
+        )
+    )
+
+with col4:
+
+    st.metric(
+        "Ø Fat",
+        format_value(
+            summary["Fat"],
+            "g",
+            decimals=0
+        )
+    )
+
+st.markdown("#### Body Development")
+
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+
+    st.metric(
+        "Weight",
+        format_value(
+            summary["Weight"],
+            "kg"
+        ),
+        delta=format_delta(
+            summary["Weight Change"],
+            "kg"
+        ),
+        delta_color="normal"
+    )
+
+with col2:
+
+    st.metric(
+        "Fat Mass",
+        format_value(
+            summary["Fat Mass"],
+            "kg"
+        ),
+        delta=format_delta(
+            summary["Fat Mass Change"],
+            "kg"
+        ),
+        delta_color="normal"
+    )
+
+with col3:
+
+    st.metric(
+        "Muscle Mass",
+        format_value(
+            summary["Muscle Mass"],
+            "kg"
+        ),
+        delta=format_delta(
+            summary["Muscle Mass Change"],
+            "kg"
+        ),
+        delta_color="normal"
+    )
+
+with col4:
+
+    st.metric(
+        "Body Fat",
+        format_value(
+            summary["Body Fat"],
+            "%"
+        ),
+        delta=format_delta(
+            summary["Body Fat Change"],
+            "%"
+        ),
+        delta_color="normal"
+    )
+
+st.markdown("#### Training Progress")
+
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+
+    st.metric(
+        "Exercises Improved",
+        summary["Exercises Improved"]
+    )
+
+with col2:
+
+    st.metric(
+        "Average Δ RM",
+        format_value(
+            summary["Average Δ RM"],
+            "kg"
+        )
+    )
+
+with col3:
+
+    st.metric(
+        "All time PRs",
+        summary["All time PRs"]
+    )
+
+with col4:
+
+    st.metric(
+        "Training Days",
+        summary["Training Days"]
+    )
 
 st.divider()
 

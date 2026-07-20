@@ -131,6 +131,143 @@ def get_weekly_pr_counts(
     )
 
 
+def get_dashboard_summary(
+        dfFitness,
+        dfBody,
+        dfGymRM,
+        period
+):
+
+    start = pd.Timestamp(
+        period["start"]
+    )
+
+    end = pd.Timestamp(
+        period["end"]
+    )
+
+    dfFitnessPeriod = dfFitness[
+        (dfFitness["Only Date"] >= start)
+        &
+        (dfFitness["Only Date"] <= end)
+    ].copy()
+
+    dfBodyPeriod = dfBody[
+        (dfBody["Date"] >= start)
+        &
+        (dfBody["Date"] <= end)
+    ].copy()
+
+    dfBodyMeasurements = dfBodyPeriod.dropna(
+        subset=["Weight 7 Days"]
+    )
+
+    body_summary = {
+        "Weight": None,
+        "Weight Change": None,
+        "Fat Mass": None,
+        "Fat Mass Change": None,
+        "Muscle Mass": None,
+        "Muscle Mass Change": None,
+        "Body Fat": None,
+        "Body Fat Change": None
+    }
+
+    if not dfBodyMeasurements.empty:
+
+        first = dfBodyMeasurements.iloc[0]
+        latest = dfBodyMeasurements.iloc[-1]
+
+        body_summary = {
+            "Weight": latest["Weight 7 Days"],
+            "Weight Change": (
+                latest["Weight 7 Days"]
+                - first["Weight 7 Days"]
+            ),
+            "Fat Mass": latest["Fat Mass 7 Days"],
+            "Fat Mass Change": (
+                latest["Fat Mass 7 Days"]
+                - first["Fat Mass 7 Days"]
+            ),
+            "Muscle Mass": latest["Muscle Mass 7 Days"],
+            "Muscle Mass Change": (
+                latest["Muscle Mass 7 Days"]
+                - first["Muscle Mass 7 Days"]
+            ),
+            "Body Fat": latest["Body Fat % 7 Days"],
+            "Body Fat Change": (
+                latest["Body Fat % 7 Days"]
+                - first["Body Fat % 7 Days"]
+            )
+        }
+
+    dfGymRM = dfGymRM.copy()
+
+    dfGymRM["Date"] = pd.to_datetime(
+        dfGymRM["Date"],
+        errors="coerce"
+    )
+
+    dfGymRMPeriod = dfGymRM[
+        (dfGymRM["Date"] >= start)
+        &
+        (dfGymRM["Date"] <= end)
+    ].copy()
+
+    exercise_columns = [
+        column
+        for column in dfGymRMPeriod.columns
+        if column != "Date"
+    ]
+
+    improvements = []
+
+    for exercise in exercise_columns:
+
+        values = pd.to_numeric(
+            dfGymRMPeriod[
+                exercise
+            ],
+            errors="coerce"
+        ).dropna()
+
+        if values.empty:
+
+            continue
+
+        start_rm = values.iloc[0]
+        best_rm = values.max()
+
+        if best_rm > start_rm:
+
+            improvements.append(
+                best_rm - start_rm
+            )
+
+    all_time_prs = get_weekly_pr_counts(
+        dfGymRM,
+        start=start,
+        end=end
+    )["PRs"].sum()
+
+    return {
+        "Calories": dfFitnessPeriod["Kalorien"].mean(),
+        "Protein": dfFitnessPeriod["Eiweiß (g)"].mean(),
+        "Carbs": dfFitnessPeriod["Kohlenhydrate (g)"].mean(),
+        "Fat": dfFitnessPeriod["Fett (g)"].mean(),
+        **body_summary,
+        "Exercises Improved": len(improvements),
+        "Average Δ RM": (
+            sum(improvements)
+            / len(improvements)
+            if improvements
+            else None
+        ),
+        "All time PRs": all_time_prs,
+        "Training Days": dfGymRMPeriod["Date"].nunique()
+    }
+
+
 def build_dashboard_dataframe(
     dfFitness,
     dfBody,
