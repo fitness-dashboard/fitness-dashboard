@@ -9,13 +9,26 @@ def get_weekly_pr_counts(
 
     df = dfGymRM.copy()
 
+    df["Date"] = pd.to_datetime(
+        df["Date"],
+        errors="coerce"
+    )
+
+    df = df.dropna(
+        subset=["Date"]
+    )
+
     if start is not None:
+
+        start = pd.Timestamp(start)
 
         df = df[
             df["Date"] >= start
         ]
 
     if end is not None:
+
+        end = pd.Timestamp(end)
 
         df = df[
             df["Date"] <= end
@@ -32,7 +45,14 @@ def get_weekly_pr_counts(
         value_vars=exercise_columns,
         var_name="Exercise",
         value_name="RM"
-    ).dropna(
+    )
+
+    df["RM"] = pd.to_numeric(
+        df["RM"],
+        errors="coerce"
+    )
+
+    df = df.dropna(
         subset=["RM"]
     )
 
