@@ -1,15 +1,17 @@
 import pandas as pd
 import numpy as np
 
+from excel_utils import delete_sheet_if_exists
+
 def erstelle_diagramme(workbook, dfGesamt):
     # ===============================
     # Neues Sheet für Diagramme
     # ===============================
 
-    try:
-        workbook.sheets["Charts Body"].delete()
-    except:
-        pass
+    delete_sheet_if_exists(
+        workbook,
+        "Charts Body"
+    )
 
     wsChart = workbook.sheets.add("Charts Body")
 

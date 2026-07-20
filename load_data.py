@@ -1,6 +1,5 @@
 import pandas as pd
 from pathlib import Path
-import sys
 from config import (
     DOWNLOADS_FOLDER,
     TANITA_FOLDER,
@@ -9,6 +8,11 @@ from config import (
 )
 from file_utils import (
     archive_csv_file
+)
+from data_validation import (
+    validate_dates,
+    validate_non_empty_dataframe,
+    validate_required_columns
 )
 from datetime import datetime
 
@@ -34,7 +38,7 @@ def lade_daten():
         )
 
         if not passende_dateien:
-            sys.exit(
+            raise FileNotFoundError(
                 f"Keine Datei gefunden: {start_string}"
             )
 
@@ -62,10 +66,29 @@ def lade_daten():
 
     dfMesswerte = pd.read_csv(file1)
 
+    validate_non_empty_dataframe(
+        dfMesswerte,
+        "MyFitnessPal Messwerte"
+    )
+
+    validate_required_columns(
+        dfMesswerte,
+        [
+            "Datum"
+        ],
+        "MyFitnessPal Messwerte"
+    )
+
     dfMesswerte["Only Date"] = pd.to_datetime(
         dfMesswerte["Datum"],
         errors="coerce"
     ).dt.date
+
+    validate_dates(
+        dfMesswerte,
+        "Only Date",
+        "MyFitnessPal Messwerte"
+    )
 
     dfMesswerte.drop(columns=["Datum"], inplace=True)
 
@@ -87,10 +110,33 @@ def lade_daten():
 
     dfNaehrwerte = pd.read_csv(file2)
 
+    validate_non_empty_dataframe(
+        dfNaehrwerte,
+        "MyFitnessPal Nährwerte"
+    )
+
+    validate_required_columns(
+        dfNaehrwerte,
+        [
+            "Datum",
+            "Kalorien",
+            "Fett (g)",
+            "Kohlenhydrate (g)",
+            "Eiweiß (g)"
+        ],
+        "MyFitnessPal Nährwerte"
+    )
+
     dfNaehrwerte["Only Date"] = pd.to_datetime(
         dfNaehrwerte["Datum"],
         errors="coerce"
     ).dt.date
+
+    validate_dates(
+        dfNaehrwerte,
+        "Only Date",
+        "MyFitnessPal Nährwerte"
+    )
 
     dfNaehrwerte.drop(columns=["Datum"], inplace=True)
 
@@ -155,10 +201,31 @@ def lade_daten():
 
     dfTrainingswerte = pd.read_csv(file3)
 
+    validate_non_empty_dataframe(
+        dfTrainingswerte,
+        "MyFitnessPal Training"
+    )
+
+    validate_required_columns(
+        dfTrainingswerte,
+        [
+            "Datum",
+            "Kalorien aus Training",
+            "Minuten für dieses Training"
+        ],
+        "MyFitnessPal Training"
+    )
+
     dfTrainingswerte["Only Date"] = pd.to_datetime(
         dfTrainingswerte["Datum"],
         errors="coerce"
     ).dt.date
+
+    validate_dates(
+        dfTrainingswerte,
+        "Only Date",
+        "MyFitnessPal Training"
+    )
 
     dfTrainingswerte.drop(columns=["Datum"], inplace=True)
 
@@ -195,11 +262,56 @@ def lade_daten():
         TANITA_OLDDATA_FILE
     )
 
+    tanita_required_columns = [
+        "Date",
+        "Weight (kg)",
+        "BMI",
+        "Body Fat (%)",
+        "Visc Fat",
+        "Muscle Mass (kg)",
+        "Bone Mass (kg)",
+        "BMR (kcal)",
+        "Metab Age",
+        "Body Water (%)",
+        "Muscle mass - right arm",
+        "Muscle mass - left arm",
+        "Muscle mass - right leg",
+        "Muscle mass - left leg",
+        "Muscle mass - trunk",
+        "Body fat (%) - right arm",
+        "Body fat (%) - left arm",
+        "Body fat (%) - right leg",
+        "Body fat (%) - left leg",
+        "Body fat (%) - trunk"
+    ]
+
+    validate_non_empty_dataframe(
+        dfTanitaAlt,
+        "Tanita Altdaten"
+    )
+
+    validate_required_columns(
+        dfTanitaAlt,
+        tanita_required_columns,
+        "Tanita Altdaten"
+    )
+
     # ===============================
     # TANITA aktuelle CSV einlesen
     # ===============================
 
     dfTanitaNeu = pd.read_csv(fileTanitaNeu)
+
+    validate_non_empty_dataframe(
+        dfTanitaNeu,
+        "Tanita aktuelle Daten"
+    )
+
+    validate_required_columns(
+        dfTanitaNeu,
+        tanita_required_columns,
+        "Tanita aktuelle Daten"
+    )
 
     # ===============================
     # Datumsfelder getrennt umwandeln
@@ -215,6 +327,18 @@ def lade_daten():
         dfTanitaNeu["Date"],
         format="%Y-%m-%d %H:%M:%S",
         errors="coerce"
+    )
+
+    validate_dates(
+        dfTanitaAlt,
+        "Date",
+        "Tanita Altdaten"
+    )
+
+    validate_dates(
+        dfTanitaNeu,
+        "Date",
+        "Tanita aktuelle Daten"
     )
 
     # ===============================

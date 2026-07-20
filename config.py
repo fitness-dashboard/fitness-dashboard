@@ -5,13 +5,6 @@ from pathlib import Path
 # ==========================================================
 
 DASHBOARD_NAME = "Dashboard Kai"
-VERSION = "2.5.0"
-
-# ==========================================================
-# Dashboard
-# ==========================================================
-
-DASHBOARD_NAME = "Dashboard Kai"
 VERSION = "2.5"
 
 # ==========================================================
@@ -60,7 +53,7 @@ TANITA_OLDDATA_FILE = (
 
 EXCEL_FILE = (
     TANITA_OLDDATA_FOLDER
-    / "Gewicht mit Python.xlsm"
+    / "Gewicht mit Python Kai.xlsm"
 )
 
 # ==========================================================

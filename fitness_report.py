@@ -54,6 +54,10 @@ from excel_formatting import (
     color_change_column,
     format_table
 )
+from excel_utils import (
+    delete_sheet_if_exists,
+    sheet_exists
+)
 from training import (
     filter_training_block,
     get_training_block_summary,
@@ -377,18 +381,14 @@ workbook = exportiere_excel(
 # Excel-Blatt Data Nutrition
 # =====================================
 
-try:
-
-    workbook.sheets[
+if delete_sheet_if_exists(
+        workbook,
         "Data Nutrition"
-    ].delete()
+):
 
     print(
         "Data Nutrition gelöscht"
     )
-
-except:
-    pass
 
 sheetNutrition = workbook.sheets.add(
     "Data Nutrition"
@@ -453,18 +453,14 @@ print("Data Nutrition erstellt.")
 # Excel-Blatt Nutrition Report
 # =====================================
 
-try:
-
-    workbook.sheets[
+if delete_sheet_if_exists(
+        workbook,
         "Nutrition Report"
-    ].delete()
+):
 
     print(
         "Nutrition Report gelöscht"
     )
-
-except:
-    pass
 
 sheetReport = workbook.sheets.add(
     "Nutrition Report"
@@ -571,14 +567,10 @@ sheetReport.range("G5:G6").api.Font.Bold = True
 # Excel-Blatt Training Block Report
 # =====================================
 
-try:
-
-    workbook.sheets[
-        "Training Block Report"
-    ].delete()
-
-except:
-    pass
+delete_sheet_if_exists(
+    workbook,
+    "Training Block Report"
+)
 
 sheetTraining = workbook.sheets.add(
     "Training Block Report"
@@ -780,17 +772,14 @@ for sheet_name in [
     "Charts GymRun"
 ]:
 
-    try:
-        workbook.sheets[
+    if delete_sheet_if_exists(
+            workbook,
             sheet_name
-        ].delete()
+    ):
 
         print(
             f"{sheet_name} gelöscht"
         )
-
-    except:
-        pass
 
 
 
@@ -892,28 +881,47 @@ sheet_order = [
 
 for i, sheet_name in enumerate(sheet_order):
 
-    try:
-
-        if i == 0:
-            workbook.sheets[
-                sheet_name
-            ].api.Move(
-                Before=workbook.sheets[1].api
-            )
-
-        else:
-            workbook.sheets[
-                sheet_name
-            ].api.Move(
-                After=workbook.sheets[
-                    sheet_order[i - 1]
-                ].api
-            )
-
-    except Exception as e:
+    if not sheet_exists(
+            workbook,
+            sheet_name
+    ):
 
         print(
-            f"Fehler bei {sheet_name}: {e}"
+            f"Blatt nicht vorhanden: {sheet_name}"
+        )
+
+        continue
+
+    if i == 0:
+        workbook.sheets[
+            sheet_name
+        ].api.Move(
+            Before=workbook.sheets[1].api
+        )
+
+    else:
+        previous_sheet_name = sheet_order[
+            i - 1
+        ]
+
+        if not sheet_exists(
+                workbook,
+                previous_sheet_name
+        ):
+
+            print(
+                f"Vorheriges Blatt nicht vorhanden: "
+                f"{previous_sheet_name}"
+            )
+
+            continue
+
+        workbook.sheets[
+            sheet_name
+        ].api.Move(
+            After=workbook.sheets[
+                previous_sheet_name
+            ].api
         )
 
 # ===============================

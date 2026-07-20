@@ -5,6 +5,7 @@ from gymrun_helpers import (
     get_exercise_volume
 )
 from gymrun_config import GYM_EXERCISES
+from excel_utils import get_or_create_sheet
 
 def create_rm_chart_data(
     dfGymMaxRM,
@@ -121,25 +122,17 @@ def create_rm_excel_chart(
 
 
     # Blatt holen oder anlegen
-    try:
-        wsGymRun = workbook.sheets[
-            data_sheet_name
-        ]
-    except:
-        wsGymRun = workbook.sheets.add(
-            data_sheet_name
-        )
+    wsGymRun = get_or_create_sheet(
+        workbook,
+        data_sheet_name
+    )
 
     #wsGymRun.clear()
 
-    try:
-        wsGymRunCharts = workbook.sheets[
-            chart_sheet_name
-        ]
-    except:
-        wsGymRunCharts = workbook.sheets.add(
-            chart_sheet_name
-        )
+    wsGymRunCharts = get_or_create_sheet(
+        workbook,
+        chart_sheet_name
+    )
 
     # Vorhandene Diagramme löschen
 
@@ -309,14 +302,10 @@ def create_volume_excel_chart(
     # Blatt holen oder anlegen
     # ===============================
 
-    try:
-        wsGymRunVolume = workbook.sheets[
-            data_sheet_name
-        ]
-    except:
-        wsGymRunVolume = workbook.sheets.add(
-            data_sheet_name
-        )
+    wsGymRunVolume = get_or_create_sheet(
+        workbook,
+        data_sheet_name
+    )
 
     # Nicht mehr löschen
     # wsGymRunVolume.clear()
@@ -357,14 +346,10 @@ def create_volume_excel_chart(
     # Volumen Diagramm
     # ===============================
 
-    try:
-        wsGymRunCharts = workbook.sheets[
-            chart_sheet_name
-        ]
-    except:
-        wsGymRunCharts = workbook.sheets.add(
-            chart_sheet_name
-        )
+    wsGymRunCharts = get_or_create_sheet(
+        workbook,
+        chart_sheet_name
+    )
 
     chart = wsGymRunCharts.charts.add()
 

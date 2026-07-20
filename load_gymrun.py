@@ -1,7 +1,11 @@
 import pandas as pd
 from pathlib import Path
-import sys
 from config import GYMRUN_FOLDER
+from data_validation import (
+    validate_dates,
+    validate_non_empty_dataframe,
+    validate_required_columns
+)
 
 def lade_gymrun():
 
@@ -19,7 +23,7 @@ def lade_gymrun():
     )
 
     if not dateien:
-        sys.exit(
+        raise FileNotFoundError(
             "Keine GymRun-Datei gefunden"
         )
 
@@ -41,6 +45,22 @@ def lade_gymrun():
         decimal="."
     )
 
+    validate_non_empty_dataframe(
+        dfGymRun,
+        "GymRun"
+    )
+
+    validate_required_columns(
+        dfGymRun,
+        [
+            "Date",
+            "Exercise",
+            "Weight",
+            "Reps"
+        ],
+        "GymRun"
+    )
+
     # ==========================================
     # Datum umwandeln
     # ==========================================
@@ -49,6 +69,12 @@ def lade_gymrun():
         dfGymRun["Date"],
         format="%d.%m.%Y",
         errors="coerce"
+    )
+
+    validate_dates(
+        dfGymRun,
+        "Date",
+        "GymRun"
     )
 
     # ==========================================

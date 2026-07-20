@@ -2,13 +2,15 @@ import xlwings as xw
 import pandas as pd
 import numpy as np
 
+from config import EXCEL_FILE
+
 def exportiere_excel(dfGesamt):
     print("Excel Export gestartet")
     # ===============================
     # Excel-Datei öffnen oder vorhandene Instanz verwenden
     # ===============================
 
-    excel_datei = r"D:\Documents\Gesundheit Kai\Fitness\Gewicht mit Python Kai.xlsm"
+    excel_datei = str(EXCEL_FILE)
 
     if xw.apps.count > 0:
         app = xw.apps.active
