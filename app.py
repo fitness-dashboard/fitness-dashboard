@@ -95,9 +95,7 @@ st.dataframe(
             "Δ Muscle",
             "Weight Days",
             "Workout Days",
-            "PRs",
-            "Training Minutes",
-            "Training Calories",
+            "PRs"
         ]
     ],
     hide_index=True,
@@ -146,14 +144,6 @@ st.dataframe(
         "PRs": st.column_config.NumberColumn(
             "PRs",
             format="%d",
-        ),
-        "Training Minutes": st.column_config.NumberColumn(
-            "Minutes",
-            format="%d min",
-        ),
-        "Training Calories": st.column_config.NumberColumn(
-            "Training kcal",
-            format="%d kcal",
         ),
     },
 )
