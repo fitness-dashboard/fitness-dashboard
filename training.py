@@ -192,7 +192,9 @@ def get_training_block_summary_df(
 
             "Start": summary["start"],
 
-            "End": summary["end"],
+            "End": pd.Timestamp(
+                block["end"]
+            ),
 
             "Training Days": summary["training_days"],
 
