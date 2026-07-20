@@ -1,13 +1,95 @@
 import pandas as pd
 
 
-import pandas as pd
+def get_weekly_pr_counts(
+        dfGymRM,
+        start=None,
+        end=None
+):
+
+    df = dfGymRM.copy()
+
+    if start is not None:
+
+        df = df[
+            df["Date"] >= start
+        ]
+
+    if end is not None:
+
+        df = df[
+            df["Date"] <= end
+        ]
+
+    exercise_columns = [
+        column
+        for column in df.columns
+        if column != "Date"
+    ]
+
+    df = df.melt(
+        id_vars="Date",
+        value_vars=exercise_columns,
+        var_name="Exercise",
+        value_name="RM"
+    ).dropna(
+        subset=["RM"]
+    )
+
+    if df.empty:
+
+        return pd.DataFrame(
+            columns=[
+                "Year",
+                "Week",
+                "PRs"
+            ]
+        )
+
+    df = df.sort_values(
+        [
+            "Exercise",
+            "Date"
+        ]
+    )
+
+    df["Previous Max"] = df.groupby(
+        "Exercise"
+    )["RM"].transform(
+        lambda values: values.cummax().shift()
+    )
+
+    df = df[
+        df["RM"] > df["Previous Max"]
+    ].copy()
+
+    df["Year"] = df["Date"].dt.isocalendar().year
+
+    df["Week"] = df["Date"].dt.isocalendar().week
+
+    return (
+        df.groupby(
+            [
+                "Year",
+                "Week"
+            ],
+            as_index=False
+        )["Exercise"]
+        .nunique()
+        .rename(
+            columns={
+                "Exercise": "PRs"
+            }
+        )
+    )
 
 
 def build_dashboard_dataframe(
     dfFitness,
     dfBody,
     dfTraining,
+    dfGymRM,
+    period,
 ):
     """
     Erstellt eine Wochenübersicht für das Dashboard.
@@ -18,6 +100,16 @@ def build_dashboard_dataframe(
     dfBody = dfBody.copy()
 
     dfTraining = dfTraining.copy()
+
+    period_prs = get_weekly_pr_counts(
+        dfGymRM,
+        start=period["start"],
+        end=period["end"]
+    )
+
+    all_time_prs = get_weekly_pr_counts(
+        dfGymRM
+    )
 
     dfTraining["Week"] = (
         dfTraining["Date"]
@@ -122,7 +214,6 @@ def build_dashboard_dataframe(
 
         training_data = {
             "Workout Days": weekTraining["Workout Days"].sum(),
-            "PRs": weekTraining["PRs"].sum(),
             "Training Minutes": weekFitness["Minuten für dieses Training"].sum(),
             "Training Calories": weekFitness["Kalorien aus Training"].sum(),
         }
@@ -161,6 +252,40 @@ def build_dashboard_dataframe(
         dashboard["Training Calories"]
         .fillna(0)
         .round(0)
+        .astype(int)
+    )
+
+    dashboard = dashboard.merge(
+        period_prs,
+        on=[
+            "Year",
+            "Week"
+        ],
+        how="left"
+    )
+
+    dashboard = dashboard.merge(
+        all_time_prs.rename(
+            columns={
+                "PRs": "All time PRs"
+            }
+        ),
+        on=[
+            "Year",
+            "Week"
+        ],
+        how="left"
+    )
+
+    dashboard["PRs"] = (
+        dashboard["PRs"]
+        .fillna(0)
+        .astype(int)
+    )
+
+    dashboard["All time PRs"] = (
+        dashboard["All time PRs"]
+        .fillna(0)
         .astype(int)
     )
 

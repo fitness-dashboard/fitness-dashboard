@@ -6,6 +6,7 @@ import pandas as pd
 from config import (
     DAILY_FITNESS_DATA_CSV_FILE,
     BODY_CSV_FILE,
+    GYMRUN_RM_CSV_FILE,
     TRAINING_DATA_CSV_FILE,
 )
 
@@ -39,6 +40,10 @@ dfTraining = pd.read_csv(
     TRAINING_DATA_CSV_FILE
 )
 
+dfGymRM = pd.read_csv(
+    GYMRUN_RM_CSV_FILE
+)
+
 dfFitness["Only Date"] = pd.to_datetime(
     dfFitness["Only Date"]
 )
@@ -51,10 +56,8 @@ dfTraining["Date"] = pd.to_datetime(
     dfTraining["Date"]
 )
 
-dfDashboard = build_dashboard_dataframe(
-    dfFitness,
-    dfBody,
-    dfTraining,
+dfGymRM["Date"] = pd.to_datetime(
+    dfGymRM["Date"]
 )
 
 # ==========================================================
@@ -62,6 +65,14 @@ dfDashboard = build_dashboard_dataframe(
 # ==========================================================
 
 period = select_period()
+
+dfDashboard = build_dashboard_dataframe(
+    dfFitness,
+    dfBody,
+    dfTraining,
+    dfGymRM,
+    period,
+)
 
 dfDashboard = dfDashboard[
     (dfDashboard["Start"] >= period["start"])
@@ -95,7 +106,8 @@ st.dataframe(
             "Δ Muscle",
             "Weight Days",
             "Workout Days",
-            "PRs"
+            "PRs",
+            "All time PRs",
         ]
     ],
     hide_index=True,
@@ -143,6 +155,10 @@ st.dataframe(
         ),
         "PRs": st.column_config.NumberColumn(
             "PRs",
+            format="%d",
+        ),
+        "All time PRs": st.column_config.NumberColumn(
+            "All time PRs",
             format="%d",
         ),
     },

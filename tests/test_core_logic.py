@@ -8,6 +8,7 @@ from gymrun_calculations import (
 )
 from gymrun_config import GYM_EXERCISES
 from body import build_body_dataframe
+from dashboard import get_weekly_pr_counts
 from nutrition import (
     build_nutrition_dataframe,
     calculate_macro_targets,
@@ -224,6 +225,101 @@ class GymRunCalculationsTests(unittest.TestCase):
         self.assertEqual(
             first_day["Bankdrücken"],
             1650
+        )
+
+
+class DashboardTests(unittest.TestCase):
+
+    def test_get_weekly_pr_counts_counts_each_exercise_once(self):
+
+        df_gym_rm = pd.DataFrame(
+            {
+                "Date": pd.to_datetime(
+                    [
+                        "2026-05-30",
+                        "2026-06-01",
+                        "2026-06-02",
+                        "2026-06-03",
+                        "2026-06-08"
+                    ]
+                ),
+                "Bankdrücken": [
+                    95,
+                    100,
+                    105,
+                    110,
+                    115
+                ],
+                "Kreuzheben": [
+                    130,
+                    140,
+                    140,
+                    145,
+                    145
+                ]
+            }
+        )
+
+        result = get_weekly_pr_counts(
+            df_gym_rm
+        )
+
+        first_week = result.loc[
+            result["Week"] == 23
+        ].iloc[0]
+
+        second_week = result.loc[
+            result["Week"] == 24
+        ].iloc[0]
+
+        self.assertEqual(
+            first_week["PRs"],
+            2
+        )
+
+        self.assertEqual(
+            second_week["PRs"],
+            1
+        )
+
+    def test_get_weekly_pr_counts_uses_selected_period_as_baseline(self):
+
+        df_gym_rm = pd.DataFrame(
+            {
+                "Date": pd.to_datetime(
+                    [
+                        "2026-06-01",
+                        "2026-06-03",
+                        "2026-06-08"
+                    ]
+                ),
+                "Bankdrücken": [
+                    100,
+                    110,
+                    115
+                ]
+            }
+        )
+
+        result = get_weekly_pr_counts(
+            df_gym_rm,
+            start=pd.Timestamp("2026-06-03"),
+            end=pd.Timestamp("2026-06-08")
+        )
+
+        self.assertEqual(
+            len(result),
+            1
+        )
+
+        self.assertEqual(
+            result.loc[0, "Week"],
+            24
+        )
+
+        self.assertEqual(
+            result.loc[0, "PRs"],
+            1
         )
 
 
