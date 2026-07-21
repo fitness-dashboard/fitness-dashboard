@@ -230,7 +230,7 @@ class GymRunCalculationsTests(unittest.TestCase):
 
 class DashboardTests(unittest.TestCase):
 
-    def test_get_weekly_pr_counts_counts_each_exercise_once(self):
+    def test_get_weekly_pr_counts_counts_each_new_record(self):
 
         df_gym_rm = pd.DataFrame(
             {
@@ -274,7 +274,7 @@ class DashboardTests(unittest.TestCase):
 
         self.assertEqual(
             first_week["PRs"],
-            2
+            5
         )
 
         self.assertEqual(
@@ -334,6 +334,60 @@ class DashboardTests(unittest.TestCase):
             second_week["PRs"],
             1
         )
+
+
+    def test_period_prs_restart_at_period_start(self):
+
+        exercise = next(iter(GYM_EXERCISES))
+        df_gym_rm = pd.DataFrame(
+            {
+                "Date": pd.to_datetime(
+                    [
+                        "2026-06-01",
+                        "2026-06-03",
+                        "2026-06-08",
+                        "2026-06-10",
+                        "2026-06-12"
+                    ]
+                ),
+                exercise: [100, 90, 95, 93, 102]
+            }
+        )
+
+        period_result = get_weekly_pr_counts(
+            df_gym_rm,
+            start=pd.Timestamp("2026-06-03"),
+            comparison_scope="period",
+            exercises=GYM_EXERCISES
+        )
+
+        all_time_result = get_weekly_pr_counts(
+            df_gym_rm,
+            start=pd.Timestamp("2026-06-03"),
+            comparison_scope="all_time",
+            exercises=GYM_EXERCISES
+        )
+
+        self.assertEqual(period_result["PRs"].sum(), 2)
+        self.assertEqual(all_time_result["PRs"].sum(), 1)
+
+    def test_configured_filter_ignores_other_exercises(self):
+
+        df_gym_rm = pd.DataFrame(
+            {
+                "Date": pd.to_datetime(
+                    ["2026-06-01", "2026-06-02"]
+                ),
+                "Not configured": [10, 20]
+            }
+        )
+
+        result = get_weekly_pr_counts(
+            df_gym_rm,
+            exercises=GYM_EXERCISES
+        )
+
+        self.assertTrue(result.empty)
 
 
 class TrainingTests(unittest.TestCase):

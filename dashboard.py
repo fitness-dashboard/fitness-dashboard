@@ -1,10 +1,14 @@
 import pandas as pd
 
+from gymrun_config import GYM_EXERCISES
+
 
 def get_weekly_pr_counts(
         dfGymRM,
         start=None,
-        end=None
+        end=None,
+        comparison_scope="all_time",
+        exercises=None
 ):
 
     df = dfGymRM.copy()
@@ -18,11 +22,28 @@ def get_weekly_pr_counts(
         subset=["Date"]
     )
 
-    exercise_columns = [
-        column
-        for column in df.columns
-        if column != "Date"
-    ]
+    if exercises is None:
+        exercise_columns = [
+            column for column in df.columns
+            if column != "Date"
+        ]
+    else:
+        exercise_columns = [
+            exercise for exercise in exercises
+            if exercise in df.columns
+        ]
+
+    if comparison_scope not in {"period", "all_time"}:
+
+        raise ValueError(
+            "comparison_scope must be 'period' or 'all_time'"
+        )
+
+    if not exercise_columns:
+
+        return pd.DataFrame(
+            columns=["Year", "Week", "PRs"]
+        )
 
     df = df.melt(
         id_vars="Date",
@@ -40,33 +61,19 @@ def get_weekly_pr_counts(
         subset=["RM"]
     )
 
-    historical_max = pd.Series(
-        dtype="float64"
-    )
+    start = pd.Timestamp(start) if start is not None else None
+    end = pd.Timestamp(end) if end is not None else None
 
-    if start is not None:
+    # Perioden-PRs starten am Periodenanfang mit einer neuen Baseline.
+    # All-Time-PRs werden zuerst gegen die komplette Historie geprueft
+    # und erst danach auf den angezeigten Zeitraum eingeschraenkt.
+    if comparison_scope == "period":
 
-        start = pd.Timestamp(start)
+        if start is not None:
+            df = df[df["Date"] >= start]
 
-        historical_max = (
-            df[
-                df["Date"] < start
-            ]
-            .groupby("Exercise")["RM"]
-            .max()
-        )
-
-        df = df[
-            df["Date"] >= start
-        ]
-
-    if end is not None:
-
-        end = pd.Timestamp(end)
-
-        df = df[
-            df["Date"] <= end
-        ]
+        if end is not None:
+            df = df[df["Date"] <= end]
 
     if df.empty:
 
@@ -91,24 +98,17 @@ def get_weekly_pr_counts(
         lambda values: values.cummax().shift()
     )
 
-    df["Historical Max"] = df[
-        "Exercise"
-    ].map(
-        historical_max
-    )
-
-    df["Previous Max"] = df[
-        [
-            "Previous Max",
-            "Historical Max"
-        ]
-    ].max(
-        axis=1
-    )
-
     df = df[
         df["RM"] > df["Previous Max"]
     ].copy()
+
+    if comparison_scope == "all_time":
+
+        if start is not None:
+            df = df[df["Date"] >= start]
+
+        if end is not None:
+            df = df[df["Date"] <= end]
 
     df["Year"] = df["Date"].dt.isocalendar().year
 
@@ -121,12 +121,10 @@ def get_weekly_pr_counts(
                 "Week"
             ],
             as_index=False
-        )["Exercise"]
-        .nunique()
+        )
+        .size()
         .rename(
-            columns={
-                "Exercise": "PRs"
-            }
+            columns={"size": "PRs"}
         )
     )
 
@@ -215,9 +213,9 @@ def get_dashboard_summary(
     ].copy()
 
     exercise_columns = [
-        column
-        for column in dfGymRMPeriod.columns
-        if column != "Date"
+        exercise
+        for exercise in GYM_EXERCISES
+        if exercise in dfGymRMPeriod.columns
     ]
 
     improvements = []
@@ -247,7 +245,9 @@ def get_dashboard_summary(
     all_time_prs = get_weekly_pr_counts(
         dfGymRM,
         start=start,
-        end=end
+        end=end,
+        comparison_scope="all_time",
+        exercises=GYM_EXERCISES
     )["PRs"].sum()
 
     return {
@@ -288,11 +288,15 @@ def build_dashboard_dataframe(
     period_prs = get_weekly_pr_counts(
         dfGymRM,
         start=period["start"],
-        end=period["end"]
+        end=period["end"],
+        comparison_scope="period",
+        exercises=GYM_EXERCISES
     )
 
     all_time_prs = get_weekly_pr_counts(
-        dfGymRM
+        dfGymRM,
+        comparison_scope="all_time",
+        exercises=GYM_EXERCISES
     )
 
     dfTraining["Week"] = (
