@@ -7,6 +7,7 @@ from excel_export import exportiere_excel
 from charts import erstelle_diagramme
 from gymrun_calculations import (build_gym_max_rm,build_gym_volume)
 from gymrun_config import GYM_EXERCISES
+from excel_reports import create_all_excel_reports
 from gymrun_charts import (
     create_rm_chart_data,
     create_volume_chart_data,
@@ -762,6 +763,22 @@ print(
     "Nutrition Report erstellt."
 )
 
+# =====================================
+# Dynamische Excel Reports
+# =====================================
+
+create_all_excel_reports(
+    workbook=workbook,
+    df_fitness=dfGesamt,
+    df_nutrition=dfNutrition,
+    df_nutrition_weekly=dfNutritionWeekly,
+    df_body=dfBody,
+    df_training=dfTrainingData,
+    df_gym_rm=dfGymMaxRM,
+)
+
+print("Dynamische Excel Reports erstellt.")
+
 # ===============================
 # Alte GymRun-Blätter löschen
 # ===============================
@@ -864,6 +881,12 @@ sheet_order = [
 
     "Nutrition Report",
 
+    "Training Block Report",
+
+    "Body Report",
+
+    "Fitness Dashboard",
+
     # =====================================
     # Diagramme
     # =====================================
@@ -878,7 +901,7 @@ sheet_order = [
     # Dashboard
     # =====================================
 
-    "Körper"
+    "Umfangsmessungen"
 
 ]
 
