@@ -399,6 +399,12 @@ sheetNutrition.range("A1").options(
     index=False
 ).value = dfNutrition
 
+# Oberste Zeile beim Scrollen sichtbar halten
+sheetNutrition.activate()
+workbook.app.api.ActiveWindow.SplitRow = 1
+workbook.app.api.ActiveWindow.SplitColumn = 0
+workbook.app.api.ActiveWindow.FreezePanes = True
+
 # =====================================
 # Tabellenkopf formatieren
 # =====================================
@@ -852,6 +858,30 @@ for index, exercise_name in enumerate(
         "Data Training Block Volume",
         "Charts Training Block"
     )
+
+# ===============================
+# Fensterbereiche fixieren
+# ===============================
+
+for sheet_name in [
+    "Data GymRun One RM",
+    "Data GymRun Volume",
+    "Data Training Block RM",
+    "Data Training Block Volume",
+]:
+    if sheet_exists(workbook, sheet_name):
+        workbook.sheets[sheet_name].activate()
+        workbook.app.api.ActiveWindow.FreezePanes = False
+        workbook.app.api.ActiveWindow.SplitRow = 3
+        workbook.app.api.ActiveWindow.SplitColumn = 0
+        workbook.app.api.ActiveWindow.FreezePanes = True
+
+if sheet_exists(workbook, "Nutrition Report"):
+    workbook.sheets["Nutrition Report"].activate()
+    workbook.app.api.ActiveWindow.FreezePanes = False
+    workbook.app.api.ActiveWindow.SplitRow = 19
+    workbook.app.api.ActiveWindow.SplitColumn = 0
+    workbook.app.api.ActiveWindow.FreezePanes = True
 
 # ===============================
 # Tabellenblätter sortieren
