@@ -49,6 +49,23 @@ def _write_pairs(sheet, row, column, pairs):
         sheet.range((target_row, column + 1)).value = value
 
 
+def _format_metric(value, unit="", signed=False, digits=1):
+    if value is None or pd.isna(value):
+        return None
+    prefix = "+" if signed and value > 0 else ""
+    formatted = f"{prefix}{value:.{digits}f}".replace(".", ",")
+    return f"{formatted} {unit}".strip()
+
+
+def _write_dashboard_rows(sheet, row, column, rows):
+    for offset, (label, value, development) in enumerate(rows):
+        target_row = row + offset
+        sheet.range((target_row, column)).value = label
+        sheet.range((target_row, column)).api.Font.Bold = True
+        sheet.range((target_row, column + 1)).value = value
+        sheet.range((target_row, column + 2)).value = development
+
+
 def _period_end(period, dates):
     configured_end = pd.Timestamp(period["end"])
     valid_dates = pd.to_datetime(dates, errors="coerce").dropna()
@@ -226,6 +243,7 @@ def create_body_report(workbook, df_body):
 def create_fitness_dashboard(
         workbook,
         df_fitness,
+        df_nutrition,
         df_body,
         df_training,
         df_gym_rm):
@@ -246,6 +264,12 @@ def create_fitness_dashboard(
         row = rows[period_type]
         column = 1 + index * (card_width + gap)
         summary = get_dashboard_summary(df_fitness, df_body, df_gym_rm, period)
+        start = pd.Timestamp(period["start"])
+        end = pd.Timestamp(period["end"])
+        nutrition = df_nutrition[
+            (df_nutrition["Date"] >= start)
+            & (df_nutrition["Date"] <= end)
+        ]
         period_prs = get_weekly_pr_counts(
             df_gym_rm,
             start=period["start"],
@@ -255,19 +279,46 @@ def create_fitness_dashboard(
         )["PRs"].sum()
 
         _section_header(sheet, row, column, f"{period_type}: {period['name']}", card_width)
-        _write_pairs(sheet, row + 2, column, [
-            ("Calories:", round(summary["Calories"]) if pd.notna(summary["Calories"]) else None),
-            ("Protein:", round(summary["Protein"], 1) if pd.notna(summary["Protein"]) else None),
-            ("Weight:", round(summary["Weight"], 1) if summary["Weight"] is not None else None),
-            ("Weight Change:", round(summary["Weight Change"], 1) if summary["Weight Change"] is not None else None),
-            ("Fat Mass:", round(summary["Fat Mass"], 1) if summary["Fat Mass"] is not None else None),
-            ("Fat Mass Change:", round(summary["Fat Mass Change"], 1) if summary["Fat Mass Change"] is not None else None),
-            ("Muscle Mass:", round(summary["Muscle Mass"], 1) if summary["Muscle Mass"] is not None else None),
-            ("Muscle Mass Change:", round(summary["Muscle Mass Change"], 1) if summary["Muscle Mass Change"] is not None else None),
-            ("Exercises Improved:", summary["Exercises Improved"]),
-            ("Period PRs:", int(period_prs)),
-            ("All-Time PRs:", int(summary["All time PRs"])),
-            ("Training Days:", summary["Training Days"]),
+        _write_dashboard_rows(sheet, row + 2, column, [
+            (
+                "Calories:",
+                _format_metric(summary["Calories"], "kcal", digits=0),
+                _format_metric(nutrition["Calories %"].mean(), "%"),
+            ),
+            (
+                "Protein:",
+                _format_metric(summary["Protein"], "g"),
+                _format_metric(nutrition["Protein %"].mean(), "%"),
+            ),
+            (
+                "Fat:",
+                _format_metric(summary["Fat"], "g"),
+                _format_metric(nutrition["Fat %"].mean(), "%"),
+            ),
+            (
+                "Carbs:",
+                _format_metric(summary["Carbs"], "g"),
+                _format_metric(nutrition["Carbs %"].mean(), "%"),
+            ),
+            (
+                "Weight:",
+                _format_metric(summary["Weight"], "kg"),
+                _format_metric(summary["Weight Change"], "kg", signed=True),
+            ),
+            (
+                "Fat Mass:",
+                _format_metric(summary["Fat Mass"], "kg"),
+                _format_metric(summary["Fat Mass Change"], "kg", signed=True),
+            ),
+            (
+                "Muscle Mass:",
+                _format_metric(summary["Muscle Mass"], "kg"),
+                _format_metric(summary["Muscle Mass Change"], "kg", signed=True),
+            ),
+            ("Exercises Improved:", summary["Exercises Improved"], None),
+            ("Period PRs:", int(period_prs), None),
+            ("All-Time PRs:", int(summary["All time PRs"]), None),
+            ("Training Days:", summary["Training Days"], None),
         ])
 
     current_block = next(
@@ -318,6 +369,7 @@ def create_all_excel_reports(
     create_fitness_dashboard(
         workbook,
         df_fitness,
+        df_nutrition,
         df_body,
         df_training,
         df_gym_rm,
