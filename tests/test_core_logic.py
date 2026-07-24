@@ -91,6 +91,16 @@ class NutritionTests(unittest.TestCase):
         )
 
         self.assertEqual(
+            result.loc[0, "Nutrition Phase name"],
+            "Sommer Recomposition 2026 – 1900 kcal"
+        )
+
+        self.assertEqual(
+            result.columns.get_loc("Nutrition Phase name"),
+            result.columns.get_loc("Nutrition Phase") + 1
+        )
+
+        self.assertEqual(
             result.loc[0, "Calories Target"],
             2200
         )

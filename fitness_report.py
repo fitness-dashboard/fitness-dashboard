@@ -410,7 +410,7 @@ workbook.app.api.ActiveWindow.FreezePanes = True
 # =====================================
 
 header = sheetNutrition.range(
-    "A1:R1"
+    "A1:S1"
 )
 
 header.api.Font.Bold = True
@@ -431,27 +431,27 @@ sheetNutrition.autofit()
 
 color_percentage_column(
     sheetNutrition,
-    "I"
+    "J"
 )
 
 color_percentage_column(
     sheetNutrition,
-    "L"
+    "M"
 )
 
 color_percentage_column(
     sheetNutrition,
-    "O"
+    "P"
 )
 
 color_percentage_column(
     sheetNutrition,
-    "R"
+    "S"
 )
 
 format_table(
     sheetNutrition,
-    "A1:R1000"
+    "A1:S1000"
 )
 
 print("Data Nutrition erstellt.")

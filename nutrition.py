@@ -91,6 +91,8 @@ def build_nutrition_dataframe(dfGesamt):
 
         "Nutrition Phase": None,
 
+        "Nutrition Phase name": None,
+
         "Weight": dfGesamt[
             "Weight (kg)"
         ].round(1),
@@ -155,6 +157,11 @@ def build_nutrition_dataframe(dfGesamt):
             phase_mask,
             "Nutrition Phase"
         ] = f"Phase {phase['phase']}"
+
+        dfNutrition.loc[
+            phase_mask,
+            "Nutrition Phase name"
+        ] = phase["name"]
 
         training_calories = dfGesamt.loc[
             target_mask,
