@@ -260,7 +260,10 @@ def create_fitness_dashboard(
             ("Protein:", round(summary["Protein"], 1) if pd.notna(summary["Protein"]) else None),
             ("Weight:", round(summary["Weight"], 1) if summary["Weight"] is not None else None),
             ("Weight Change:", round(summary["Weight Change"], 1) if summary["Weight Change"] is not None else None),
+            ("Fat Mass:", round(summary["Fat Mass"], 1) if summary["Fat Mass"] is not None else None),
+            ("Fat Mass Change:", round(summary["Fat Mass Change"], 1) if summary["Fat Mass Change"] is not None else None),
             ("Muscle Mass:", round(summary["Muscle Mass"], 1) if summary["Muscle Mass"] is not None else None),
+            ("Muscle Mass Change:", round(summary["Muscle Mass Change"], 1) if summary["Muscle Mass Change"] is not None else None),
             ("Exercises Improved:", summary["Exercises Improved"]),
             ("Period PRs:", int(period_prs)),
             ("All-Time PRs:", int(summary["All time PRs"])),
@@ -291,7 +294,7 @@ def create_fitness_dashboard(
         "Muscle", "Δ Muscle", "Weight Days", "Workout Days", "PRs",
         "All time PRs",
     ]
-    table_row = 32
+    table_row = 35
     sheet.range((table_row, 1)).value = f"Weekly Dashboard – {current_block['name']}"
     sheet.range((table_row, 1)).api.Font.Bold = True
     sheet.range((table_row + 2, 1)).options(index=False).value = weekly[table_columns]
