@@ -879,7 +879,7 @@ for sheet_name in [
 if sheet_exists(workbook, "Nutrition Report"):
     workbook.sheets["Nutrition Report"].activate()
     workbook.app.api.ActiveWindow.FreezePanes = False
-    workbook.app.api.ActiveWindow.SplitRow = 19
+    workbook.app.api.ActiveWindow.SplitRow = 21
     workbook.app.api.ActiveWindow.SplitColumn = 0
     workbook.app.api.ActiveWindow.FreezePanes = True
 

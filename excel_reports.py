@@ -164,10 +164,12 @@ def create_nutrition_report(workbook, df_nutrition, df_weekly):
             ("Average Protein:", round(data["Protein Actual"].mean(), 1) if not data.empty else None),
             ("Protein Target:", round(data["Protein %"].mean(), 1) if not data.empty else None),
             ("Average Fat:", round(data["Fat Actual"].mean(), 1) if not data.empty else None),
+            ("Fat Target:", round(data["Fat %"].mean(), 1) if not data.empty else None),
             ("Average Carbs:", round(data["Carbs Actual"].mean(), 1) if not data.empty else None),
+            ("Carbs Target:", round(data["Carbs %"].mean(), 1) if not data.empty else None),
         ])
 
-    table_row = 17
+    table_row = 19
     sheet.range((table_row, 1)).value = "Weekly Nutrition and Body Development"
     sheet.range((table_row, 1)).api.Font.Bold = True
     sheet.range((table_row + 2, 1)).options(index=False).value = df_weekly
