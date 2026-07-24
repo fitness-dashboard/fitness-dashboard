@@ -44,6 +44,22 @@ def exportiere_excel(dfGesamt):
     # DataFrame schreiben
     wsData.range("A2").value = dfGesamt
 
+    # xlwings schreibt für den DataFrame-Index eine leere Überschrift.
+    # AutoFilter benötigt jedoch für jede verwendete Spalte einen Spaltennamen.
+    wsData.range("A2").value = "Nr"
+
+    # Filter nur über den tatsächlich genutzten Datenbereich setzen
+    if wsData.api.AutoFilterMode:
+        wsData.api.AutoFilterMode = False
+
+    wsData.range(
+        (2, 1),
+        (
+            len(dfGesamt) + 2,
+            dfGesamt.shape[1] + 1
+        )
+    ).api.AutoFilter(Field=1)
+
     # ===============================
     # EXCEL Formatierung
     # ===============================

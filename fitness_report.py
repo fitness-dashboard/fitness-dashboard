@@ -399,6 +399,18 @@ sheetNutrition.range("A1").options(
     index=False
 ).value = dfNutrition
 
+# Filter nur über den tatsächlich genutzten Datenbereich setzen
+if sheetNutrition.api.AutoFilterMode:
+    sheetNutrition.api.AutoFilterMode = False
+
+sheetNutrition.range(
+    (1, 1),
+    (
+        len(dfNutrition) + 1,
+        len(dfNutrition.columns)
+    )
+).api.AutoFilter(Field=1)
+
 # Oberste Zeile beim Scrollen sichtbar halten
 sheetNutrition.activate()
 workbook.app.api.ActiveWindow.SplitRow = 1
