@@ -5,6 +5,7 @@ import pandas as pd
 
 from config import (
     DAILY_FITNESS_DATA_CSV_FILE,
+    NUTRITION_CSV_FILE,
     BODY_CSV_FILE,
     GYMRUN_RM_CSV_FILE,
     TRAINING_DATA_CSV_FILE,
@@ -53,6 +54,10 @@ dfFitness = pd.read_csv(
     DAILY_FITNESS_DATA_CSV_FILE
 )
 
+dfNutrition = pd.read_csv(
+    NUTRITION_CSV_FILE
+)
+
 dfBody = pd.read_csv(
     BODY_CSV_FILE
 )
@@ -67,6 +72,10 @@ dfGymRM = pd.read_csv(
 
 dfFitness["Only Date"] = pd.to_datetime(
     dfFitness["Only Date"]
+)
+
+dfNutrition["Date"] = pd.to_datetime(
+    dfNutrition["Date"]
 )
 
 dfBody["Date"] = pd.to_datetime(
@@ -86,6 +95,12 @@ dfGymRM["Date"] = pd.to_datetime(
 # ==========================================================
 
 period = select_period()
+
+dfNutritionPeriod = dfNutrition[
+    (dfNutrition["Date"] >= period["start"])
+    &
+    (dfNutrition["Date"] <= period["end"])
+].copy()
 
 dfDashboard = build_dashboard_dataframe(
     dfFitness,
@@ -166,6 +181,50 @@ with col4:
             summary["Fat"],
             "g",
             decimals=0
+        )
+    )
+
+st.markdown("##### Nutrition Target Achievement")
+
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+
+    st.metric(
+        "Ø Calories Target",
+        format_value(
+            dfNutritionPeriod["Calories %"].mean(),
+            "%"
+        )
+    )
+
+with col2:
+
+    st.metric(
+        "Ø Protein Target",
+        format_value(
+            dfNutritionPeriod["Protein %"].mean(),
+            "%"
+        )
+    )
+
+with col3:
+
+    st.metric(
+        "Ø Carbs Target",
+        format_value(
+            dfNutritionPeriod["Carbs %"].mean(),
+            "%"
+        )
+    )
+
+with col4:
+
+    st.metric(
+        "Ø Fat Target",
+        format_value(
+            dfNutritionPeriod["Fat %"].mean(),
+            "%"
         )
     )
 
