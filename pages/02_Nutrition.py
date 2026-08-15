@@ -3,8 +3,10 @@ import plotly.express as px
 import streamlit as st
 
 from config import (
+    DAILY_FITNESS_DATA_CSV_FILE,
     NUTRITION_CSV_FILE,
     NUTRITION_PHASE_SUMMARY_CSV_FILE,
+    NUTRITION_PHASES,
 )
 import plotly.graph_objects as go
 
@@ -28,6 +30,10 @@ dfNutrition = pd.read_csv(
     NUTRITION_CSV_FILE
 )
 
+dfFitness = pd.read_csv(
+    DAILY_FITNESS_DATA_CSV_FILE
+)
+
 dfSummary["Start"] = pd.to_datetime(
     dfSummary["Start"]
 )
@@ -40,11 +46,67 @@ dfNutrition["Date"] = pd.to_datetime(
     dfNutrition["Date"]
 )
 
+dfFitness["Only Date"] = pd.to_datetime(
+    dfFitness["Only Date"]
+)
+
+# ==========================================================
+# Sportbereinigte Kalorien
+# ==========================================================
+
+training_calories_by_date = (
+    dfFitness
+    .groupby("Only Date")["Kalorien aus Training"]
+    .sum(min_count=1)
+)
+
+dfNutrition["Training Calories"] = (
+    dfNutrition["Date"]
+    .map(training_calories_by_date)
+    .fillna(0)
+)
+
+dfNutrition["Net Calories"] = (
+    dfNutrition["Calories Actual"]
+    - dfNutrition["Training Calories"]
+)
+
+dfNutrition["Net Calories Target"] = pd.Series(
+    pd.NA,
+    index=dfNutrition.index,
+    dtype="Float64"
+)
+
+for nutrition_phase in NUTRITION_PHASES:
+
+    phase_mask = (
+        (dfNutrition["Date"] >= pd.Timestamp(nutrition_phase["start"]))
+        &
+        (dfNutrition["Date"] <= pd.Timestamp(nutrition_phase["end"]))
+    )
+
+    dfNutrition.loc[
+        phase_mask,
+        "Net Calories Target"
+    ] = nutrition_phase["calories"]
+
+dfNutrition["Net Calories %"] = (
+    dfNutrition["Net Calories"]
+    / dfNutrition["Net Calories Target"]
+    * 100
+)
+
 # ==========================================================
 # Zeitraum auswählen
 # ==========================================================
 
 period = select_period()
+
+dfNutritionPeriod = dfNutrition[
+    (dfNutrition["Date"] >= period["start"])
+    &
+    (dfNutrition["Date"] <= period["end"])
+].copy()
 
 # ==========================================================
 # Zeitraum filtern
@@ -75,6 +137,14 @@ else:
         "End": period["end"],
     }
 
+summary["Average Net Calories"] = (
+    dfNutritionPeriod["Net Calories"].mean()
+)
+
+summary["Net Calories Target"] = (
+    dfNutritionPeriod["Net Calories %"].mean()
+)
+
 # ==========================================================
 # Nutrition Report
 # ==========================================================
@@ -90,6 +160,11 @@ with col1:
     )
 
     st.write(
+        f"**Average Net Calories:** "
+        f"{summary['Average Net Calories']:.0f} kcal"
+    )
+
+    st.write(
         f"**Average Protein:** {summary['Average Protein']:.1f} g"
     )
 
@@ -98,6 +173,11 @@ with col1:
     )
 
 with col2:
+
+    st.write(
+        f"**Net Calories Target:** "
+        f"{summary['Net Calories Target']:.1f} %"
+    )
 
     st.write(
         f"**Average Fat:** {summary['Average Fat']:.1f} g"
@@ -124,6 +204,7 @@ METRICS = {
     "Protein (g)": "Protein",
     "Carbs (g)": "Carbs",
     "Fat (g)": "Fat",
+    "Net Calories (kcal)": "Net Calories",
 }
 
 metric_label = st.selectbox(
@@ -138,6 +219,7 @@ TARGET_COLUMNS = {
     "Protein": "Protein Target",
     "Carbs": "Carbs Target",
     "Fat": "Fat Target",
+    "Net Calories": "Net Calories Target",
 }
 
 target_column = TARGET_COLUMNS[metric]
@@ -163,7 +245,10 @@ else:
 
     dfChart = dfNutrition.copy()
 
-value_column = f"{metric} Actual"
+if metric == "Net Calories":
+    value_column = "Net Calories"
+else:
+    value_column = f"{metric} Actual"
 
 dfChart["Average"] = (
     dfChart[value_column]
@@ -258,6 +343,10 @@ dfTable = dfTable[
         "Calories Actual",
         "Calories %",
 
+        "Training Calories",
+        "Net Calories",
+        "Net Calories %",
+
         "Protein Actual",
         "Protein %",
 
@@ -273,6 +362,9 @@ dfTable = dfTable.rename(
     columns={
         "Calories Actual": "Calories",
         "Calories %": "Cal %",
+
+        "Training Calories": "Sport Calories",
+        "Net Calories %": "Net Cal %",
 
         "Protein Actual": "Protein",
         "Protein %": "Prot %",
@@ -296,10 +388,13 @@ dfTable["Date"] = (
 
 numeric_columns = [
     "Calories",
+    "Sport Calories",
+    "Net Calories",
     "Protein",
     "Carbs",
     "Fat",
     "Cal %",
+    "Net Cal %",
     "Prot %",
     "Carb %",
     "Fat %",
@@ -335,6 +430,7 @@ def highlight_percent(val):
 
 percent_columns = [
     "Cal %",
+    "Net Cal %",
     "Prot %",
     "Carb %",
     "Fat %",
