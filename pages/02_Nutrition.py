@@ -108,6 +108,18 @@ dfNutritionPeriod = dfNutrition[
     (dfNutrition["Date"] <= period["end"])
 ].copy()
 
+nutrition_records = dfNutritionPeriod.dropna(
+    subset=["Calories Actual"]
+)
+
+if nutrition_records.empty:
+    elapsed_nutrition_days = 0
+else:
+    last_nutrition_date = nutrition_records["Date"].max()
+    elapsed_nutrition_days = (
+        last_nutrition_date - pd.Timestamp(period["start"])
+    ).days + 1
+
 # ==========================================================
 # Zeitraum filtern
 # ==========================================================
@@ -144,6 +156,8 @@ summary["Average Net Calories"] = (
 summary["Net Calories Target"] = (
     dfNutritionPeriod["Net Calories %"].mean()
 )
+
+summary["Days"] = elapsed_nutrition_days
 
 # ==========================================================
 # Nutrition Report

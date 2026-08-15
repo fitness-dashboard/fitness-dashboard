@@ -135,7 +135,7 @@ st.caption(
 
 
 duration_days = (
-    period["end"] - period["start"]
+    latest["Date"] - pd.Timestamp(period["start"])
 ).days + 1
 
 col1, col2 = st.columns(2)
