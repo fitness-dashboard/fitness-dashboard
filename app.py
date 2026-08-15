@@ -9,6 +9,7 @@ from config import (
     BODY_CSV_FILE,
     GYMRUN_RM_CSV_FILE,
     TRAINING_DATA_CSV_FILE,
+    NUTRITION_PHASES,
 )
 
 from filters import select_period
@@ -101,6 +102,58 @@ dfNutritionPeriod = dfNutrition[
     &
     (dfNutrition["Date"] <= period["end"])
 ].copy()
+
+# ==========================================================
+# Sportbereinigte Kalorien
+# ==========================================================
+
+training_calories_by_date = (
+    dfFitness
+    .groupby("Only Date")["Kalorien aus Training"]
+    .sum(min_count=1)
+)
+
+dfNetNutrition = dfNutritionPeriod[
+    dfNutritionPeriod["Calories Actual"].notna()
+].copy()
+
+dfNetNutrition["Training Calories"] = (
+    dfNetNutrition["Date"]
+    .map(training_calories_by_date)
+    .fillna(0)
+)
+
+dfNetNutrition["Net Calories"] = (
+    dfNetNutrition["Calories Actual"]
+    - dfNetNutrition["Training Calories"]
+)
+
+base_calorie_targets = pd.Series(
+    pd.NA,
+    index=dfNetNutrition.index,
+    dtype="Float64"
+)
+
+for nutrition_phase in NUTRITION_PHASES:
+
+    phase_mask = (
+        (dfNetNutrition["Date"] >= pd.Timestamp(nutrition_phase["start"]))
+        &
+        (dfNetNutrition["Date"] <= pd.Timestamp(nutrition_phase["end"]))
+    )
+
+    base_calorie_targets.loc[phase_mask] = nutrition_phase["calories"]
+
+dfNetNutrition["Net Calories Target %"] = (
+    dfNetNutrition["Net Calories"]
+    / base_calorie_targets
+    * 100
+)
+
+average_net_calories = dfNetNutrition["Net Calories"].mean()
+average_net_calories_target = (
+    dfNetNutrition["Net Calories Target %"].mean()
+)
 
 dfDashboard = build_dashboard_dataframe(
     dfFitness,
@@ -224,6 +277,31 @@ with col4:
         "Ø Fat Target",
         format_value(
             dfNutritionPeriod["Fat %"].mean(),
+            "%"
+        )
+    )
+
+st.markdown("##### Net Nutrition")
+
+col1, col2 = st.columns(2)
+
+with col1:
+
+    st.metric(
+        "Ø Net Calories",
+        format_value(
+            average_net_calories,
+            "kcal",
+            decimals=0
+        )
+    )
+
+with col2:
+
+    st.metric(
+        "Ø Net Calories Target",
+        format_value(
+            average_net_calories_target,
             "%"
         )
     )
