@@ -337,7 +337,7 @@ with col2:
             summary["Fat Mass Change"],
             "kg"
         ),
-        delta_color="normal"
+        delta_color="inverse"
     )
 
 with col3:
@@ -367,7 +367,7 @@ with col4:
             summary["Body Fat Change"],
             "%"
         ),
-        delta_color="normal"
+        delta_color="inverse"
     )
 
 st.markdown("#### Training Progress")
