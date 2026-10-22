@@ -7,6 +7,38 @@ from config import (
 )
 
 
+def _get_current_period_index(periods, today=None):
+    """Index der aktuellen bzw. zuletzt begonnenen Phase ermitteln."""
+
+    if periods.empty:
+        return 0
+
+    reference_date = (
+        pd.Timestamp.today().normalize()
+        if today is None
+        else pd.Timestamp(today).normalize()
+    )
+
+    active_periods = periods[
+        (periods["Start"] <= reference_date)
+        & (periods["End"] >= reference_date)
+    ]
+
+    if not active_periods.empty:
+        selected_label = active_periods["Start"].idxmax()
+    else:
+        started_periods = periods[
+            periods["Start"] <= reference_date
+        ]
+
+        if not started_periods.empty:
+            selected_label = started_periods["Start"].idxmax()
+        else:
+            selected_label = periods["Start"].idxmin()
+
+    return periods.index.get_loc(selected_label)
+
+
 def select_period():
     """
     Gemeinsamer Zeitraum-Filter für alle Seiten.
@@ -59,6 +91,7 @@ def select_period():
         period_name = st.selectbox(
             "Training Block",
             training["Name"],
+            index=_get_current_period_index(training),
         )
 
         row = training[
@@ -80,6 +113,7 @@ def select_period():
     period_name = st.selectbox(
         "Nutrition Phase",
         nutrition["Phase"],
+        index=_get_current_period_index(nutrition),
     )
 
     row = nutrition[
