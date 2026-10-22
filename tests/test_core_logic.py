@@ -134,6 +134,10 @@ class BodyTests(unittest.TestCase):
                 "Body Water (%)": [50, 51],
                 "Bone Mass (kg)": [3, 3.1],
                 "Metab Age": [50, 49],
+                "BMR (kcal) Tanita": [1800, 1810],
+                "Grundumsatz pro Tag errechnet 30 Tage": [1750, 1760],
+                "Grundumsatz pro Tag errechnet 60 Tage": [1740, 1750],
+                "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12": [1850, 1860],
                 "Muscle mass - right arm": [3, 3.1],
                 "Muscle mass - left arm": [3, 3.1],
                 "Muscle mass - trunk": [30, 30.5],
@@ -164,6 +168,11 @@ class BodyTests(unittest.TestCase):
         self.assertEqual(
             result.loc[1, "Body Fat % 7 Days"],
             24.5
+        )
+
+        self.assertEqual(
+            result.loc[1, "BMR Tanita"],
+            1810
         )
 
 

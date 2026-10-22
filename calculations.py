@@ -27,6 +27,13 @@ def berechne_werte(dfGesamt):
         as_index=False
     )[numeric_cols].sum()
 
+    # Den originalen Tanita-Wert sichern, bevor "BMR (kcal)"
+    # weiter unten mit dem berechneten Mifflin-Wert belegt wird.
+    dfGesamt["BMR (kcal) Tanita"] = (
+        dfGesamt["BMR (kcal)"]
+        .replace(0, np.nan)
+    )
+
     # ===============================
     # Segment-Muskelmasse bereinigen
     # ===============================

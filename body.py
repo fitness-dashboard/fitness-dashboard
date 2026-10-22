@@ -42,7 +42,21 @@ def build_body_dataframe(dfGesamt):
 
         "BMI": dfGesamt["BMI"],
 
-        "BMR": dfGesamt["BMR (kcal)"],
+        "BMR Tanita": dfGesamt[
+            "BMR (kcal) Tanita"
+        ],
+
+        "BMR Calculated 30 Days": dfGesamt[
+            "Grundumsatz pro Tag errechnet 30 Tage"
+        ],
+
+        "BMR Calculated 60 Days": dfGesamt[
+            "Grundumsatz pro Tag errechnet 60 Tage"
+        ],
+
+        "BMR Mifflin-St Jeor x 1.12": dfGesamt[
+            "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"
+        ],
 
         "Visceral Fat": dfGesamt["Visc Fat"],
 

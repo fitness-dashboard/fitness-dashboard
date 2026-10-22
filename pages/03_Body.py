@@ -203,7 +203,6 @@ chart_options = {
     "Visceral Fat": "Visceral Fat",
     "Body Water %": "Body Water %",
     "Bone Mass": "Bone Mass",
-    "BMR": "BMR",
 }
 
 selected_chart = st.selectbox(
@@ -233,6 +232,68 @@ fig.update_layout(
 
 st.plotly_chart(
     fig,
+    use_container_width=True,
+)
+
+st.divider()
+
+# --------------------------------------------------
+# Basal Metabolic Rate Comparison
+# --------------------------------------------------
+
+st.subheader("Basal Metabolic Rate Comparison")
+
+bmr_columns = {
+    "Tanita": "BMR Tanita",
+    "Calculated 30 Days": "BMR Calculated 30 Days",
+    "Calculated 60 Days": "BMR Calculated 60 Days",
+    "Mifflin-St Jeor x 1.12": "BMR Mifflin-St Jeor x 1.12",
+}
+
+bmr_metric_columns = st.columns(4)
+
+for metric_column, (label, column) in zip(
+    bmr_metric_columns,
+    bmr_columns.items(),
+):
+    available_values = dfBody[column].dropna()
+    value = (
+        f"{available_values.iloc[-1]:.0f} kcal"
+        if not available_values.empty
+        else "—"
+    )
+
+    with metric_column:
+        st.metric(label, value)
+
+bmr_chart_data = (
+    dfBody[["Date", *bmr_columns.values()]]
+    .rename(
+        columns={
+            column: label
+            for label, column in bmr_columns.items()
+        }
+    )
+)
+
+bmr_fig = px.line(
+    bmr_chart_data,
+    x="Date",
+    y=list(bmr_columns.keys()),
+    template="plotly_white",
+)
+
+bmr_fig.update_layout(
+    height=450,
+    margin=dict(l=20, r=20, t=20, b=20),
+    xaxis_title="",
+    yaxis_title="kcal per day",
+    legend_title_text="",
+    hovermode="x unified",
+)
+
+st.plotly_chart(
+    bmr_fig,
     use_container_width=True,
 )
 

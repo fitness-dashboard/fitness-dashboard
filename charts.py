@@ -37,8 +37,8 @@ def erstelle_diagramme(workbook, dfGesamt):
     )
 
     # Diagramm 4
-    dfGesamt["BMR (kcal)"] = (
-        dfGesamt["BMR (kcal)"]
+    dfGesamt["BMR (kcal) Tanita"] = (
+        dfGesamt["BMR (kcal) Tanita"]
         .replace(0, np.nan)
     )
 
@@ -244,7 +244,7 @@ def erstelle_diagramme(workbook, dfGesamt):
 
     chart_data4 = pd.DataFrame({
         "Datum": dfChart["Only Date"],
-        "BMR (kcal) Tanita": dfChart["BMR (kcal)"],
+        "BMR (kcal) Tanita": dfChart["BMR (kcal) Tanita"],
         "Grundumsatz pro Tag errechnet 30 Tage": dfChart["Grundumsatz pro Tag errechnet 30 Tage"],
         "Grundumsatz pro Tag errechnet 60 Tage": dfChart["Grundumsatz pro Tag errechnet 60 Tage"],
         "Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12": dfChart["Grundumsatz Mifflin-St.-Jeor mit Faktor 1,12"]
